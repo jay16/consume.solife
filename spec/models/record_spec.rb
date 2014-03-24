@@ -1,5 +1,13 @@
 require 'spec_helper'
 
 describe Record do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @record = create(:record)
+  end
+  subject { @record }
+
+  it { should belong_to(:user) }
+  it { should validate_presence_of(:value) }
+  it { should validate_presence_of(:ymdhms) }
+
 end
