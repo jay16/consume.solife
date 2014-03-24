@@ -1,7 +1,7 @@
 .row.row-offcanvas.row-offcanvas-right
   #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas{:role => "navigation"}
     .list-group
-      .list-group-item.active.row
+      .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
         .col-6.col-sm-6.col-lg-6
           = gravatar_image_tag(current_user.email, alt: current_user.name)
         .col-6.col-sm-6.col-lg-6
@@ -14,8 +14,7 @@
     %p.pull-right.visible-xs
       %button.btn.btn-primary.btn-xs{"data-toggle" => "offcanvas", :type => "button"} Toggle nav
     .jumbotron
-      %h1 Hello, world!
-      %p This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+      %h1 创建消费记录框
     .row
       .col-12.col-sm-12.col-lg-12
         %h2 Heading
