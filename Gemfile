@@ -36,6 +36,8 @@ group :development,:test do
   gem "rspec-rails"
   gem "shoulda-matchers"
   gem "capybara"
+  gem "spork"
+  #gem "autotest-rails"
 end
 
 group :doc do
