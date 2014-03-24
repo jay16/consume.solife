@@ -1,0 +1,11 @@
+= simple_form_for(@record) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id
+    = f.input :value
+    = f.input :remark
+    = f.input :ymdhms
+
+  .form-actions
+    = f.button :submit

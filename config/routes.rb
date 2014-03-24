@@ -1,4 +1,6 @@
 Consume::Application.routes.draw do
+  resources :records
+
   get "users/index"
   get "users/show"
   get "users/edit"
