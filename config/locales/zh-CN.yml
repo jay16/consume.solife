@@ -25,10 +25,22 @@
               blank: "不可为空"
             ymdhms:
               blank: "不可为空"
+        tag:
+          attributes:
+            label: 
+              blank: "不可为空"
+        record_with_tag:
+          attributes:
+            record_id:
+              blank: "不可为空"
+              not_a_number: "必须为整型"
+            tag_id: 
+              blank: "不可为空"
+              not_a_number: "必须为整型"
         user:
           attributes:
-            name: "name is blank"
-            email: "email is empty"
+            name: "不可为空"
+            email: "不可为空"
 
   simple_form:
     error_notification:
