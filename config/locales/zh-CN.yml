@@ -13,14 +13,23 @@
         email: "邮箱"
         password: "密码"
         password_confirmation: "确认密码"
-
+      record:
+        value: "消费数值"
+        ymdhms: "消费日期"
+        remark: "消费备注"
     errors:
       models:
         record:
           attributes:
-            value: "consume vaue"
-            ymdhms: "consume stand date format"
+            value:
+              blank: "不可为空"
+            ymdhms:
+              blank: "不可为空"
         user:
           attributes:
             name: "name is blank"
             email: "email is empty"
+
+  simple_form:
+    error_notification:
+      default_message: "请查看下列错误信息:"

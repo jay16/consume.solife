@@ -1,11 +1,26 @@
-= simple_form_for(@record) do |f|
-  = f.error_notification
+= simple_form_for([current_user,@record], remote: true) do |f|
+  = render partial: "shared/error_messages", locals: { target: @record }
 
-  .form-inputs
-    = f.input :user_id
-    = f.input :value
-    = f.input :remark
-    = f.input :ymdhms
+  %fieldset
+    = f.input :user_id, as: :hidden
+    = f.input :tags_list, as: :hidden
 
-  .form-actions
-    = f.button :submit
+
+    .form-group.form-inline
+      = f.text_field :value, class: "col-md-3 form-control", placeholder: "消费数值"
+      = f.text_field :ymdhms,class: "col-md-6 form-control", placeholder: "消费日期"
+    %br
+    .form-group
+      = f.input_field :remark, as: :text, class: "col-md-9 form-control", placeholder: "消费备注", label: false
+
+    .form-actions
+      %ul#eventTags.col-md-10
+
+      = f.button :submit, "提交", class: "btn btn-primary pull-right"
+    .form-group
+      #events_container
+
+:javascript
+  $(function(){
+    Tags.initTagIt("#eventTags");
+  });

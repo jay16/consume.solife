@@ -8,6 +8,7 @@ gem "mysql2"
 gem "simple_form"
 gem "haml-rails"
 gem "devise"
+#gem "protected_attributes"
 
 gem "gravatar_image_tag"
 # Use SCSS for stylesheets

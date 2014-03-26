@@ -24,13 +24,15 @@ class RecordsController < ApplicationController
   # POST /records
   # POST /records.json
   def create
-    @record = Record.new(record_params)
+    @record = current_user.records.new(record_params)
 
     respond_to do |format|
       if @record.save
+        format.js
         format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.json { render action: 'show', status: :created, location: @record }
       else
+        format.js
         format.html { render action: 'new' }
         format.json { render json: @record.errors, status: :unprocessable_entity }
       end
@@ -69,6 +71,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:user_id, :value, :remark, :ymdhms)
+      params.require(:record).permit(:user_id, :value, :remark, :ymdhms, :tags_list)
     end
 end
