@@ -8,7 +8,6 @@
 #    t.string   "ymdhms"
 #    t.datetime "created_at"
 #    t.datetime "updated_at"
-
 class Record < ActiveRecord::Base
   attr_accessor :tags_list
   
@@ -19,14 +18,15 @@ class Record < ActiveRecord::Base
   belongs_to :user
   has_many :record_with_tags, dependent: :destroy
   has_many :tags, through: :record_with_tags
-
-  before_save :build_with_tags
+  
+  #after_create :build_with_tags
+  #private
   def build_with_tags
-    return if self.tags_list.blank?
+    return if self.tags_list.blank? or self.tags_list.chomp.size == 0
 
     self.tags_list.split(",").each do |str|
-      tag = current_user.tags.find_or_create(:label, str.chomp)
-
+       tag = self.user.tags.find_or_create_by(label: str.strip)
+       RecordWithTag.create({record_id: self.id, tag_id: tag.id})
     end
   end
 end

@@ -16,8 +16,22 @@
 
     .row
       .col-12.col-sm-12.col-lg-12
-        %h2 Heading
-        %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        %p
-          %a.btn.btn-default{:href => "#", :role => "button"} View details »
-      / /span
+        %table.table.table-hover
+          %thead
+            %tr
+              %th value
+              %th remark
+              %th ymdhms
+              %th tags
+                
+          %tbody
+          - @records.each do |record|
+            %tr
+              %td 
+                = record.value
+              %td 
+                = record.remark
+              %td 
+                = record.ymdhms
+              %td 
+                = record.tags.map{|t| t.label}.join(",")

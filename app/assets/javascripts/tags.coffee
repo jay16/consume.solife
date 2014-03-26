@@ -2,63 +2,48 @@
 window.Tags =
 
   # tag-it控件选择标签
-  initTagIt : (target) ->
-    sampleTags = [
-      "c++"
-      "java"
-      "php"
-      "coldfusion"
-      "javascript"
-      "asp"
-      "ruby"
-      "python"
-      "c"
-      "scala"
-      "groovy"
-      "haskell"
-      "perl"
-      "erlang"
-      "apl"
-      "cobol"
-      "go"
-      "lua"
-    ]
+  # target: tag-it容器
+  # tags: 已创建标签数组
+  # control: input加载标签字符串
+  # show_pane: 显示面板
+  initTagIt : (target,tags,control,show_pane) ->
+    $eventTags = $(target)
+    sampleTags = tags
+    $control = $(control)
+    $show_pane = $(show_pane)
 
-    #-------------------------------
-    # Tag events
-    #-------------------------------
-    eventTags = $(target)
     addEvent = (text) ->
       tags_list = []
-      eventTags.find(".tagit-choice:not(.removed)").each ->
+      $eventTags.find(".tagit-choice:not(.removed)").each ->
          tags_list.push $(this).find(".tagit-label:first").text()
-      $("#events_container").html text + "<br>" + tags_list.join(",")
-      $("#record_tags_list").val(tags_list.join(","));
+
+      $show_pane.html text + "<br>" + tags_list.join(",") if show_pane.length
+      $control.val(tags_list.join(",")) if control.length
       return
 
-    eventTags.tagit
+    $eventTags.tagit
       availableTags: sampleTags
       beforeTagAdded: (evt, ui) ->
-        addEvent "beforeTagAdded: " + eventTags.tagit("tagLabel", ui.tag)  unless ui.duringInitialization
+        addEvent "beforeTagAdded: " + $eventTags.tagit("tagLabel", ui.tag)  unless ui.duringInitialization
         return
 
       afterTagAdded: (evt, ui) ->
-        addEvent "afterTagAdded: " + eventTags.tagit("tagLabel", ui.tag)  unless ui.duringInitialization
+        addEvent "afterTagAdded: " + $eventTags.tagit("tagLabel", ui.tag)  unless ui.duringInitialization
         return
 
       beforeTagRemoved: (evt, ui) ->
-        addEvent "beforeTagRemoved: " + eventTags.tagit("tagLabel", ui.tag)
+        addEvent "beforeTagRemoved: " + $eventTags.tagit("tagLabel", ui.tag)
         return
 
       afterTagRemoved: (evt, ui) ->
-        addEvent "afterTagRemoved: " + eventTags.tagit("tagLabel", ui.tag)
+        addEvent "afterTagRemoved: " + $eventTags.tagit("tagLabel", ui.tag)
         return
 
       onTagClicked: (evt, ui) ->
-        addEvent "onTagClicked: " + eventTags.tagit("tagLabel", ui.tag)
+        addEvent "onTagClicked: " + $eventTags.tagit("tagLabel", ui.tag)
         return
 
       onTagExists: (evt, ui) ->
-        addEvent "标签已经选过: " + eventTags.tagit("tagLabel", ui.existingTag)
+        addEvent "标签已经选过: " + $eventTags.tagit("tagLabel", ui.existingTag)
         return
 

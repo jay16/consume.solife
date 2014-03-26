@@ -15,12 +15,13 @@
 
     .form-actions
       %ul#eventTags.col-md-10
+        = tag_it_list @record.tags
 
       = f.button :submit, "提交", class: "btn btn-primary pull-right"
     .form-group
-      #events_container
+      #show_pane
 
 :javascript
   $(function(){
-    Tags.initTagIt("#eventTags");
+    Tags.initTagIt("#eventTags",["hello","hi"],"#record_tags_list","#show_pane");
   });

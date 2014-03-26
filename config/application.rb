@@ -20,7 +20,7 @@ module Consume
       # g.template_engine :haml
       g.stylesheets false
       g.javascripts false
-      g.helper false
+      #g.helper false
       g.view_specs false
       g.helper_specs false
       g.test_framework :rspec

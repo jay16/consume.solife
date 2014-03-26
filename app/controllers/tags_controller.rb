@@ -14,7 +14,7 @@ class TagsController < ApplicationController
 
   # GET /tags/new
   def new
-    @tag = Tag.new
+    @tag = current_user.tags.new
   end
 
   # GET /tags/1/edit

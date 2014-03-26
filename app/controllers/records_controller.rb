@@ -28,6 +28,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
+        @record.build_with_tags
         format.js
         format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.json { render action: 'show', status: :created, location: @record }
