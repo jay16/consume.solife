@@ -1,4 +1,4 @@
-= simple_form_for([current_user,@record], remote: true) do |f|
+= simple_form_for(@record, remote: true) do |f|
   = render partial: "shared/error_messages", locals: { target: @record }
 
   %fieldset

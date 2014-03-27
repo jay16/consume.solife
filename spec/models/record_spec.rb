@@ -15,15 +15,15 @@ describe Record do
     end
 
     it "should build with two tags after create" do
-      @record.tags << @tag1
-      @record.tags << @tag2
-      @record.tags.size.should >= 2
+      @record.tags.size.should eq(2)
     end
 
-    it "should build with two tags after build" do
-      RecordWithTag.create({record_id: @record.id, tag_id: @tag1.id})
-      RecordWithTag.create({record_id: @record.id, tag_id: @tag2.id})
-      @record.tags.size.should >= 2
+    it "should distinct tags with dumplicate tags" do
+      @record.tags << @tag1
+      @record.tags << @tag2
+      @record.tags << @tag2
+      @record.tags << @tag2
+      @record.tags.size.should eq(4)
     end
   end
 end

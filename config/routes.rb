@@ -1,15 +1,13 @@
 Consume::Application.routes.draw do
-  resources :tags
-
-  resources :comments
-
   root :to => "home#index"
 
   devise_for :users, controllers: { sessions: :sessions }
 
-  resources :users do
-    resources :records
-  end
+  resources :users
+  resources :records
+  resources :tags
+  resources :tags
+  resources :comments
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

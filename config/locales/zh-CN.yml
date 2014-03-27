@@ -21,6 +21,8 @@
       models:
         record:
           attributes:
+            user_id:
+              blank: "不可为空"
             value:
               blank: "不可为空"
             ymdhms:
