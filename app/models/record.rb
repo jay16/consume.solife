@@ -1,6 +1,6 @@
 # Schema Information
 #
-# Table name: recrods
+# Table name: rorrods
 #
 #    t.integer  "user_id"
 #    t.float    "value"
@@ -16,17 +16,17 @@ class Record < ActiveRecord::Base
   validates :ymdhms, presence: true
 
   belongs_to :user
-  has_many :record_with_tags, dependent: :destroy
-  has_many :tags, through: :record_with_tags
+  has_and_belongs_to_many :tags,-> { uniq }, autosave: true
   
-  #after_create :build_with_tags
-  #private
+  after_create :build_with_tags
+
+  private
+
   def build_with_tags
     return if self.tags_list.blank? or self.tags_list.chomp.size == 0
 
-    self.tags_list.split(",").each do |str|
-       tag = self.user.tags.find_or_create_by(label: str.strip)
-       RecordWithTag.create({record_id: self.id, tag_id: tag.id})
+    self.tags_list.split(",").map{ |t| t.strip }.uniq.each do |str|
+       self.tags << self.user.tags.find_or_create_by(label: str)
     end
   end
 end

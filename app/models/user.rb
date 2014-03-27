@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@]+@[^@]+\z/, message: "Error Format Email!" }
   validates :password, length: { in: 6..20 } #minimum,maximum,is
 
-  has_many :tags
-  has_many :records
+  has_many :tags, -> { uniq }
+  has_many :records, -> { uniq }
 end
 
 
