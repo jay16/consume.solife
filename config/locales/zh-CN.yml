@@ -47,3 +47,15 @@
   simple_form:
     error_notification:
       default_message: "请查看下列错误信息:"
+
+  view:
+    tag: "标签"
+    operation:
+      show: "明细"
+      edit: "编辑"
+      destroy: "删除"
+    record:
+      value: "消费数值"
+      remark: "消费备注"
+      ymdhms: "消费时间"
+

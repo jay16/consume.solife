@@ -4,7 +4,7 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    @records = Record.all
+    @records = current_user.records
   end
 
   # GET /records/1
@@ -14,7 +14,7 @@ class RecordsController < ApplicationController
 
   # GET /records/new
   def new
-    @record = Record.new
+    @record = current_user.records.new
   end
 
   # GET /records/1/edit
@@ -45,9 +45,11 @@ class RecordsController < ApplicationController
   def update
     respond_to do |format|
       if @record.update(record_params)
+        format.js
         format.html { redirect_to @record, notice: 'Record was successfully updated.' }
         format.json { head :no_content }
       else
+        format.js
         format.html { render action: 'edit' }
         format.json { render json: @record.errors, status: :unprocessable_entity }
       end
@@ -67,11 +69,11 @@ class RecordsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_record
-      @record = Record.find(params[:id])
+      @record = current_user.records.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:user_id, :value, :remark, :ymdhms, :tags_list)
+      params.require(:record).permit(:user_id, :value, :remark, :ymdhms, :tags_list, :image)
     end
 end

@@ -18,5 +18,6 @@
 #= require jquery.ui
 #= require tag-it
 #= require tags
+#= require records
 
 $ ->

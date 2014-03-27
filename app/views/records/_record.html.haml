@@ -1,0 +1,7 @@
+%tr{id: "tr_#{dom_id record}"}
+      %td= record.value
+      %td= record.remark
+      %td= record.ymdhms
+      %td= record.tags.map { |t| t.label }.join(",")
+      %td= link_to t("view.operation.edit"), "/records/#{record.id}/edit", remote: true
+      %td= link_to t("view.operation.destroy"), record, :method => :delete, :data => { :confirm  => 'Are you sure?' }, remote: true

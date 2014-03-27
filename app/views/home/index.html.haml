@@ -11,27 +11,9 @@
       %a.list-group-item{:href => "#"} 记录笔数
   / /span
   .col-xs-12.col-sm-7
-    .jumbotron{style: "padding:10px 60px;height:170px;"}
+    .jumbotron.record_form{style: "padding:11px 60px;display:block;"}
       = render partial: "records/form"
 
     .row
       .col-12.col-sm-12.col-lg-12
-        %table.table.table-hover
-          %thead
-            %tr
-              %th value
-              %th remark
-              %th ymdhms
-              %th tags
-                
-          %tbody
-          - @records.each do |record|
-            %tr{id: "#{dom_id record}"}
-              %td 
-                = record.value
-              %td 
-                = record.remark
-              %td 
-                = record.ymdhms
-              %td 
-                = record.tags.map{|t| t.label}.join(",")
+        = render template: "records/index", layout: false

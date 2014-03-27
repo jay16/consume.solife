@@ -13,15 +13,22 @@
     .form-group
       = f.input_field :remark, as: :text, class: "col-md-9 form-control", placeholder: "消费备注", label: false
 
-    .form-actions
+    .form-group
       %ul#eventTags.col-md-10
         = tag_it_list @record.tags
-
       = f.button :submit, "提交", class: "btn btn-primary pull-right"
+
     .form-group
       #show_pane
+
+    .form-group
+      = f.input_field :image, as: :file
+
+      %table.table#images_list
+        %tr
 
 :javascript
   $(function(){
     Tags.initTagIt("#eventTags",["hello","hi"],"#record_tags_list","#show_pane");
+    Records.multiFileUpload("record_image","images_list");
   });
