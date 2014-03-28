@@ -7,19 +7,21 @@ describe Record do
   it { should validate_presence_of(:value) }
   it { should validate_presence_of(:ymdhms) }
 
-  describe "record with tags" do
-    # before :all do; end
+  describe ".tags" do
+     before :each do
+       @record = create(:record)
+     end
 
-    # after :all do; end
+     after :each do
+       @record.destroy
+     end
 
     it "should build with two tags after create" do
-      @record = create(:record)
       @record.tags.count.should eq(2)
       @record.tags.map { |t| t.label }.join(",").should == "one,two"
     end
 
-    it "should distinct tags with dumplicate tags" do
-      @record = create(:record)
+    it "should distinct tags when add repeated tags" do
       @user = @record.user
       @tag = @user.tags.new({label: "three"})
       @record.tags << @tag
@@ -29,7 +31,6 @@ describe Record do
     end
 
     it "should add new tags and remove old tags after update" do
-      @record = create(:record)
       @record.tags_list = "one,three,four"
       @record.update_attribute(:value, rand(1000)+@record.value)
       @record.tags.count.should eq(3)
