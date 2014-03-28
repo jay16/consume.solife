@@ -1,4 +1,4 @@
-module ControllerHelper
+module ControllerHelpers
   def sign_in(user = double(:user))
     if user.nil?
       request.env["warden"].stub(:authenticate!).add_throw(:warden, {:scope => :user})

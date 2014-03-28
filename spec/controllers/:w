@@ -6,14 +6,7 @@ describe RecordsController do
   let(:record)  { FactoryGirl.create(:record, :user => user) }
   let(:record1)  { FactoryGirl.create(:record, :user => user) }
   let(:record2)  { FactoryGirl.create(:record, :user => user) }
-  let(:valid_session) { {} }
-
-  def valid_attributes
-    { "value" => rand(1000), 
-      "remark" => rand(1000).to_s, 
-      "ymdhms" => Time.now.strftime("%Y-%m-%d %H:%M:%S")
-    }
-  end
+  let(:valid_session) {}
 
   before do
     sign_in user
@@ -48,33 +41,28 @@ describe RecordsController do
   end
 
   describe "POST create" do
-    it "should valid and is a hash with valid_attributes" do
-      expect(valid_attributes.nil?).to be_false
-      expect(valid_attributes).to be_a(Hash)
-    end
-
     describe "with valid params" do
       it "creates a new Record" do
-        expect { 
-          post :create, {:record => valid_attributes, :user => user} 
-        }.to change(user.records, :count).by(1)
+        expect {
+          post :create, {:record => valid_attributes}, valid_session
+        }.to change(Record, :count).by(1)
       end
 
       it "assigns a newly created record as @record" do
-        post :create, {:record => valid_attributes, :user => user}, valid_session
+        post :create, {:record => valid_attributes}, valid_session
         assigns(:record).should be_a(Record)
-        #assigns(:record).should be_persisted
-        #assigns(:record).should be_valid
+        assigns(:record).should be_persisted
       end
 
       it "redirects to the created record" do
-        post :create, {:record => valid_attributes, :user => user}, valid_session
-        #response.should redirect_to(record_path(user.records.last))
+        post :create, {:record => valid_attributes}, valid_session
+        response.should redirect_to(Record.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved record as @record" do
+        # Trigger the behavior that occurs when invalid params are submitted
         user.records.any_instance.stub(:save).and_return(false)
         post :create, {:record => { "user_id" => "invalid value" }}, valid_session
         assigns(:record).should be_a_new(Record)
@@ -91,8 +79,8 @@ describe RecordsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested record" do
-        user.records.any_instance.should_receive(:update).with({ "user_id" => user.id.to_s })
-        put :update, {:id => record.to_param, :record => { "user_id" => user.id.to_s }}, valid_session
+        user.records.any_instance.should_receive(:update).with({ "user_id" => "1" })
+        put :update, {:id => record.to_param, :record => { "user_id" => "1" }}, valid_session
       end
 
       it "assigns the requested record as @record" do
@@ -123,16 +111,15 @@ describe RecordsController do
 
   describe "DELETE destroy" do
     it "destroys the requested record" do
-      record_destroy = FactoryGirl.create(:record, :user=> user)
       expect {
-        delete :destroy, {:id => record_destroy.to_param}, valid_session
-      }.to change(user.records, :count).by(-1)
+        delete :destroy, {:id => record.to_param}, valid_session
+      }.to change(Record, :count).by(-1)
     end
 
     it "redirects to the records list" do
-      record_destroy = FactoryGirl.create(:record, :user=> user)
-      delete :destroy, {:id => record_destroy.to_param}, valid_session
-      #response.should redirect_to(records_url)
+      delete :destroy, {:id => record.to_param}, valid_session
+      response.should redirect_to(records_url)
     end
   end
+=end
 end
