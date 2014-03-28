@@ -1,0 +1,34 @@
+= simple_form_for(@record, remote: true) do |f|
+  = render partial: "shared/error_messages", locals: { target: @record }
+
+  %fieldset
+    = f.input :user_id, as: :hidden
+    = f.input :tags_list, as: :hidden
+
+
+    .form-group.form-inline
+      = f.text_field :value, class: "col-md-3 form-control", placeholder: "消费数值"
+      = f.text_field :ymdhms,class: "col-md-6 form-control", placeholder: "消费日期"
+    %br
+    .form-group
+      = f.input_field :remark, as: :text, class: "col-md-9 form-control", placeholder: "消费备注", label: false
+
+    .form-group
+      %ul#eventTags.col-md-10
+        = tag_it_list @record
+      = f.button :submit, "提交", class: "btn btn-primary pull-right"
+
+    .form-group
+      #show_pane
+
+    .form-group
+      = f.input_field :image, as: :file
+
+      %table.table#images_list
+        %tr
+
+:javascript
+  $(function(){
+    Tags.initTagIt("#eventTags",["hello","hi"],"#record_tags_list","#show_pane");
+    Records.multiFileUpload("record_image","images_list");
+  });
