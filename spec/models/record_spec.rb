@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'spec_helper'
 
 describe Record do
@@ -16,9 +17,9 @@ describe Record do
        @record.destroy
      end
 
-    it "should build with two tags after create" do
-      @record.tags.count.should eq(2)
-      @record.tags.map { |t| t.label }.join(",").should == "one,two"
+    it "should build two tags with action :create" do
+      expect(@record.tags.count).to eq(2)
+      expect(@record.tags_string).to eq("one,two")
     end
 
     it "should distinct tags when add repeated tags" do
@@ -26,15 +27,22 @@ describe Record do
       @tag = @user.tags.new({label: "three"})
       @record.tags << @tag
       @record.tags << @tag
-      @record.tags.count.should eq(3)
-      @record.tags.map { |t| t.label }.join(",").should == "one,two,three"
+      expect(@record.tags.count).to eq(3)
+      expect(@record.tags_string).to eq("one,two,three")
     end
 
-    it "should add new tags and remove old tags after update" do
+    it "should add new and remove old tags when :update" do
       @record.tags_list = "one,three,four"
       @record.update_attribute(:value, rand(1000)+@record.value)
-      @record.tags.count.should eq(3)
-      @record.tags.map { |t| t.label }.join(",").should == "one,three,four"
+      expect(@record.tags.count).to eq(3)
+      expect(@record.tags_string).to eq("one,three,four")
+    end
+
+    it "should return false when :update without change" do
+      @record.tags_list = "five"
+      @record.update_attributes({}).should be_true
+      expect(@record.tags.count).to eq(1)
+      expect(@record.tags.map { |t| t.label }.join(",")).to eq("five")
     end
   end
 end
