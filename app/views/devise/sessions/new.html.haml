@@ -1,0 +1,18 @@
+.container
+  .row
+    .col-sm-4.col-sm-offset-4
+      .row
+        .col-sm-8.col-sm-offset-2
+          = image_tag("/assets/ibackup-logo.png")
+          %p{style: "color:white;text-align:center;font-size:24px;margin-top:-30px;"}
+            爱生活，爱备份
+
+      .row{style:"margin-top:150px;"}
+        .col-sm-10.col-sm-offset-1
+          = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .form-inputs
+              = f.input :email, required: false, autofocus: true, label: false, input_html: { class: "col-sm-12 form-control", style: "border-radius: 4px 4px 0px 4px;" }
+              = f.input :password, required: true, label: false, input_html: { class: "col-sm-8 form-control", style: "width:80%;border-radius: 4px 0px 0px 4px;" }, wrapper_html: { style: "display: inline;" }
+              - f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+              = f.button :submit, "登 陆", label: false, class: "btn btn-primary", style: "border-radius: 0px 0px 4px 0px;"
+          - render "devise/shared/links"

@@ -14,7 +14,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require turbolinks
-#= require bootstrap
+#  require bootstrap
 #= require jquery.ui
 #= require tag-it
 #= require tags
