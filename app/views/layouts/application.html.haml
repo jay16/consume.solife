@@ -23,5 +23,7 @@
       .row
         .col-sm-8.col-sm-offset-2{style: "text-align:center;"}
           %p.notice= notice
-          %p.alert= alert
-    = yield
+          %p.alert{style:"padding:0px;"}= alert
+    .container
+      .row
+        = yield

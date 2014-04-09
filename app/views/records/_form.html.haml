@@ -21,11 +21,13 @@
     .form-group
       #show_pane
 
-    .form-group
+    %span.btn.btn-success.fileinput-button
+      %i.glyphicon.glyphicon-plus.glyphicon-white
+      %span 添加文件
       = f.input_field :image, as: :file
 
-      %table.table#images_list
-        %tr
+    %table.table#images_list
+      %tr
 
 :javascript
   $(function(){
