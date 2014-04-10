@@ -21,7 +21,9 @@ class Record < ActiveRecord::Base
   after_create :build_with_tags
   after_update :build_with_tags
 
-  private
+  def tags_string
+    self.tags.map { |t| t.label }.join(",") 
+  end
 
   def build_with_tags
     return if self.tags_list.blank? or self.tags_list.chomp.size == 0

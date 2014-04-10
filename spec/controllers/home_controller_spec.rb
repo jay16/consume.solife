@@ -2,26 +2,24 @@
 require 'spec_helper'
 
 describe HomeController do
-  before :each do 
-    @user = create(:user)
-  end
-  #let(:user) { Factory :user }
+  describe "GET 'home#index'" do
+    let(:user) { FactoryGirl.create(:user) }
 
-  describe "GET 'index'" do
     it "should show register link if user not signed in" do
       visit "/"
       get :index
+
       response.should_not be_success
-      page.should have_content("登陆")
+      expect(page).to have_content("登陆")
     end
 
-    it "should show index if user is signed in" do
+    it "should show index if user has signed in" do
       visit "/"
-      sign_in @user
+      sign_in user
       
       get :index
+      expect(page).to have_content(user.name)
       response.should be_success
-      #expect(page).to have_content("Home")
     end
   end
 
