@@ -13,13 +13,10 @@ module ApplicationHelper
   end
 
   def notice_message
-    flash_messages = []
-    flash.each do |type, message|
-      type = :success if type == :notice
-      text = content_tag(:div, link_to("x", "#", class: "close", "data-dismiss" => "alert") + message, class: "alert alert-#{type}")
-      flash_messages << text if message
-    end
-    flash_messages.join("\n").html_safe
+    flashs = flash.find_all { |t, m| m.present? }
+    flashs.map do |type, message|
+      content_tag(:div, link_to("x", "#", class: "close", "data-dismiss" => "alert") + message, class: "alert alert-#{type == :notice ? :success : :warning}")
+    end.join("\n").html_safe if !flashs.empty?
   end
 
   def controller_javascript_include_tag
