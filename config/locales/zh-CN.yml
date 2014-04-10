@@ -19,6 +19,14 @@
         remark: "消费备注"
     errors:
       models:
+        user:
+          attributes:
+            email:
+              taken: "此邮箱已被注册."
+            password:
+              blank: "密码不可以为空."
+            password_confirmation:
+              confirmation: "确认密码不可以为空."
         record:
           attributes:
             user_id:
@@ -39,10 +47,6 @@
             tag_id: 
               blank: "不可为空"
               not_a_number: "必须为整型"
-        user:
-          attributes:
-            name: "不可为空"
-            email: "不可为空"
 
   simple_form:
     error_notification:
