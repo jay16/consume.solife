@@ -1,5 +1,5 @@
 Consume::Application.routes.draw do
-  root :to => "home#index"
+  root :to => "users#index"
 
   devise_for :users, controllers: { sessions: :sessions }
 

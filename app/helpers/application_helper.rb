@@ -2,7 +2,7 @@
 module ApplicationHelper
 
   def render_page_title
-    content_tag(:title, "爱记录", nil, false)
+    content_tag(:title, "爱记录,爱生活", nil, false)
   end
 
   def controller_stylesheet_link_tag

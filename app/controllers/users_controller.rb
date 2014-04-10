@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def index
-    redirect_to user_path(current_user)
+    @records = current_user.records
+    @record = current_user.records.new
+    @record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
   end
 
   def show

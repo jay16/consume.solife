@@ -1,2 +1,19 @@
-%h1 Users#index
-%p Find me in app/views/users/index.html.haml
+.row.row-offcanvas.row-offcanvas-right
+  #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas{:role => "navigation"}
+    .list-group
+      .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
+        .col-6.col-sm-6.col-lg-6
+          = gravatar_image_tag(current_user.email, alt: current_user.name)
+        .col-6.col-sm-6.col-lg-6
+          = current_user.name
+      %a.list-group-item{:href => "#"} 关注
+      %a.list-group-item{:href => "#"} 消费圈
+      %a.list-group-item{:href => "#"} 记录笔数
+  / /span
+  .col-xs-12.col-sm-7
+    .jumbotron.record_form{style: "padding:11px 60px;display:block;"}
+      = render partial: "records/form"
+
+    .row
+      .col-12.col-sm-12.col-lg-12
+        = render template: "records/index", layout: false
