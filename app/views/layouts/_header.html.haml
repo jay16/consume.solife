@@ -46,4 +46,4 @@
           %li
             %a{:href => "#"} 个人资料
           %li.divider
-          %li= link_to "退出", destroy_user_session_path
+          %li= link_to "退出", destroy_user_session_path, method: :delete

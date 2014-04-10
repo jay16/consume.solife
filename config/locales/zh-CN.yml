@@ -59,11 +59,3 @@
       remark: "消费备注"
       ymdhms: "消费时间"
   
-  devise:
-    registrations:
-      user:
-        signed_up: "注册成功"
-    failure:
-      user:
-        not_found_in_database: "用户不存在"
-

@@ -21,9 +21,7 @@
     = render partial: "layouts/header" if user_signed_in?
     .container
       .row
-        .col-sm-8.col-sm-offset-2{style: "text-align:center;"}
-          %p.notice= notice
-          %p.alert{style:"padding:0px;"}= alert
-    .container
+        .col-sm-12{style: "text-align:center;"}
+          = notice_message
       .row
         = yield
