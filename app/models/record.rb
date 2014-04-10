@@ -20,6 +20,14 @@ class Record < ActiveRecord::Base
   
   after_create :build_with_tags
   after_update :build_with_tags
+  
+  def tags_list
+    @tags_list || ""
+  end
+
+  def tags_string
+    self.tags.map { |t| t.label }.join(",")
+  end
 
   def tags_string
     self.tags.map { |t| t.label }.join(",") 

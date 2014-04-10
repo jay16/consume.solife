@@ -10,7 +10,40 @@
  * require_tree .
  *
  *= require_self
- *= require bootstrap
+ *  require bootstrap
  *= require tag-it
  *= require tag-it-theme
  */
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin-right: 4px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  border: solid transparent;
+  border-width: 0 0 100px 200px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -moz-transform: translate(-300px, 0) scale(4);
+  direction: ltr;
+  cursor: pointer;
+}
+/* Fix for IE 6: */
+/* line 56, ../../../../../.rvm/gems/ruby-2.0.0-p451/gems/jquery-fileupload-rails-0.4.1/vendor/assets/stylesheets/jquery.fileupload-ui.scss */
+* html .fileinput-button {
+  line-height: 22px;
+  margin: 1px -3px 0 0;
+}
+
+/* Fix for IE 7: */
+/* line 62, ../../../../../.rvm/gems/ruby-2.0.0-p451/gems/jquery-fileupload-rails-0.4.1/vendor/assets/stylesheets/jquery.fileupload-ui.scss */
+* + html .fileinput-button {
+  margin: 1px 0 0 0;
+}
+

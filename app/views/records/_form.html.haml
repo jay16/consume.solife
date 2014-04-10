@@ -15,17 +15,19 @@
 
     .form-group
       %ul#eventTags.col-md-10
-        = tag_it_list @record.tags
+        = tag_it_list @record
       = f.button :submit, "提交", class: "btn btn-primary pull-right"
 
     .form-group
       #show_pane
 
-    .form-group
+    %span.btn.btn-success.fileinput-button
+      %i.glyphicon.glyphicon-plus.glyphicon-white
+      %span 添加文件
       = f.input_field :image, as: :file
 
-      %table.table#images_list
-        %tr
+    %table.table#images_list
+      %tr
 
 :javascript
   $(function(){

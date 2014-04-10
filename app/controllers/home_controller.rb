@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_filter :authenticate_user!
+
   def index
-    @records = current_user.records
-    @record = current_user.records.new
   end
 end
