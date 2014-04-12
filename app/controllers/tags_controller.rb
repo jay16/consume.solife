@@ -1,6 +1,8 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html, :js
+
   # GET /tags
   # GET /tags.json
   def index
@@ -42,9 +44,11 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
+        format.js
         format.html { redirect_to @tag, notice: 'Tag was successfully updated.' }
         format.json { head :no_content }
       else
+        format.js
         format.html { render action: 'edit' }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
       end
@@ -64,11 +68,11 @@ class TagsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tag
-      @tag = Tag.find(params[:id])
+      @tag = current_user.tags.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
-      params.require(:tag).permit(:user_id, :label)
+      params.require(:tag).permit(:user_id, :label, :klass)
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327060444) do
+ActiveRecord::Schema.define(version: 20140412061442) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140327060444) do
     t.string   "ymdhms"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "klass",      default: -1, null: false
   end
 
   create_table "records_tags", force: true do |t|
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140327060444) do
     t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "klass",      default: -1, null: false
   end
 
   create_table "users", force: true do |t|

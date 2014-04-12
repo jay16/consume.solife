@@ -1,21 +1,14 @@
-%h1 Listing tags
+.row
+  %p 标签列表 
 
-%table.table.table-hover
-  %tr
-    %th User
-    %th Label
-    %th
-    %th
-    %th
+.row
+  .list-header
+    .col-sm-6 标签 
+    .col-sm-2{style:"padding-right:0px;"} 类型
+    .col-sm-2{style:"padding-right:0px;"} 编辑
+    .col-sm-2{style:"padding-right:0px;"} 删除 
 
-  - @tags.each do |tag|
-    %tr
-      %td= tag.user_id
-      %td= tag.label
-      %td= link_to 'Show', tag
-      %td= link_to 'Edit', edit_tag_path(tag)
-      %td= link_to 'Destroy', tag, :method => :delete, :data => { :confirm => 'Are you sure?' }
+- @tags.each do |tag|
+  = render partial: "tags/tag", locals: { tag: tag } 
 
-%br
-
-= link_to 'New Tag', new_tag_path
+- link_to 'New Tag', new_tag_path

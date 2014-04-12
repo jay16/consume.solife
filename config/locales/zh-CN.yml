@@ -1,6 +1,12 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 "zh-CN":
+  show: "明细"
+  edit: "编辑"
+  del: "删除"
+  submit: "提交"
+  cancel: "取消"
+
   activerecord:
     models:
       user: "用户"
@@ -49,6 +55,7 @@
               not_a_number: "必须为整型"
 
   simple_form:
+    submit: "提交"
     error_notification:
       default_message: "请查看下列错误信息:"
 

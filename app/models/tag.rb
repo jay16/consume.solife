@@ -1,3 +1,4 @@
+#encoding: utf-8
 # Schema Information
 #
 # Table name: tags
@@ -11,4 +12,12 @@ class Tag < ActiveRecord::Base
 
   belongs_to :user
   has_and_belongs_to_many :records,-> { uniq }, autosave: true
+
+  def klass_mapping
+    { 1 => "衣", 2 => "食", 3 => "住", 4 => "行", -1 => "其他" }
+  end
+
+  def klass_name
+    klass_mapping[self.klass]
+  end
 end

@@ -10,10 +10,13 @@
       %a.list-group-item{:href => "#"} 消费圈
       %a.list-group-item{:href => "#"} 记录笔数
   / /span
-  .col-xs-12.col-sm-7
+  .col-xs-12.col-sm-6
     .jumbotron.record_form{style: "padding:11px 60px;display:block;"}
       = render partial: "records/form"
 
     .row
       .col-12.col-sm-12.col-lg-12
         = render template: "records/index", layout: false
+
+  .col-sm-3
+    = render template: "tags/index", layout: false

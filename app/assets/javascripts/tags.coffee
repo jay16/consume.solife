@@ -1,6 +1,13 @@
 # TagsController 下所有页面的JS功能
 window.Tags =
 
+  # 编辑时标签时，取消提交
+  # tag_id: 标签id
+  cancelEdit : (tag_id) ->
+    $dom_tag = $("#tag_"+tag_id) 
+    $dom_tag.find(".edit-form").remove()
+    $dom_tag.find(".show-form").css("display","block")
+
   # tag-it控件选择标签
   # target: tag-it容器
   # tags: 已创建标签数组

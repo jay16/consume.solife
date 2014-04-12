@@ -4,8 +4,12 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore temp file
+*.swp
 # Ignore bundler config.
+/config/*.yml
 /.bundle
+/vendor
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

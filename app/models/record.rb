@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Schema Information
 #
 # Table name: rorrods
@@ -21,6 +22,14 @@ class Record < ActiveRecord::Base
   after_create :build_with_tags
   after_update :build_with_tags
   
+  def klass_mapping
+    { 1 => "衣", 2 => "食", 3 => "住", 4 => "行", -1 => "其他" }
+  end
+
+  def klass_name
+    klass_mapping[self.klass]
+  end
+
   def tags_list
     @tags_list || ""
   end
