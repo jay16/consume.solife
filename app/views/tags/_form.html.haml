@@ -4,9 +4,9 @@
   .row
     .col-sm-6
       = f.input_field :label, label: false, class: "col-sm-12"
-    .col-sm-2
+    .col-sm-2.center.no-padding
       = f.select :klass, @tag.klass_mapping.map { |k, v| [v, k] }, include_blank: false, label: false
-    .col-sm-2
+    .col-sm-2.right.no-padding
       = f.button :submit, t("submit"), class: "btn btn-xs btn-primary"
-    .col-sm-2
+    .col-sm-2.right.no-padding
       = link_to t("cancel"), "javascript:void(0);", class: "btn btn-xs btn-default", onclick: "Tags.cancelEdit(#{@tag.id})"

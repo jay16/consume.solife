@@ -4,9 +4,8 @@
 .row
   .list-header
     .col-sm-6 标签 
-    .col-sm-2{style:"padding-right:0px;"} 类型
-    .col-sm-2{style:"padding-right:0px;"} 编辑
-    .col-sm-2{style:"padding-right:0px;"} 删除 
+    .col-sm-2.center.no-padding 类型
+    .col-sm-4.center 操作
 
 - @tags.each do |tag|
   = render partial: "tags/tag", locals: { tag: tag } 
