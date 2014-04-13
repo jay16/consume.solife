@@ -9,6 +9,7 @@
 #    t.datetime "updated_at"#
 class Tag < ActiveRecord::Base
   validates :label, presence: true, length: { minimum: 1 }
+  #uniq: true, scope: :user
 
   belongs_to :user
   has_and_belongs_to_many :records,-> { uniq }, autosave: true

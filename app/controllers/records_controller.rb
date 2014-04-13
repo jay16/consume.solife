@@ -1,6 +1,7 @@
 class RecordsController < ApplicationController
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html, :js
   # GET /records
   # GET /records.json
   def index
@@ -28,7 +29,6 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
-        @record = current_user.records.new
         format.js
         format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.json { render action: 'show', status: :created, location: @record }
@@ -61,6 +61,7 @@ class RecordsController < ApplicationController
   def destroy
     @record.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to records_url }
       format.json { head :no_content }
     end

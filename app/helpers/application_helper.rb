@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def notice_message
-    flashs = flash.find_all { |t, m| m.present? }
+    flashs = flash.reject { |t, m| t.empty? }
     flashs.map do |type, message|
       content_tag(:div, link_to("x", "#", class: "close", "data-dismiss" => "alert") + message, class: "alert alert-#{type == :notice ? :success : :warning}")
     end.join("\n").html_safe if !flashs.empty?

@@ -5,7 +5,7 @@
   .list-header
     .col-sm-6 标签 
     .col-sm-2.center.no-padding 类型
-    .col-sm-4.center 操作
+    .col-sm-4.center= t("operation")
 
 - @tags.each do |tag|
   = render partial: "tags/tag", locals: { tag: tag } 

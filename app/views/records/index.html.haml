@@ -1,12 +1,12 @@
-%table.table.table-hover
-  %tr
-    %th= t("view.record.value")
-    %th= t("view.record.remark")
-    %th= t("view.record.ymdhms")
-    %th= t("view.tag")
-    %th= t("view.operation.edit")
-    %th= t("view.operation.destroy")
+%table.table.table-hover.record-list
+  %thead
+    %tr
+      %th= t("view.record.value")
+      %th= t("view.record.remark")
+      %th= t("view.record.ymdhms")
+      %th= t("view.tag")
+      %th.center{colspan:"2"}= t("operation")
 
-  - @records.each do |record|
-    - next if !record.valid?
-    = render partial: "records/record", locals: { record: record }
+  %tbody
+    - @records.each do |record|
+      = render partial: "records/record", locals: { record: record } if record.valid?

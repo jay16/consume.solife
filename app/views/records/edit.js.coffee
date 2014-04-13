@@ -1,2 +1,2 @@
-$("#tr_<%= dom_id @record %>").addClass "active"
+$("#<%= dom_id @record %>").addClass "active"
 $(".record_form").html "<%= j render partial: 'records/form' %>"

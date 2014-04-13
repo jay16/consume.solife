@@ -1,3 +1,4 @@
+- @record.ymdhms ||= Time.now.strftime("%Y-%m-%d %H:%M:%S")
 = simple_form_for(@record, remote: true) do |f|
   = render partial: "shared/error_messages", locals: { target: @record }
 
@@ -14,7 +15,7 @@
       = f.input_field :remark, as: :text, class: "col-md-9 form-control", placeholder: "消费备注", label: false
 
     .form-group
-      %ul#eventTags.col-md-10
+      %ul#eventTags.col-md-10{style:"line-height:18px;font-size:14px;"}
         = tag_it_list @record
       = f.button :submit, "提交", class: "btn btn-primary pull-right"
 
@@ -31,6 +32,6 @@
 
 :javascript
   $(function(){
-    Tags.initTagIt("#eventTags",["hello","hi"],"#record_tags_list","#show_pane");
+    Tags.initTagIt("#eventTags",#{Tag.all.map(&:label)},"#record_tags_list","#show_pane");
     Records.multiFileUpload("record_image","images_list");
   });

@@ -25,7 +25,7 @@ window.Tags =
          tags_list.push $(this).find(".tagit-label:first").text()
 
       $show_pane.html text + "<br>" + tags_list.join(",") if show_pane.length
-      $control.val(tags_list.join(",")) if control.length
+      $control.val(tags_list.join(",")) 
       return
 
     $eventTags.tagit

@@ -9,14 +9,17 @@
       %a.list-group-item{:href => "#"} 关注
       %a.list-group-item{:href => "#"} 消费圈
       %a.list-group-item{:href => "#"} 记录笔数
-  / /span
+  //span
   .col-xs-12.col-sm-6
-    .jumbotron.record_form{style: "padding:11px 60px;display:block;"}
+    // 消费记录创建框
+    .jumbotron.record_form{style: "padding:11px 40px;display:block;"}
       = render partial: "records/form"
 
+    // 消费记录列表
     .row
       .col-12.col-sm-12.col-lg-12
         = render template: "records/index", layout: false
 
+  // 侧边栏-标签列表
   .col-sm-3
     = render template: "tags/index", layout: false

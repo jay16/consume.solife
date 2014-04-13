@@ -6,6 +6,7 @@
   del: "删除"
   submit: "提交"
   cancel: "取消"
+  operation: "操作"
 
   activerecord:
     models:
