@@ -21,3 +21,7 @@
 #= require records
 
 $ ->
+  reloadWindow = ->
+    window.location.reload()
+    return
+  setInterval "reloadWindow()", 1200 * 1000
