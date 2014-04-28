@@ -29,7 +29,7 @@ window.App =
 
 reloadWindow =->
   window.location.reload()
-  alert "reload"
+  #alert "reload"
   return
 setInterval reloadWindow, 1200 * 1000
 
