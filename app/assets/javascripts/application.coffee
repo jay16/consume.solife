@@ -20,8 +20,16 @@
 #= require tags
 #= require records
 
-$ ->
-  reloadWindow = ->
-    window.location.reload()
-    return
-  setInterval "reloadWindow()", 1200 * 1000
+window.App =
+  showLoading :->
+    $(".loading").removeClass("hidden")
+  hideLoading :->
+    $(".loading").addClass("hidden")
+
+
+reloadWindow =->
+  window.location.reload()
+  alert "reload"
+  return
+setInterval reloadWindow, 1200 * 1000
+

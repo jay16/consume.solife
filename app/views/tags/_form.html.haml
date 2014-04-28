@@ -9,4 +9,4 @@
     .col-sm-2.right.no-padding
       = f.button :submit, t("submit"), class: "btn btn-xs btn-primary"
     .col-sm-2.right.no-padding
-      = link_to t("cancel"), "javascript:void(0);", class: "btn btn-xs btn-default", onclick: "Tags.cancelEdit(#{@tag.id})"
+      = link_to t("cancel"), "javascript:void(0);", class: "btn btn-xs btn-default", onclick: "Tags.cancelEdit(#{@tag.id});App.hideLoading();"

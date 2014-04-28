@@ -2,5 +2,5 @@
   .show-form
     .col-sm-6= tag.label
     .col-sm-2.center.no-padding= tag.klass_name
-    .col-sm-2.right.no-padding= link_to t("edit"), edit_tag_path(tag), remote: true, class: "btn btn-xs btn-info"
+    .col-sm-2.right.no-padding= link_to t("edit"), edit_tag_path(tag), remote: true, class: "btn btn-xs btn-info", onclick: "App.showLoading();"
     .col-sm-2.right.no-padding= link_to t("del"), tag, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-xs btn-danger" 

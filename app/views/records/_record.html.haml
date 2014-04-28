@@ -3,5 +3,5 @@
   %td= record.remark
   %td= record.ymdhms
   %td= record.tags.map { |t| t.label }.join(",")
-  %td= link_to t("edit"), "/records/#{record.id}/edit", remote: true
+  %td= link_to t("edit"), "/records/#{record.id}/edit", remote: true, onclick: "App.showLoading();"
   %td= link_to t("del"), record, :method => :delete, :data => { :confirm  => 'Are you sure?' }, remote: true
