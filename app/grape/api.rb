@@ -1,5 +1,6 @@
 require "entities"
 require "helpers"
+
 class Api < Grape::API
   prefix "api"
   format :json
@@ -19,19 +20,47 @@ class Api < Grape::API
  
   resource :records do
 
-    # validate the phone with find_or_create
+    # Post a new record
+    # require authentication
     # Example
-    # /api/records.json
+    # post /api/records.json
     # Params:
-    # token
-    # photo:
-    #  serial
-    #  manufacturer
-    #  model
+    # record[:value]  consume value
+    # record[:remark] consume remark
+    # record[:ymdhms] consume timestamp
+    # record[:klass]  consume klass
     post do
       authenticate!
       record = current_user.records.create(params[:reocrd])
       present record, with: APIEntities::Record
+    end
+
+    # Get record list 
+    # Example
+    # get  /api/records/index.json
+    # params:
+    # params[:page]
+    # params[:per_page]: default is 30
+    # params[:type]: default(or empty) excellent no_reply popular last
+    # Example
+    #   /api/topics/index.json?page=1&per_page=15
+    get do
+      authenticate!
+      records = current_user.records
+      present records, with: APIEntities::Record
+    end
+
+    # Update a record
+    # Example
+    # put /api/recores/index.json
+    # params:
+    # params[:id]
+    # params[:recored]
+    put do
+      authenticate!
+      record = current_user.records.find_by(:id, params[:id])
+      record.update_attributes(params[:record])
+      present records, with: APIEntities::Record
     end
   end
 

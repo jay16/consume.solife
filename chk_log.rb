@@ -1,6 +1,7 @@
-ip_lines = IO.readlines("./log/development.log").find_all(&/for\s\d+\.\d+\.\d+\.\d+/.method(:match))
-path_lines = ip_lines.reject { |line| %w(.js .css).include? File.extname(line.split[2].split("?")[0]) }
-uniq_path_lines = path_lines.map { |line| line.split[2] }.uniq.sort
+#Started GET "/assets/tag-it.css?body=1" for 127.0.0.1 at 2014-04-29 00:08:50 +0800
+ip_lines = IO.readlines("./log/development.log").find_all(&/for\s(\d+\.\d+\.\d+\.\d+)/.method(:match))
+path_lines = ip_lines.reject { |line| %w(.js .css).include? File.extname(line.split[2].split("?")[0]) } #移除js,css调用
+uniq_path_lines = path_lines.map { |line| line.split[2] }.uniq.sort #uniq path lines
 uniq_path_lines.map do |path| #path
   tmp_path_lines = path_lines.find_all { |line| line.include? path } #path lines
   tmp_ip_lines = tmp_path_lines.map { |line| line.split[4] }.uniq #ip lines

@@ -8,10 +8,15 @@ module APIEntities
     end
   end
 
-  class Record< Grape::Entity
+  class Record < Grape::Entity
     format_with(:ymdhms_format) { |t| t.strftime("%Y-%m-%d %H:%M:%S") }
 
-    expose :user_id, :id, :value, :ymdhms, :klass, :tags_list
+    expose :user_id,  #user id
+           :id,       #record id
+           :value,    #consume value
+           :ymdhms,   #consume timestamp
+           :klass,    #consume klass
+           :tags_list #consume tags list
     with_options(format_with: :ymdhms_format) do
       expose :created_at
       expose :updated_at

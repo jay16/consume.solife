@@ -1,12 +1,13 @@
 # encoding: utf-8
 # Schema Information
 #
-# Table name: rorrods
+# Table name: records
 #
 #    t.integer  "user_id"
 #    t.float    "value"
 #    t.text     "remark"
 #    t.string   "ymdhms"
+#    t.integer  "klass"  # cloth/food/house/foot/other
 #    t.datetime "created_at"
 #    t.datetime "updated_at"
 class Record < ActiveRecord::Base
