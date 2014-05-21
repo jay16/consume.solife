@@ -5,6 +5,9 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore temp file
+*.tar.gz
+*.sql
+.DS_Store
 *.swp
 # Ignore bundler config.
 /config/*.yml

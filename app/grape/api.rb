@@ -1,5 +1,6 @@
 require "entities"
 require "helpers"
+require "json"
 
 class Api < Grape::API
   prefix "api"
@@ -7,57 +8,55 @@ class Api < Grape::API
 
   helpers APIHelpers
 
-  resource :users do
+  # validation user before all api
+  before_validation do
+    authenticate!
+  end
 
-    #validate user with token
-    #Example
-    # /api/users/validate.json
-    get :validate do
-      authenticate!
+  resource :users do
+    # validate user with token
+    # Example:
+    # get /api/users.json?token=abc
+    get do
+      present current_user, with: APIEntities::User
+    end
+
+    # update user info
+    # Example:
+    # put /api/users.json?name=new_name
+    put do
+      current_user.update(params[:user])
       present current_user, with: APIEntities::User
     end
   end
  
   resource :records do
-
     # Post a new record
-    # require authentication
     # Example
     # post /api/records.json
     # Params:
-    # record[:value]  consume value
-    # record[:remark] consume remark
-    # record[:ymdhms] consume timestamp
-    # record[:klass]  consume klass
+    # record[:record][{}]
     post do
-      authenticate!
-      record = current_user.records.create(params[:reocrd])
+      record_params = params[:record].is_a?(String) ? eval(params[:record]) : params[:record]
+      record = current_user.records.create(record_params)
       present record, with: APIEntities::Record
     end
 
     # Get record list 
     # Example
     # get  /api/records/index.json
-    # params:
-    # params[:page]
-    # params[:per_page]: default is 30
-    # params[:type]: default(or empty) excellent no_reply popular last
-    # Example
-    #   /api/topics/index.json?page=1&per_page=15
     get do
-      authenticate!
-      records = current_user.records
+      records = current_user.records 
       present records, with: APIEntities::Record
     end
 
     # Update a record
     # Example
-    # put /api/recores/index.json
+    # put /api/recores.json
     # params:
     # params[:id]
-    # params[:recored]
+    # params[:recored][{}]
     put do
-      authenticate!
       record = current_user.records.find_by(:id, params[:id])
       record.update_attributes(params[:record])
       present records, with: APIEntities::Record
@@ -66,13 +65,18 @@ class Api < Grape::API
 
   resource :tags do
 
-    # Post a sms with find_or_create
-    # Exaple
-    # /api/tags.json
+    # get tags list 
+    # Example
+    # get /api/tags.json
+    get do
+      tags = current_user.tags
+      present tags, with: APIEntities::Tag
+    end
+    # Post a tag
+    # Example
+    # post /api/tags.json
     post do
-      authenticate!
-      tag = current_user.tags.create(params[:tag])
-
+      tag = current_user.tags.find_or_create(params[:tag])
       present tag, with: APIEntities::Tag
     end
   end

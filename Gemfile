@@ -9,6 +9,8 @@ gem "simple_form"
 gem "haml-rails"
 gem "devise"
 #gem "protected_attributes"
+gem "grape"
+gem "grape-entity"
 
 gem "gravatar_image_tag"
 # Use SCSS for stylesheets

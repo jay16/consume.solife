@@ -41,7 +41,7 @@ module Consume
      config.timeout_in = 20.minutes
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :password_confirm, :token, :private_token]
+    #config.filter_parameters += [:password, :password_confirm, :token, :private_token]
 
   end
 end

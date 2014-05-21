@@ -1,4 +1,5 @@
 module APIEntities
+
   class User < Grape::Entity
     format_with(:ymdhms_format) { |t| t.strftime("%Y-%m-%d %H:%M:%S") }
 
