@@ -27,12 +27,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  #def token
-  #  n2 = self.email.length.to_s
-  #  n1 = n2.length.to_s
-  #  str = n1 + n2 + self.email + self.password
-  #  Base64.encode64(str)
-  #end
+  # only use in spec/grape_spec.rb
+  def token
+    n2 = self.email.length.to_s
+    n1 = n2.length.to_s
+    str = n1 + n2 + self.email + self.password
+    Base64.encode64(str)
+  end
 end
 
 

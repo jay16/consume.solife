@@ -48,4 +48,7 @@ RSpec.configure do |config|
   config.order = "random"
   config.include Rails.application.routes.url_helpers
   config.include Capybara::DSL
+  #config.include RSpec::Rails::RequestExampleGroup, :type => :request, :example_group => {
+  #  :file_path => /spec\/grape/
+  #}
 end

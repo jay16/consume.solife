@@ -15,6 +15,7 @@ module APIEntities
     expose :user_id,  #user id
            :id,       #record id
            :value,    #consume value
+           :remark,   #consume value
            :ymdhms,   #consume timestamp
            :klass,    #consume klass
            :tags_list #consume tags list
