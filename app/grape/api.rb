@@ -2,9 +2,12 @@ require "entities"
 require "helpers"
 require "json"
 
-class Api < Grape::API
+class Consume::API < Grape::API
+  #version "v1"
   prefix "api"
   format :json
+  default_format :json
+  default_error_formatter :json
 
   helpers APIHelpers
 

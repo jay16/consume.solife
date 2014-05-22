@@ -40,6 +40,7 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+  config.render_views
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -48,7 +49,7 @@ RSpec.configure do |config|
   config.order = "random"
   config.include Rails.application.routes.url_helpers
   config.include Capybara::DSL
-  #config.include RSpec::Rails::RequestExampleGroup, :type => :request, :example_group => {
-  #  :file_path => /spec\/grape/
-  #}
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
+    file_path: /spec\/grape/
+  }
 end

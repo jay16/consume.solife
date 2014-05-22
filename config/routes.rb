@@ -1,3 +1,4 @@
+require "api.rb"
 Consume::Application.routes.draw do
   root :to => "users#index"
 
@@ -9,7 +10,8 @@ Consume::Application.routes.draw do
   resources :tags
   resources :comments
 
-  mount Api => "/"
+  mount Consume::API => "/"
+  get "/home/api" => "home#api"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
