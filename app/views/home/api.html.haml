@@ -1,4 +1,20 @@
-%table.table.table-hover
-  - @routes.each do |route|
+%table.table.table-condensed
+  %thead
     %tr
-      %td= route.to_s
+      %th.hidden Prefix
+      %th.hidden Version
+      %th.hidden Namespace
+      %th Method
+      %th Path
+      %th.hidden Params
+      %th Describtion
+  %tbody
+    - @routes.each do |route|
+      %tr
+        %td.hidden= route.route_prefix
+        %td.hidden= route.route_version
+        %td.hidden= route.route_namespace
+        %td= route.route_method
+        %td= route.route_path
+        %td.hidden= route.route_params
+        %td= route.route_description

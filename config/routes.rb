@@ -11,7 +11,7 @@ Consume::Application.routes.draw do
   resources :comments
 
   mount Consume::API => "/"
-  get "/home/api" => "home#api"
+  get "/api" => "home#api"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
