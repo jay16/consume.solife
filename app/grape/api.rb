@@ -48,8 +48,7 @@ class Consume::API < Grape::API
     # post /api/records.json
     desc "create a new record."
     post do
-      record_params = params[:record].is_a?(String) ? eval(params[:record]) : params[:record]
-      record = current_user.records.create(record_params)
+      record = current_user.records.create(must_be_hash(params[:record]))
       present record, with: APIEntities::Record
     end
 
@@ -70,9 +69,9 @@ class Consume::API < Grape::API
     # put /api/recores/1.json
     desc "update a record."
     post "/:id" do
-      record = current_user.records.find_by(:id, params[:id])
-      record.update(params[:record])
-      present records, with: APIEntities::Record
+      record = current_user.records.find(params[:id].to_i)
+      record.update(must_be_hash(params[:record]))
+      present record, with: APIEntities::Record
     end
   end
 
@@ -94,7 +93,7 @@ class Consume::API < Grape::API
     # post /api/tags.json
     desc "create a new tag."
     post do
-      tag = current_user.tags.find_or_create(params[:tag])
+      tag = current_user.tags.find_or_create(must_be_hash(params[:tag]))
       present tag, with: APIEntities::Tag
     end
 

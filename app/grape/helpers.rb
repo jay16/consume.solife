@@ -1,4 +1,6 @@
 module APIHelpers
+
+  # customer logger
   def logger
       Consume::API.logger
   end
@@ -13,4 +15,10 @@ module APIHelpers
   def authenticate!
     error!({ "error" => "401 Unauthorized" }, 401) unless current_user
   end 
+
+  # params[:record] should hash
+  # but get string
+  def must_be_hash(hstr)
+    hstr.is_a?(String) ? eval(hstr) : hstr
+  end
 end 

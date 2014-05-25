@@ -4,7 +4,7 @@ require "uri"
 require "json"
 
 url  = "http://127.0.0.1"
-port = 3000
+port = 3001
 base_url = [url, port].join(":")
 
 def base_test_post base_url, path, params = {}
@@ -16,6 +16,7 @@ def base_test_post base_url, path, params = {}
   puts "测试结果:"
   puts res.code
   puts res.message
+  puts res.body
 end
 
 def base_test_get base_url, path, params = {}
@@ -32,19 +33,25 @@ end
 
 token = "MjIwc29saWZlLmpheUBnbWFpbC5jb21qYXk1MjcxMzA2NzM="
 # test /api/users.json?token
-base_test_get(base_url, "/api/users", {format: "json", token: token})
+#base_test_get(base_url, "/api/users", {format: "json", token: token})
 
 # test /api/recores.json
-base_test_get(base_url, "/api/records", { format: "json", token: token})
+#base_test_get(base_url, "/api/records", { format: "json", token: token})
 
 # test /api/tags.json
-base_test_get(base_url, "/api/tags", { format: "json", token: token})
+#base_test_get(base_url, "/api/tags", { format: "json", token: token})
+
 
 #    t.float    "value"
 #    t.text     "remark"
 #    t.string   "ymdhms"
 #    t.integer  "klass"  # cloth/food/house/foot/other
 record_param = { 
+  route_info: {
+    options: {
+  params: { id: 8 }
+    }
+  },
   record:  {
     value: rand(1000),
     ymdhms: Time.now.strftime("%Y/%m/%d %H:%M:%S").to_s,
@@ -52,5 +59,9 @@ record_param = {
   }
 }
 param = { format: "json", token: token }.merge(record_param)
-base_test_post(base_url, "/api/records", param)
-puts param
+#base_test_post(base_url, "/api/records", param)
+
+#base_url = "http://consume.solife.us"
+#token = "MjE2amF5X2xpQHNvbGlmZS51c2pheTUyNzEzMDY3Mw=="
+param = { format: "json", token: token }.merge(record_param)
+base_test_post(base_url, "/api/records/9.json", param)
