@@ -11,6 +11,17 @@ class Consume::API < Grape::API
 
   helpers APIHelpers
 
+  rescue_from :all do |e|
+    case e
+    when ActiveRecord::RecordNotFound
+      Rack::Response.new(['user not found'], 404, {}).finish
+    else
+      # ExceptionNotifier.notify_exception(e) # Uncommit it when ExceptionNotification is available
+      Rails.logger.error "APIv2 Error: #{e}\n#{e.backtrace.join("\n")}"
+      Rack::Response.new(['error'], 500, {}).finish
+    end
+  end
+
   # logger params for all api
   before do
     logger.info "Params:\n#{params.to_json}"
