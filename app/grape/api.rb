@@ -73,6 +73,13 @@ class Consume::API < Grape::API
       record.update(must_be_hash(params[:record]))
       present record, with: APIEntities::Record
     end
+
+    # delete /api/recores/1.json
+    desc "delete a record."
+    delete "/:id" do
+      record = current_user.records.find(params[:id])
+      record.destroy
+    end
   end
 
   resource :tags do
