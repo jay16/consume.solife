@@ -62,14 +62,14 @@ class Consume::API < Grape::API
     # get /api/records/1.json
     desc "get a record."
     get "/:id" do
-      record = current_user.records.find_by(:id, params[:id])
+      record = current_user.records.find(params[:id])
       present record, with: APIEntities::Record
     end
 
     # put /api/recores/1.json
     desc "update a record."
     post "/:id" do
-      record = current_user.records.find(params[:id].to_i)
+      record = current_user.records.find(params[:id])
       record.update(must_be_hash(params[:record]))
       present record, with: APIEntities::Record
     end
@@ -86,7 +86,7 @@ class Consume::API < Grape::API
     # get /api/tags.json
     desc "get a tag."
     get "/:id" do
-      tag = current_user.tags.find_by(:id, params[:id])
+      tag = current_user.tags.find(params[:id])
       present tag, with: APIEntities::Tag
     end
 
@@ -100,7 +100,7 @@ class Consume::API < Grape::API
     # post /api/tags.json
     desc "update a tag."
     post "/:id" do
-      tag = current_user.tags.find_by(:id, params[:id])
+      tag = current_user.tags.find(params[:id])
       tag.update(params[:tag])
       present tag, with: APIEntities::Tag
     end
