@@ -1,16 +1,26 @@
 .row.row-offcanvas.row-offcanvas-right
-  #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas{:role => "navigation"}
-    .list-group
-      .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
-        .col-6.col-sm-6.col-lg-6
-          = gravatar_image_tag(current_user.email, alt: current_user.name)
-        .col-6.col-sm-6.col-lg-6
-          = current_user.name
-      %a.list-group-item{:href => "#"} 关注
-      %a.list-group-item{:href => "#"} 消费圈
+  #sidebar.col-sm-3.sidebar-offcanvas{:role => "navigation"}
+    .row
+      .list-group
+        .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
+          .col-6.col-sm-6.col-lg-6
+            = gravatar_image_tag(current_user.email, alt: current_user.name)
+          .col-6.col-sm-6.col-lg-6
+            = current_user.name
+        %a.list-group-item{:href => "#"} 关注
+        %a.list-group-item{:href => "#"} 消费圈
+    .row
+      .list-group
+        - @members.each do |arr|
+          .list-group-item
+            %span= arr[0].email
+            %span{style: "float:right"}= arr[1] ? "yes" : "no"
+    .row
+      .list-group
+        = render partial: "users/search", layout: false
 
   //span
-  .col-xs-12.col-sm-6
+  .col-sm-6
     // 消费记录创建框
     .jumbotron.record_form{style: "padding:11px 40px;display:block;"}
       = render partial: "records/form"

@@ -6,13 +6,18 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :timeoutable, :timeout_in => 20.minutes
-
-
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@]+@[^@]+\z/, message: "Error Format Email!" }
   validates :password, length: { in: 6..20 } #minimum,maximum,is
 
   has_many :tags, -> { uniq }
   has_many :records, -> { uniq }
+  has_many :groups, foreign_key: "from_id"
+
+  #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
+
+  def self.members(user)
+    user.groups.map { |g| [find(g.to_id), g.state] }
+  end
 
   def self.validate(token)
     str = Base64.decode64(token)
