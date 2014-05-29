@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
     (group_users + group_follows).uniq
   end
 
+  def group_member_records
+    uids = group_members.map { |u| u.id }.push(id)
+    Record.where("id in (#{uids.join(',')})")
+  end
+
   def self.validate(token)
     str = Base64.decode64(token)
     n1 = str[0].to_i
