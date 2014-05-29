@@ -1,8 +1,12 @@
 - @users.each do |user| 
-  - next if user == current_user
   .list-group-item
     %span= user.email
-    %a.btn.btn-default.btn-xs{href: "#{group_user_path(user)}", style: "float: right;", "data-remote" => true} 共享
+    -if current_user == user
+      %a.btn.btn-default.btn-xs{disabled: "disabled", style: "float: right;"} 自己
+    -elsif Group.include?(user)
+      %a.btn.btn-default.btn-xs{disabled: "disabled", style: "float: right;"} 已请求 
+    -else
+      %a.btn.btn-default.btn-xs{href: "#{ask_group_user_path(user)}", style: "float: right;", "data-remote" => true} 共享
 
 - if @users.empty?
   %a.list-group-item{:href => "javascript:void(0);"} 匹配#{params[:keyword]}结果为零

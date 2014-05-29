@@ -11,12 +11,22 @@ class User < ActiveRecord::Base
 
   has_many :tags, -> { uniq }
   has_many :records, -> { uniq }
-  has_many :groups, foreign_key: "from_id"
+
+  has_many :follow_groups, -> { where accept: false }, class_name: 'Group', foreign_key: :to_id
+  has_many :ask_groups, -> { where accept: false }, class_name: 'Group', foreign_key: :from_id
+
+  has_many :_ask_groups, -> { where accept: true }, class_name: 'Group', foreign_key: :from_id
+  has_many :group_users, through: :_ask_groups, source: :ask_user
+
+  has_many :_follow_groups, -> { where accept: true }, class_name: 'Group', foreign_key: :to_id
+  has_many :group_follows, through: :_follow_groups, source: :follow_user
 
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
 
-  def self.members(user)
-    user.groups.map { |g| [find(g.to_id), g.state] }
+
+  # uniq group_users and group_follows
+  def group_members
+    (group_users + group_follows).uniq
   end
 
   def self.validate(token)

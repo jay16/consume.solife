@@ -1,1 +1,5 @@
-window.location.reload();
+<% if @group and @group.valid? %>
+  window.location.reload();
+<% else %>
+  alert("group is nil!");
+<% end %>

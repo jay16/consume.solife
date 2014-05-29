@@ -9,12 +9,36 @@
             = current_user.name
         %a.list-group-item{:href => "#"} 关注
         %a.list-group-item{:href => "#"} 消费圈
+    // ask other to join group
     .row
       .list-group
-        - @members.each do |arr|
+        - current_user.ask_groups.each do |group|
           .list-group-item
-            %span= arr[0].email
-            %span{style: "float:right"}= arr[1] ? "yes" : "no"
+            = (user = User.find(group.to_id)).email
+            - if group.state == "wait"
+              = content_tag(:span, "等待同意", { class: "label label-info", style: "float:right;"})
+            - elsif group.state == "refuse"
+              = link_to "再请求", ask_group_user_path(user), remote: true, method: :get, class: "btn btn-default btn-xs", style: "float:right;"
+              = content_tag(:span, "被拒", { class: "label label-danger", style: "float:right;"})
+            - else
+              = content_tag(:span, "$_$", { class: "label label-warn", style: "float:right;"})
+
+    // be asked to join group
+    .row
+      .list-group
+        - current_user.follow_groups.each do |group|
+          - next if group.state == "refuse"
+          .list-group-item
+            = (user = User.find(group.from_id)).email
+            = link_to "同意", agree_group_user_path(user), remote: true, method: :post, class: "btn btn-default btn-primary btn-xs", style: "float: right"
+            = link_to "拒绝", refuse_group_user_path(user), remote: true, method: :delete, class: "btn btn-default btn-danger btn-xs", style: "float: right"
+
+    // group users
+    .row
+      .list-group
+        - current_user.group_members.each do |user|
+          .list-group-item
+            = user.email
     .row
       .list-group
         = render partial: "users/search", layout: false

@@ -4,7 +4,16 @@ Consume::Application.routes.draw do
 
   devise_for :users, controllers: { sessions: :sessions }
 
-  resources :users
+  resources :users do
+    collection do
+      get "search"
+    end
+    member do
+      get    "group", as: :ask_group
+      post   "group", as: :agree_group
+      delete "group", as: :refuse_group
+    end
+  end
   resources :records
   resources :tags
   resources :tags
@@ -12,6 +21,7 @@ Consume::Application.routes.draw do
 
   mount Consume::API => "/"
   get "/api" => "home#api"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

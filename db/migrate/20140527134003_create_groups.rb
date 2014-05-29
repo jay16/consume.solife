@@ -3,7 +3,8 @@ class CreateGroups < ActiveRecord::Migration
     create_table :groups do |t|
       t.integer :from_id
       t.integer :to_id
-      t.boolean :state, default: false, null: false
+      t.boolean :accept, default: false, null: false
+      t.string :state, default: "wait", null: false
 
       t.timestamps
     end

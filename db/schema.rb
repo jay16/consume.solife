@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(version: 20140527134003) do
   create_table "groups", force: true do |t|
     t.integer  "from_id"
     t.integer  "to_id"
-    t.boolean  "state",      default: false, null: false
+    t.boolean  "accept",     default: false,  null: false
+    t.string   "state",      default: "wait", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
