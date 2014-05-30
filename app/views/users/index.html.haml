@@ -7,7 +7,7 @@
             = gravatar_image_tag(current_user.email, alt: current_user.name)
           .col-6.col-sm-6.col-lg-6
             = current_user.name
-        %a.list-group-item{:href => "#"} 关注
+        %a.list-group-item{:href => "#"}= ["消费[", @records.count, "]笔"].join
         %a.list-group-item{:href => "#"} 消费圈
     // ask other to join group
     .row
