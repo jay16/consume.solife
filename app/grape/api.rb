@@ -1,7 +1,7 @@
+#encoding: utf-8
 require "entities"
 require "helpers"
 require "json"
-
 class Consume::API < Grape::API
   #version "v1"
   prefix "api"
@@ -14,10 +14,12 @@ class Consume::API < Grape::API
   rescue_from :all do |e|
     case e
     when ActiveRecord::RecordNotFound
-      Rack::Response.new(['user not found'], 404, {}).finish
+      Rack::Response.new(["user not found"], 404, {}).finish
+    when Mysql2::Error
+      Rack::Response.new(["Mysql2::Error"], 402, {}).finish
     else
       # ExceptionNotifier.notify_exception(e) # Uncommit it when ExceptionNotification is available
-      Rails.logger.error "APIv2 Error: #{e}\n#{e.backtrace.join("\n")}"
+      Rails.logger.error "APIv1 Error: #{e}\n#{e.backtrace.join("\n")}"
       Rack::Response.new(['error'], 500, {}).finish
     end
   end
@@ -27,52 +29,80 @@ class Consume::API < Grape::API
     logger.info "Params:\n#{params.to_json}"
   end
 
+  # get /api/routes
   desc "consume::api routes"
   get "/routes" do
     Consume::API::routes
-      .map{ |i| { "desc" => i.route_description, "method" => i.route_method, "path" => i.route_path } }
-      .to_json
+      .map{ |i| {desc: i.route_description, method: i.route_method, path: i.route_path} }
+      .to_json 
+  end
+
+  # get /api/versions
+  desc "android/ios client version"
+  get "/version" do
+    # v_ios     = 0.0
+    # v_android = 0.0
+    if params[:os] and params[:version]
+      case [:os]
+      when "ios" then
+      when "android" then
+      else
+        error! "#{params[:os]} should in [ios, android]", 404
+      end
+    else
+      error! "must offer :os, :version", 404
+    end
   end
 
   # validation user for below api
-  before_validation do
-    authenticate!
-  end
-
+  #before_validation do
+  #  authenticate!
+  #end
 
   resource :users do
     # get /api/users.json?token=abc
     desc "get user info with token."
     get do
+      authenticate!
       present current_user, with: APIEntities::User
     end
 
     # put /api/users.json?name=new_name
     desc "update user info."
     post do
+      authenticate!
       current_user.update(params[:user])
       present current_user, with: APIEntities::User
     end
   end
  
   resource :records do
-    # post /api/records.json
-    desc "create a new record."
-    post do
-      record = current_user.records.create(must_be_hash(params[:record]))
-      present record, with: APIEntities::Record
-    end
-
     # get /api/records.json
     desc "get record list."
     get do
-      records = current_user.records 
+      authenticate!
+      records = current_user.records.where("id > #{params[:id] || 0}") 
       present records, with: APIEntities::Record
+    end
+
+    get "/friends" do
+      authenticate!
+      records = current_user.group_member_records(false).where("id > #{params[:id] || 0}") 
+      present records, with: APIEntities::Record
+    end
+
+    # post /api/records.json
+    desc "create a new record."
+    post do
+      authenticate!
+      record = current_user.records.create(must_be_hash(params[:record]))
+      present record, with: APIEntities::Record
     end
 
     # get /api/records/1.json
     desc "get a record."
     get "/:id" do
+      authenticate!
       record = current_user.records.find(params[:id])
       present record, with: APIEntities::Record
     end
@@ -80,6 +110,7 @@ class Consume::API < Grape::API
     # put /api/recores/1.json
     desc "update a record."
     post "/:id" do
+      authenticate!
       record = current_user.records.find(params[:id])
       record.update(must_be_hash(params[:record]))
       present record, with: APIEntities::Record
@@ -88,6 +119,7 @@ class Consume::API < Grape::API
     # delete /api/recores/1.json
     desc "delete a record."
     delete "/:id" do
+      authenticate!
       record = current_user.records.find(params[:id])
       record.destroy
     end
@@ -97,6 +129,7 @@ class Consume::API < Grape::API
     # get /api/tags.json
     desc "get tag list."
     get do
+      authenticate!
       tags = current_user.tags
       present tags, with: APIEntities::Tag
     end
@@ -104,6 +137,7 @@ class Consume::API < Grape::API
     # get /api/tags.json
     desc "get a tag."
     get "/:id" do
+      authenticate!
       tag = current_user.tags.find(params[:id])
       present tag, with: APIEntities::Tag
     end
@@ -111,6 +145,7 @@ class Consume::API < Grape::API
     # post /api/tags.json
     desc "create a new tag."
     post do
+      authenticate!
       tag = current_user.tags.find_or_create(must_be_hash(params[:tag]))
       present tag, with: APIEntities::Tag
     end
@@ -118,6 +153,7 @@ class Consume::API < Grape::API
     # post /api/tags.json
     desc "update a tag."
     post "/:id" do
+      authenticate!
       tag = current_user.tags.find(params[:id])
       tag.update(params[:tag])
       present tag, with: APIEntities::Tag
