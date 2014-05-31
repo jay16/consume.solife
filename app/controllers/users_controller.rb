@@ -5,10 +5,10 @@ class UsersController < ApplicationController
     #@records = current_user.group_member_records
     @records = current_user.records
     @record  = current_user.records.new
-    @record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
+    #@record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     @tags = current_user.tags
 
-    fresh_when(:etag => [@records, @record, @members, @tags])
+    fresh_when(:etag => [@records, @tags])
   end
 
   def show

@@ -40,8 +40,15 @@ module Consume
      config.encoding = "utf-8"
      config.timeout_in = 20.minutes
 
+     config.assets.enabled = true
+     config.assets.version = '1.0'
+
+     config.assets.precompile += %w(application.js records.js tags.js tag-it.js jquery.ui.js)
+     config.assets.precompile += %w(application.css tag-it.css tag-it-theme.css)
     # Configure sensitive parameters which will be filtered from the log file.
     #config.filter_parameters += [:password, :password_confirm, :token, :private_token]
 
   end
 end
+
+I18n.locale = 'zh-CN'
