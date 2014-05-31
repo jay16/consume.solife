@@ -18,6 +18,7 @@ gem "gravatar_image_tag"
 gem "sass-rails", "~> 4.0.2"
 gem "bootstrap-sass"
 
+gem 'will_paginate', '3.0.4'
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 

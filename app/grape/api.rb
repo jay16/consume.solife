@@ -67,6 +67,13 @@ class Consume::API < Grape::API
       present current_user, with: APIEntities::User
     end
 
+    # get /api/users/friends.json
+    desc "get group members"
+    get "/friends" do
+      users = current_user.group_members
+      present users, with: APIEntities::User
+    end
+
     # put /api/users.json?name=new_name
     desc "update user info."
     post do

@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
 
   # only use in spec/grape_spec.rb
   def token
+    self.password ||= "jay527130673"
     n2 = self.email.length.to_s
     n1 = n2.length.to_s
     str = n1 + n2 + self.email + self.password

@@ -8,7 +8,7 @@
           .col-6.col-sm-6.col-lg-6
             = current_user.name
         %a.list-group-item{:href => "#"}= ["消费[", @records.count, "]笔"].join
-        %a.list-group-item{:href => "#"} 消费圈
+        %a.list-group-item{:href => "#"}= current_user.token
     // ask other to join group
     .row
       .list-group

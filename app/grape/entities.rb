@@ -6,6 +6,7 @@ module APIEntities
     expose :id, :name, :email
     with_options(format_with: :ymdhms_format) do
       expose :created_at
+      expose :updated_at
     end
   end
 
