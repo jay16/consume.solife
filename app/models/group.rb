@@ -7,6 +7,6 @@ class Group < ActiveRecord::Base
 
 
   def self.include?(user)
-    where(:to_id => user.id).count
+    where("to_id = #{user.id} or from_id = #{user.id}").count > 0
   end
 end
