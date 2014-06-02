@@ -33,8 +33,10 @@ module Consume
     config.time_zone = "Beijing"
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-     config.i18n.default_locale = "zh-CN"
+     I18n.config.enforce_available_locales = true
+     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
+     config.i18n.locale = 'zh-CN'
+     config.i18n.default_locale = 'zh-CN'
 
      # Configure the default encoding used in templates for Ruby 1.9.
      config.encoding = "utf-8"
@@ -51,4 +53,4 @@ module Consume
   end
 end
 
-I18n.locale = 'zh-CN'
+#I18n.locale = :'zh-CN'
