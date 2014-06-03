@@ -40,7 +40,12 @@ class Consume::API < Grape::API
   get "/version" do
     case params[:os].to_s
     when "android" then
-      { :verison => Setting.mobile.os.android.version,:describtion => Setting.mobile.os.android.describtion, :url => Setting.mobile.os.android.url }
+      { 
+        :version     => Setting.mobile.os.android.version,
+        :apk_name    => File.basename(Setting.mobile.os.android.url),
+        :describtion => Setting.mobile.os.android.describtion, 
+        :url         => Setting.mobile.os.android.url 
+      }
     else
         error! "#{params[:os]} should in [android]", 404
     end
