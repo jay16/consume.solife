@@ -26,6 +26,12 @@ defaults: &defaults
   external_feed_name: "Ruby Taiwan Group"
   twitter_id: "ruby_china"
   gravatar_proxy: "http://gravatar.com"
+  mobile:
+    os:
+      android:
+        version: "0.1"
+        describtion: "consume.solife.us"
+        url: "http://solife-apk.qiniudn.com/iconsumes-0.1.apk"
 
 development:
   <<: *defaults

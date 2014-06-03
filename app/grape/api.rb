@@ -18,7 +18,6 @@ class Consume::API < Grape::API
     when Mysql2::Error
       Rack::Response.new(["Mysql2::Error"], 402, {}).finish
     else
-      # ExceptionNotifier.notify_exception(e) # Uncommit it when ExceptionNotification is available
       Rails.logger.error "APIv1 Error: #{e}\n#{e.backtrace.join("\n")}"
       Rack::Response.new(['error'], 500, {}).finish
     end
@@ -26,31 +25,24 @@ class Consume::API < Grape::API
 
   # logger params for all api
   before do
-    logger.info "Params:\n#{params.to_json}"
+    #logger.info "Params:\n#{params.to_json}"
+    Rails.logger.info "Params:\n#{params.to_json}"
   end
 
   # get /api/routes
   desc "consume::api routes"
   get "/routes" do
-    Consume::API::routes
-      .map{ |i| {desc: i.route_description, method: i.route_method, path: i.route_path} }
-      .to_json 
+    Consume::API::routes.map{ |i| {desc: i.route_description, method: i.route_method, path: i.route_path} }.to_json 
   end
 
   # get /api/versions
   desc "android/ios client version"
   get "/version" do
-    # v_ios     = 0.0
-    # v_android = 0.0
-    if params[:os] and params[:version]
-      case [:os]
-      when "ios" then
-      when "android" then
-      else
-        error! "#{params[:os]} should in [ios, android]", 404
-      end
+    case params[:os].to_s
+    when "android" then
+      { :verison => Setting.mobile.os.android.version,:describtion => Setting.mobile.os.android.describtion, :url => Setting.mobile.os.android.url }
     else
-      error! "must offer :os, :version", 404
+        error! "#{params[:os]} should in [android]", 404
     end
   end
 
@@ -70,7 +62,9 @@ class Consume::API < Grape::API
     # get /api/users/friends.json
     desc "get group members"
     get "/friends" do
+      authenticate!
       users = current_user.group_members
+      users.reject!{ |u| params[:ids].split(",").include?(u.id.to_s) } if params[:ids] and !params[:ids].empty?
       present users, with: APIEntities::User
     end
 
