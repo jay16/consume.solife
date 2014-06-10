@@ -101,7 +101,7 @@ class Consume::API < Grape::API
     desc "create a new record."
     post do
       authenticate!
-      record = current_user.records.first_or_create(must_be_hash(params[:record]))
+      record = current_user.records.where(must_be_hash(params[:record])).first_or_create
       present record, with: APIEntities::Record
     end
 
@@ -152,7 +152,7 @@ class Consume::API < Grape::API
     desc "create a new tag."
     post do
       authenticate!
-      tag = current_user.tags.first_or_create(must_be_hash(params[:tag]))
+      tag = current_user.tags.where(must_be_hash(params[:tag])).first_or_create
       present tag, with: APIEntities::Tag
     end
 
