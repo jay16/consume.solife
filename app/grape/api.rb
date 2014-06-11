@@ -55,7 +55,6 @@ class Consume::API < Grape::API
   #before_validation do
   #  authenticate!
   #end
-
   resource :users do
     # get /api/users.json?token=abc
     desc "get user info with token."
@@ -101,7 +100,10 @@ class Consume::API < Grape::API
     desc "create a new record."
     post do
       authenticate!
-      record = current_user.records.where(must_be_hash(params[:record])).first_or_create
+      record_params = must_be_hash(params[:record])
+      puts record_params
+      build_relation_with_tags(record_params)
+      record = current_user.records.where(record_params).first_or_create
       present record, with: APIEntities::Record
     end
 
