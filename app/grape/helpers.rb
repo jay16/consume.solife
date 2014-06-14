@@ -22,13 +22,7 @@ module APIHelpers
     hstr.is_a?(String) ? eval(hstr) : hstr
   end
 
-  def build_relation_with_tags(params)
-    klass = params[:klass]
-    tags_list = params.delete(:tags_list) { |e| "" }
-    return if tags_list.strip.empty?
-
-    tags_list.split(/,/).each do |label|
-      current_user.tags.where({klass: klass.to_i, label: label.strip}).first_or_create
-    end
+  def extract_tags_list(params)
+    params.delete(:tags_list) { |e| "" }
   end
 end 

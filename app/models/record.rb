@@ -20,8 +20,8 @@ class Record < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :tags, -> { uniq }, autosave: true
   
-  after_create :build_with_tags
-  after_update :build_with_tags
+  after_create :build_relation_with_tags
+  after_update :build_relation_with_tags
   
   def klass_mapping
     { 1 => "衣", 2 => "食", 3 => "住", 4 => "行", -1 => "其他" }
@@ -39,14 +39,18 @@ class Record < ActiveRecord::Base
     self.tags.map(&:label).join(",") 
   end
 
-  def build_with_tags
-    return if self.tags_list.chomp.empty?
-     
+  def build_relation_with_tags
+    return if self.tags_list.strip.empty?
+
     tags = self.tags.map(&:label)
+    # filter the nouse tags
     self.tags_list.split(",").map(&:strip).uniq.each do |label|
-       tag = self.user.tags.find_or_create_by(label: label)
-       tags.include?(label) ? tags.delete(label) : self.tags << tag
+      tag = self.user.tags.find_or_create_by(label: label, klass: self.klass)
+      # rebuild relation with tags: remove unuse tags and add new tag
+      tags.include?(label) ? tags.delete(label) : self.tags << tag
     end
+    # remove the unuse tags relation
     tags.each { |l| self.tags.delete self.tags.find_by(label: l) } if !tags.empty?
   end
+
 end

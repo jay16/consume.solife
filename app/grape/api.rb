@@ -102,8 +102,10 @@ class Consume::API < Grape::API
       authenticate!
       record_params = must_be_hash(params[:record])
       puts record_params
-      build_relation_with_tags(record_params)
+      tags_list = extract_tags_list(record_params)
       record = current_user.records.where(record_params).first_or_create
+      record.tags_list = tags_list
+      record.build_relation_with_tags
       present record, with: APIEntities::Record
     end
 

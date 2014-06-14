@@ -4,7 +4,7 @@ require "uri"
 require "json"
 
 url  = "http://127.0.0.1"
-port = 3001
+port = 3000
 base_url = [url, port].join(":")
 
 def base_test_post base_url, path, params = {}
@@ -55,13 +55,15 @@ record_param = {
   record:  {
     value: rand(1000),
     ymdhms: Time.now.strftime("%Y/%m/%d %H:%M:%S").to_s,
-    remark: "api" + rand(1000).to_s
+    remark: "api" + rand(1000).to_s,
+    tags_list: "hello, world"
   }
 }
+token = "MjE2amF5X2xpQHNvbGlmZS51c2pheTUyNzEzMDY3Mw=="
 param = { format: "json", token: token }.merge(record_param)
-#base_test_post(base_url, "/api/records", param)
+base_test_post(base_url, "/api/records", param)
 
 #base_url = "http://consume.solife.us"
 #token = "MjE2amF5X2xpQHNvbGlmZS51c2pheTUyNzEzMDY3Mw=="
 param = { format: "json", token: token }.merge(record_param)
-base_test_post(base_url, "/api/records/9.json", param)
+#base_test_post(base_url, "/api/records/9.json", param)
