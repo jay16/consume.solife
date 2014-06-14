@@ -86,7 +86,12 @@ class Consume::API < Grape::API
     desc "get record list."
     get do
       authenticate!
-      records = current_user.records.where("id > #{params[:id] || 0}") 
+      if !params[:updated_at].nil?
+        condition = %Q(date_format(updated_at,'%Y-%m-%d %H:%i:%s') > '#{params[:updated_at]}')
+      else
+        condition = %Q(id > #{params[:id] || 0}) 
+      end
+      records = current_user.records.where(condition) 
       present records, with: APIEntities::Record
     end
 
@@ -140,7 +145,12 @@ class Consume::API < Grape::API
     desc "get tag list."
     get do
       authenticate!
-      tags = current_user.tags.where("id > #{params[:id] || 0}") 
+      if !params[:updated_at].nil?
+        condition = %Q(date_format(updated_at,'%Y-%m-%d %H:%i:%s') > '#{params[:updated_at]}')
+      else
+        condition = %Q(id > #{params[:id] || 0}) 
+      end
+      tags = current_user.tags.where(condition) 
       present tags, with: APIEntities::Tag
     end
 

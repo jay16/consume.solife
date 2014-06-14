@@ -32,7 +32,7 @@ class Record < ActiveRecord::Base
   end
 
   def tags_list
-    @tags_list || ""
+    @tags_list || tags_string
   end
 
   def tags_string
