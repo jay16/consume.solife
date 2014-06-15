@@ -40,17 +40,20 @@ class Record < ActiveRecord::Base
   end
 
   def build_relation_with_tags
-    return if self.tags_list.strip.empty?
-
-    tags = self.tags.map(&:label)
-    # filter the nouse tags
-    self.tags_list.split(",").map(&:strip).uniq.each do |label|
-      tag = self.user.tags.find_or_create_by(label: label, klass: self.klass)
-      # rebuild relation with tags: remove unuse tags and add new tag
-      tags.include?(label) ? tags.delete(label) : self.tags << tag
+    if self.tags_list.strip.empty?
+      # clear all relation with tag
+      self.tags.each { |tag| self.tags.delete(tag) } if !self.tags.empty?
+    else
+      tags = self.tags.map(&:label)
+      # filter the nuuse tags
+      self.tags_list.split(",").map(&:strip).uniq.each do |label|
+        tag = self.user.tags.find_or_create_by(label: label, klass: self.klass)
+        # rebuild relation with tags: remove unuse tags and add new tag
+        tags.include?(label) ? tags.delete(label) : self.tags << tag
+      end
+      # remove the unuse tags relation
+      tags.each { |l| self.tags.delete self.tags.find_by(label: l) } if !tags.empty?
     end
-    # remove the unuse tags relation
-    tags.each { |l| self.tags.delete self.tags.find_by(label: l) } if !tags.empty?
   end
 
 end
