@@ -17,8 +17,10 @@ gem "gravatar_image_tag"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 4.0.2"
 gem "bootstrap-sass"
-gem 'i18n', github: 'svenfuchs/i18n'
-gem 'will_paginate', '3.0.4'
+gem "i18n", github: "svenfuchs/i18n"
+gem "will_paginate", "3.0.4"
+
+gem "whenever", :require => false
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
