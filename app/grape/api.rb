@@ -113,8 +113,9 @@ class Consume::API < Grape::API
     desc "create a new record."
     post do
       authenticate!
-      # force params to hash and add browse/ip
-      record_params = must_be_hash(params[:record]).merge(browser_with_ip)
+      # force params to hash 
+      # browse/ip be covered by params when params include browser/ip
+      record_params = browser_with_ip.merge(must_be_hash(params[:record]))
       # delete the virtus attribute [.tags_list] from params
       tags_list = extract_tags_list(record_params)
       record = current_user.records.where(record_params).first_or_create
@@ -137,7 +138,8 @@ class Consume::API < Grape::API
     post "/:id" do
       authenticate!
       record = current_user.records.find(params[:id])
-      record.update(must_be_hash(params[:record]).merge(browser_with_ip))
+      record_param = browser_with_ip.merge(must_be_hash(params[:record]))
+      record.update(record_param)
       present record, with: APIEntities::Record
     end
 
