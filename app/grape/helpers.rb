@@ -25,4 +25,10 @@ module APIHelpers
   def extract_tags_list(params)
     params.delete(:tags_list) { |e| "" }
   end
+
+  def browser_with_ip
+    browser   = request.env["HTTP_USER_AGENT"] || request.user_agent
+    remote_ip = request.env['REMOTE_ADDR'] || request.remote_ip
+    return { :ip => remote_ip, :browser => browser }
+  end
 end 

@@ -105,7 +105,7 @@ class Consume::API < Grape::API
     desc "create a new record."
     post do
       authenticate!
-      record_params = must_be_hash(params[:record])
+      record_params = must_be_hash(params[:record]).merge(browser_with_ip)
       puts record_params
       tags_list = extract_tags_list(record_params)
       record = current_user.records.where(record_params).first_or_create
@@ -184,4 +184,5 @@ class Consume::API < Grape::API
   route :any, '*path' do
     error! "error path - #{routes.first.route_path.sub("*path(.:format)","")}#{params[:path]}", 404
   end
+
 end
