@@ -81,6 +81,7 @@ class Consume::API < Grape::API
     end
   end
  
+  # core object [records]
   resource :records do
     # get /api/records.json
     desc "get record list."
@@ -95,9 +96,16 @@ class Consume::API < Grape::API
       present records, with: APIEntities::Record
     end
 
+    # get records of user's friends
+    # get /api/records/friends.json
     get "/friends" do
       authenticate!
-      records = current_user.group_member_records(false).where("id > #{params[:id] || 0}") 
+      if !params[:updated_at].nil?
+        condition = %Q(date_format(updated_at,'%Y-%m-%d %H:%i:%s') > '#{params[:updated_at]}')
+      else
+        condition = %Q(id > #{params[:id] || 0}) 
+      end
+      records = current_user.group_member_records(false).where(condition) 
       present records, with: APIEntities::Record
     end
 
@@ -105,10 +113,12 @@ class Consume::API < Grape::API
     desc "create a new record."
     post do
       authenticate!
+      # force params to hash and add browse/ip
       record_params = must_be_hash(params[:record]).merge(browser_with_ip)
-      puts record_params
+      # delete the virtus attribute [.tags_list] from params
       tags_list = extract_tags_list(record_params)
       record = current_user.records.where(record_params).first_or_create
+      # build relation with tags
       record.tags_list = tags_list
       record.build_relation_with_tags
       present record, with: APIEntities::Record
@@ -127,7 +137,7 @@ class Consume::API < Grape::API
     post "/:id" do
       authenticate!
       record = current_user.records.find(params[:id])
-      record.update(must_be_hash(params[:record]))
+      record.update(must_be_hash(params[:record]).merge(browser_with_ip))
       present record, with: APIEntities::Record
     end
 
@@ -136,7 +146,7 @@ class Consume::API < Grape::API
     delete "/:id" do
       authenticate!
       record = current_user.records.find(params[:id])
-      record.destroy
+      record.destroy if !record.nil?
     end
   end
 
