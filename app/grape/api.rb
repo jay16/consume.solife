@@ -115,10 +115,11 @@ class Consume::API < Grape::API
       authenticate!
       # force params to hash 
       # browse/ip be covered by params when params include browser/ip
-      record_params = browser_with_ip.merge(must_be_hash(params[:record]))
+      record_param = browser_with_ip.merge(must_be_hash(params[:record]))
+      puts record_param
       # delete the virtus attribute [.tags_list] from params
-      tags_list = extract_tags_list(record_params)
-      record = current_user.records.where(record_params).first_or_create
+      tags_list = extract_tags_list(record_param)
+      record = current_user.records.where(record_param).first_or_create
       # build relation with tags
       record.tags_list = tags_list
       record.build_relation_with_tags
