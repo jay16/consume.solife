@@ -2,7 +2,8 @@ module APIHelpers
 
   # customer logger
   def logger
-      Consume::API.logger
+    #Consume::API.logger
+    Rails.logger
   end
   
   def current_user
@@ -13,13 +14,16 @@ module APIHelpers
   end 
 
   def authenticate!
-    error!({ "error" => "401 Unauthorized" }, 401) unless current_user
+    error!({ :error => "401 Unauthorized" }, 401) unless current_user
   end 
 
   # params[:record] should hash
   # but get string
   def must_be_hash(hstr)
-    hstr.is_a?(String) ? eval(hstr) : hstr
+    hash = hstr.is_a?(String) ? eval(hstr) : hstr
+    new_hash = Hash.new
+    hash.each_pair { |k, v| new_hash[k.to_sym] = v }
+    return new_hash
   end
 
   def extract_tags_list(params)

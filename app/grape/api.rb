@@ -25,8 +25,7 @@ class Consume::API < Grape::API
 
   # logger params for all api
   before do
-    #logger.info "Params:\n#{params.to_json}"
-    Rails.logger.info "Params:\n#{params.to_json}"
+    logger.info "Params:\n#{params.to_json}"
   end
 
   # get /api/routes
@@ -115,7 +114,7 @@ class Consume::API < Grape::API
       authenticate!
       # force params to hash 
       # browse/ip be covered by params when params include browser/ip
-      record_param = browser_with_ip.merge(must_be_hash(params[:record]))
+      record_param = must_be_hash(params[:record]).merge(browser_with_ip)
       puts record_param
       # delete the virtus attribute [.tags_list] from params
       tags_list = extract_tags_list(record_param)
@@ -197,5 +196,4 @@ class Consume::API < Grape::API
   route :any, '*path' do
     error! "error path - #{routes.first.route_path.sub("*path(.:format)","")}#{params[:path]}", 404
   end
-
 end
