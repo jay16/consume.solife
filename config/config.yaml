@@ -7,9 +7,9 @@ defaults: &defaults
   mobile:
     os:
       android:
-        version: "0.1"
+        version: "0.2"
         describtion: "consume.solife.us"
-        url: "http://solife-apk.qiniudn.com/iconsumes-0.1.apk"
+        url: "http://solife-apk.qiniudn.com/iconsumes-0.2.apk"
 
 development:
   <<: *defaults
