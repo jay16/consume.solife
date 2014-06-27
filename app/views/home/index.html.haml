@@ -7,12 +7,12 @@
     = stylesheet_link_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
     = stylesheet_link_tag "hello.css"
     %body{style: "padding:0px;"}
-      %nav.navbar.navbar-default{:role => "navigation"}
+      %nav#nav.navbar.navbar-default{:role => "navigation"}
         / Brand and toggle get grouped for better mobile display
         .navbar-header
           %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(http://solife-images.u.qiniudn.com/favicon.so.ico) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 爱记录
         / Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        .collapse.navbar-collapse
           %ul.nav.navbar-nav.hidden
             %li.active
               %a{:href => "#"} Link
@@ -23,7 +23,7 @@
             %li.action
               %a.signup{:href => "javascript:void(0);"}
                 %strike 免费注册 
-      #main{role: "main"}
+      #slogn
         %header#home-hero
           .container
             .row
@@ -40,7 +40,7 @@
                   %a{:alt => "爱记录 Mac 客户端", :href => ""} 
                     %Strike Mac
                   客户端
-      .container
+      .container#cache
         .row
           .col-sm-8.col-sm-offset-2
             .alert.alert-info
@@ -78,3 +78,27 @@
                   %input#user_password.password.required.col-sm-8.form-control{:name => "user[password]", :style => "width:80%;border-radius: 4px 0px 0px 4px;", :type => "password"}/
               %input.btn.btn.btn-primary{:label => "false", :name => "commit", :style => "border-radius: 0px 0px 4px 0px;", :type => "submit", :value => "登 陆"}
 
+:javascript
+  $(function(){
+    function resizeWindow() {
+        var w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight|| e.clientHeight;//|| g.clientHeight;
+        $("body").css({"height": y + "px", "overflow": "hidden"});
+        $("#footer").css({"min-height": "70px", "padding-top": "15px"});
+        var nh = $("#nav").height();
+        var sh = $("#slogn").height();
+        var fh = $("#footer").height();
+        var ch = y - nh - sh - fh;
+       $("#cache").css({"height": ch + "px", "overflow":"hidden"});
+       console.log("nh:"+nh);
+       console.log("sh:"+sh);
+       console.log("fh:"+fh);
+       console.log("ch:"+ch);
+    }
+    resizeWindow();
+    $(window).resize(function() { resizeWindow(); });
+  });

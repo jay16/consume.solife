@@ -29,7 +29,7 @@ class Consume::API < Grape::API
 
     @cache_arr = []
     @cache_arr.push(Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-    @cache_arr.push(current_user.email.gsub(/(.*?)\@/,"**@"))
+    @cache_arr.push(current_user.email.gsub(/(.*?)\@/) { "*"*$1.to_s.length+"@" })
   end
 
   # get /api/routes
