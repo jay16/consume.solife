@@ -1,15 +1,10 @@
-.row
+.row{style:"margin-top:50px;"}
   .col-sm-6.col-sm-offset-3
-    %p{style: "color:black;text-align:center;font-size:24px;margin-top:50px;margin-bottom:50px;"}
+    %p{style: "color:black;text-align:center;font-size:24px;margin-top:70px;margin-bottom:30px;"}
       爱生活，爱记录
+    %h3 橫向解析你的消费习惯，纵向解释你的资金去向。
 
-    %p 月光族的你，证明你有消费的能力。
-    %p 月月光族的你，证明你无法控制自己的消费欲望。
-    %p 回首月月光的记忆，你能明白什么？钱不够花?那是你的事。
-    %p 努力摆脱月光族的群体，却又无能为力？让我来帮你，你只需要记录自己的消费即可。
-    %p 橫向解析你的消费习惯，纵向解释你资金的去向，理解了为何成为月光族，也许会帮助到你。
-
-.row{style:"margin-top:150px;"}
+.row{style:"margin-top:50px;"}
   .col-sm-4.col-sm-offset-4
     .row
       .col-sm-10.col-sm-offset-1
@@ -20,3 +15,23 @@
             - f.input :remember_me, as: :boolean if devise_mapping.rememberable?
             = f.button :submit, "登 陆", label: false, class: "btn btn-primary", style: "border-radius: 0px 0px 4px 0px;"
         - render "devise/shared/links"
+    :javascript
+      $(function(){
+          function inputMonitor() {
+              var isDisabled = false;
+              $("input").each(function(){
+                  if(!$.trim($(this).val()).length) isDisabled = true;
+              })
+              console.log(isDisabled);
+              if(isDisabled == true)
+                  $("input[type=submit]").attr("disabled", "disabled");
+              else
+                  $("input[type=submit]").removeAttr("disabled");
+          }
+
+          inputMonitor();
+          $("input").bind("onchange keyup input", function(){
+              inputMonitor();
+          });
+      });
+

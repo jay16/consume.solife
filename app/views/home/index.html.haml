@@ -18,7 +18,8 @@
               %a{:href => "#"} Link
           %ul.nav.navbar-nav.navbar-right
             %li
-              %a.login{"data-target" => "#login-modal", "data-toggle" => "modal", :href => "#login-modal", :role => "button", :type => "button"} 登录
+              %a.hidden.login{"data-target" => "#login-modal-no", "data-toggle" => "modal", :href => "/users/sign_in", :role => "button", :type => "button"} 登录
+              %a.login{href: "/users/sign_in"} 登陆
             %li.action
               %a.signup{:href => "javascript:void(0);"}
                 %strike 免费注册 
