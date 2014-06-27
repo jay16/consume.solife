@@ -35,4 +35,9 @@ module APIHelpers
     remote_ip = request.env['REMOTE_ADDR'] || request.remote_ip
     return { :ip => remote_ip }
   end
+
+  def cache_action(arr)
+    cache_list = File.join(Rails.root, "tmp/api_cache.list")
+    `echo #{arr.join(",")} >> #{cache_list}`
+  end
 end 

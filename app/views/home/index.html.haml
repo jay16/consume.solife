@@ -1,3 +1,79 @@
-.row
-  .col-sm-8.col-sm-offset-2{style: "background: purple;"}
-    hello world
+%html{:lang => "zh-CN"}
+  %head
+    %meta{:charset => "utf-8"}
+    %title 爱记录 - 爱生活
+    = javascript_include_tag "http://libs.baidu.com/jquery/1.9.0/jquery.js"
+    = javascript_include_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
+    = stylesheet_link_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
+    = stylesheet_link_tag "hello.css"
+    %body{style: "padding:0px;"}
+      %nav.navbar.navbar-default{:role => "navigation"}
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(http://solife-images.u.qiniudn.com/favicon.so.ico) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 爱记录
+        / Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav.hidden
+            %li.active
+              %a{:href => "#"} Link
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              %a.login{"data-target" => "#login-modal", "data-toggle" => "modal", :href => "#login-modal", :role => "button", :type => "button"} 登录
+            %li.action
+              %a.signup{:href => "javascript:void(0);"}
+                %strike 免费注册 
+      #main{role: "main"}
+        %header#home-hero
+          .container
+            .row
+              .span12
+                %h1.tagline 爱生活，爱记录
+                %h2.intro 橫向解析你的消费习惯，纵向解释你资金的去向。
+                %p.intro.apps-download
+                  获取
+                  = succeed "\u{ff0c}" do
+                    %a{alt: "爱记录 iOS 客户端", href: ""} 
+                      %strike iPhone
+                  = succeed "\u{ff0c}" do
+                    %a{:alt => "爱记录 Android 客户端", :href => "#{Setting.mobile.os.android.url}"} Android
+                  %a{:alt => "爱记录 Mac 客户端", :href => ""} 
+                    %Strike Mac
+                  客户端
+      .container
+        .row
+          .col-sm-8.col-sm-offset-2
+            .alert.alert-info
+              %table.table.table-condensed
+                - @cache.map { |line| line.split(/,/) }.each do |row|
+                  %tr
+                    - row.each do |data|
+                      %td= data
+
+
+      %footer#footer
+        .copyright
+          %p © 2014 consume.solife.us 
+
+
+
+#login-modal.modal.fade
+  .modal-dialog
+    .modal-content{style: "max-width:450px;"}
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h3#login-modal-label 登录
+      .modal-body{style: "min-height: 150px;max-width:430px;"}
+        .col-sm-10.col-sm-offset-1
+          %form#new_user.simple_form.new_user{"accept-charset" => "UTF-8", :action => "/users/sign_in", :method => "post", :novalidate => "novalidate"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "✓"}
+                %input{:name => "authenticity_token", :type => "hidden", :value => "speZxhxzs9RlQfPvdBPC+m8k6s/+V8JR5Nt4zj8G44U="}/
+            .form-inputs
+              .control-group.email.optional.user_email
+                .controls
+                  %input#user_email.string.email.optional.col-sm-12.form-control{:autofocus => "autofocus", :name => "user[email]", :style => "border-radius: 4px 4px 0px 4px;", :type => "email"}/
+              .control-group.password.required.user_password{:style => "display: inline;"}
+                .controls
+                  %input#user_password.password.required.col-sm-8.form-control{:name => "user[password]", :style => "width:80%;border-radius: 4px 0px 0px 4px;", :type => "password"}/
+              %input.btn.btn.btn-primary{:label => "false", :name => "commit", :style => "border-radius: 0px 0px 4px 0px;", :type => "submit", :value => "登 陆"}
+

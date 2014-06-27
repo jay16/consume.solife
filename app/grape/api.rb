@@ -26,6 +26,10 @@ class Consume::API < Grape::API
   # logger params for all api
   before do
     logger.info "Params:\n#{params.to_json}"
+
+    @cache_arr = []
+    @cache_arr.push(Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+    @cache_arr.push(current_user.email.gsub(/(.*?)\@/,"**@"))
   end
 
   # get /api/routes
@@ -76,6 +80,9 @@ class Consume::API < Grape::API
     post do
       authenticate!
       current_user.update(params[:user])
+
+      @cache_arr.push("更新个人信息")
+      cache_action(@cache_arr)
       present current_user, with: APIEntities::User
     end
   end
@@ -122,6 +129,9 @@ class Consume::API < Grape::API
       # build relation with tags
       record.tags_list = tags_list
       record.build_relation_with_tags
+      @cache_arr.push("创建消费记录")
+      cache_action(@cache_arr)
+
       present record, with: APIEntities::Record
     end
 
@@ -140,6 +150,9 @@ class Consume::API < Grape::API
       record = current_user.records.find(params[:id])
       record_param = browser_with_ip.merge(must_be_hash(params[:record]))
       record.update(record_param)
+
+      @cache_arr.push("修改消费记录")
+      cache_action(@cache_arr)
       present record, with: APIEntities::Record
     end
 
@@ -179,6 +192,9 @@ class Consume::API < Grape::API
     post do
       authenticate!
       tag = current_user.tags.where(must_be_hash(params[:tag])).first_or_create
+
+      @cache_arr.push("创建标签")
+      cache_action(@cache_arr)
       present tag, with: APIEntities::Tag
     end
 
@@ -188,6 +204,9 @@ class Consume::API < Grape::API
       authenticate!
       tag = current_user.tags.find(params[:id])
       tag.update(must_be_hash(params[:tag]))
+
+      @cache_arr.push("修改标签")
+      cache_action(@cache_arr)
       present tag, with: APIEntities::Tag
     end
   end
