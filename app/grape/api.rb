@@ -27,9 +27,11 @@ class Consume::API < Grape::API
   before do
     logger.info "Params:\n#{params.to_json}"
 
-    @cache_arr = []
-    @cache_arr.push(Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-    @cache_arr.push(current_user.email.gsub(/(.*?)\@/) { "*"*$1.to_s.length+"@" })
+    if current_user
+      @cache_arr = []
+      @cache_arr.push(Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+      @cache_arr.push(current_user.email.gsub(/(.*?)\@/) { "*"*$1.to_s.length+"@" })
+    end
   end
 
   # get /api/routes
