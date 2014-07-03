@@ -47,22 +47,30 @@ token = "MjIwc29saWZlLmpheUBnbWFpbC5jb21qYXk1MjcxMzA2NzM="
 #    t.string   "ymdhms"
 #    t.integer  "klass"  # cloth/food/house/foot/other
 record_param = { 
-  route_info: {
-    options: {
-  params: { id: 8 }
-    }
-  },
   record:  {
     value: rand(1000),
     ymdhms: Time.now.strftime("%Y/%m/%d %H:%M:%S").to_s,
     remark: "api" + rand(1000).to_s,
-    tags_list: "hello, world"
+    "tags_list" => "hello, world",
+    browser: "hello, world"
   }
 }
 token = "MjE2amF5X2xpQHNvbGlmZS51c2pheTUyNzEzMDY3Mw=="
 param = { format: "json", token: token }.merge(record_param)
 base_test_post(base_url, "/api/records", param)
+base_test_post(base_url, "/api/records/558", param)
 
+tag_param = {
+  tag: {
+    label: rand(100000).to_s,
+    klass: rand(5),
+    browser: "yes"
+  }
+}
+
+param = { format: "json", token: token }.merge(tag_param)
+base_test_post(base_url, "/api/tags", param)
+base_test_post(base_url, "/api/tags/24", param)
 #base_url = "http://consume.solife.us"
 #token = "MjE2amF5X2xpQHNvbGlmZS51c2pheTUyNzEzMDY3Mw=="
 param = { format: "json", token: token }.merge(record_param)

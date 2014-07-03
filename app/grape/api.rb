@@ -84,6 +84,8 @@ class Consume::API < Grape::API
       current_user.update(params[:user])
 
       @cache_arr.push("更新个人信息")
+      @cache_arr.push("api")
+      @cache_arr.push(browser_with_ip[:ip])
       cache_action(@cache_arr)
       present current_user, with: APIEntities::User
     end
@@ -123,17 +125,18 @@ class Consume::API < Grape::API
       authenticate!
       # force params to hash 
       # browse/ip be covered by params when params include browser/ip
-      record_param = must_be_hash(params[:record]).merge(browser_with_ip)
-      puts record_param
+      record_params = must_be_hash(params[:record]).merge(browser_with_ip)
       # delete the virtus attribute [.tags_list] from params
-      tags_list = extract_tags_list(record_param)
-      record = current_user.records.where(record_param).first_or_create
+      tags_list = extract_tags_list(record_params)
+      record = current_user.records.where(record_params).first_or_create
       # build relation with tags
       record.tags_list = tags_list
       record.build_relation_with_tags
-      @cache_arr.push("创建消费记录")
-      cache_action(@cache_arr)
 
+      @cache_arr.push("创建消费记录")
+      @cache_arr.push(record.browser)
+      @cache_arr.push(record.ip)
+      cache_action(@cache_arr)
       present record, with: APIEntities::Record
     end
 
@@ -150,10 +153,12 @@ class Consume::API < Grape::API
     post "/:id" do
       authenticate!
       record = current_user.records.find(params[:id])
-      record_param = browser_with_ip.merge(must_be_hash(params[:record]))
-      record.update(record_param)
+      record_params = must_be_hash(params[:record]).merge(browser_with_ip)
+      record.update(record_params)
 
       @cache_arr.push("修改消费记录")
+      @cache_arr.push(record.browser)
+      @cache_arr.push(record.ip)
       cache_action(@cache_arr)
       present record, with: APIEntities::Record
     end
@@ -193,9 +198,12 @@ class Consume::API < Grape::API
     desc "create a new tag."
     post do
       authenticate!
-      tag = current_user.tags.where(must_be_hash(params[:tag])).first_or_create
+      tag_params = must_be_hash(params[:tag]).merge(browser_with_ip)
+      tag = current_user.tags.where(tag_params).first_or_create
 
       @cache_arr.push("创建标签")
+      @cache_arr.push(tag.browser)
+      @cache_arr.push(tag.ip)
       cache_action(@cache_arr)
       present tag, with: APIEntities::Tag
     end
@@ -205,9 +213,12 @@ class Consume::API < Grape::API
     post "/:id" do
       authenticate!
       tag = current_user.tags.find(params[:id])
-      tag.update(must_be_hash(params[:tag]))
+      tag_params = must_be_hash(params[:tag]).merge(browser_with_ip)
+      tag.update(tag_params)
 
       @cache_arr.push("修改标签")
+      @cache_arr.push(tag.browser)
+      @cache_arr.push(tag.ip)
       cache_action(@cache_arr)
       present tag, with: APIEntities::Tag
     end

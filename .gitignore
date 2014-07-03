@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore temp file
-*/assets/*
+/tmp/*
 *.tar.gz
 *.sql
 .DS_Store
