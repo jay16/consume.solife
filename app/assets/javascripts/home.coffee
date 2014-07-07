@@ -7,6 +7,7 @@ window.Home =
       $(".cache-list").addClass("hidden")
       $(".mobile").addClass("hidden")
       $(".android").removeClass("hidden")
+    Home.resizeWindow()
 
   resizeWindow: ->
     w = window
