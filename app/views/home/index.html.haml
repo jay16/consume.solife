@@ -2,10 +2,9 @@
   %head
     %meta{:charset => "utf-8"}
     %title 爱记录 - 爱生活
-    = javascript_include_tag "http://libs.baidu.com/jquery/1.9.0/jquery.js"
-    = javascript_include_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
     = stylesheet_link_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
     = stylesheet_link_tag "hello.css"
+
     %body{style: "padding:0px;"}
       %nav#nav.navbar.navbar-default{:role => "navigation"}
         / Brand and toggle get grouped for better mobile display
@@ -27,35 +26,39 @@
         %header#home-hero
           .container
             .row
-              .span12
+              .col-sm-12
                 %h1.tagline 爱生活，爱记录
                 %h2.intro 橫向解析你的消费习惯，纵向解释你的资金去向。
                 %p.intro.apps-download
                   获取
                   = succeed "\u{ff0c}" do
-                    %a{alt: "爱记录 iOS 客户端", href: ""} 
+                    %a{alt: "爱记录 iOS 客户端", href: "javascript:void(0);"} 
                       %strike iPhone
                   = succeed "\u{ff0c}" do
-                    %a{:alt => "爱记录 Android 客户端", :href => "#{Setting.mobile.os.android.url}"} Android
-                  %a{:alt => "爱记录 Mac 客户端", :href => ""} 
+                    %a{onclick: "Home.downloadAndroid();"} Android
+                  %a{:alt => "爱记录 Mac 客户端", :href => "javascript:void(0);"} 
                     %Strike Mac
                   客户端
       .container#cache
-        .row
+        .row.mobile.android.hidden
+          .row
+            %img{src: "http://qr.liantu.com/api.php?text=#{Setting.mobile.os.android.url}"}
+          .row
+            %a{href: "#{Setting.mobile.os.android.url}"} 本地下载
+        .row.cache-list
           .col-sm-8.col-sm-offset-2
             .alert.alert-info
+              :css
+                .table { margin: 0px; }
               %table.table.table-condensed
                 - @cache.map { |line| line.split(/,/) }.each do |row|
                   %tr
                     - row.each do |data|
                       %td= data
 
-
       %footer#footer
         .copyright
-          %p © 2014 consume.solife.us 
-
-
+          %p © #{Time.now.strftime("%Y")} consume.solife.us 
 
 #login-modal.modal.fade
   .modal-dialog
@@ -78,27 +81,7 @@
                   %input#user_password.password.required.col-sm-8.form-control{:name => "user[password]", :style => "width:80%;border-radius: 4px 0px 0px 4px;", :type => "password"}/
               %input.btn.btn.btn-primary{:label => "false", :name => "commit", :style => "border-radius: 0px 0px 4px 0px;", :type => "submit", :value => "登 陆"}
 
-:javascript
-  $(function(){
-    function resizeWindow() {
-        var w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName('body')[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight|| e.clientHeight;//|| g.clientHeight;
-        $("body").css({"height": y + "px", "overflow": "hidden"});
-        $("#footer").css({"min-height": "70px", "padding-top": "15px"});
-        var nh = $("#nav").height();
-        var sh = $("#slogn").height();
-        var fh = $("#footer").height();
-        var ch = y - nh - sh - fh;
-       $("#cache").css({"height": ch + "px", "overflow":"hidden"});
-       console.log("nh:"+nh);
-       console.log("sh:"+sh);
-       console.log("fh:"+fh);
-       console.log("ch:"+ch);
-    }
-    resizeWindow();
-    $(window).resize(function() { resizeWindow(); });
-  });
+
+= javascript_include_tag "http://libs.baidu.com/jquery/1.9.0/jquery.js"
+= javascript_include_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
+= javascript_include_tag "home"
