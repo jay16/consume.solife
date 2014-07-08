@@ -3,10 +3,21 @@ window.Tags =
 
   # 编辑时标签时，取消提交
   # tag_id: 标签id
-  cancelEdit : (tag_id) ->
+  cancelEdit: (tag_id) ->
     $dom_tag = $("#tag_"+tag_id) 
     $dom_tag.find(".edit-form").remove()
     $dom_tag.find(".show-form").css("display","block")
+
+  toggleShow: (self, klass) ->
+    state = $(self).attr("checked")
+    if state == undefined
+      $(self).attr("checked", "true")
+      $(klass).removeClass("hidden")
+    else
+      $(self).removeAttr("checked")
+      $(klass).addClass("hidden")
+
+
 
   # tag-it控件选择标签
   # target: tag-it容器

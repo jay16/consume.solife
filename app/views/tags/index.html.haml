@@ -1,13 +1,20 @@
 .row
-  %p 标签列表 
+  %label.checkbox-inline
+    %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tag-table');"} 
+    标签列表 
 
 .row
-  .list-header
-    .col-sm-6 标签 
-    .col-sm-2.center.no-padding 类型
-    .col-sm-4.center= t("operation")
+  %table.tag-table.hidden.table-condensed{style: "width:100%;"}
+    %thead
+      %tr
+        %th 标签 
+        %th.center.no-padding 类型
+        %th.center{colspan: "2"}
+          %label.checkbox-inline
+            %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tag-operation');"} 
+            = t("operation")
+    %tbody
+      - @tags.each do |tag|
+        = render partial: "tags/tag", locals: { tag: tag } 
 
-- @tags.each do |tag|
-  = render partial: "tags/tag", locals: { tag: tag } 
-
-- link_to 'New Tag', new_tag_path
+  - link_to 'New Tag', new_tag_path
