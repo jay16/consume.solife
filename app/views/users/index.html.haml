@@ -8,6 +8,10 @@
           .col-6.col-sm-6.col-lg-6
             = current_user.name
         %a.list-group-item{:href => ""}= ["消费[", @records.count, "]笔"].join
+        %a.list-group-item
+          %label.checkbox-inline
+            %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tags-list');"} 
+            标签列表 
         %a.list-group-item{:href => ""}= Time.now.strftime("%Y-%m-%d %H:%M:%S")
     // ask other to join group
     .row
@@ -44,13 +48,13 @@
         = render partial: "users/search", layout: false
 
   //span
-  .col-sm-6
+  .col-sm-9.records-list
     // 消费记录创建框
     .jumbotron.record_form.hidden{style: "padding:11px 40px;display:block;"}
       - render partial: "records/form"
 
     // 消费记录列表
-    .row
+    .row{style: "padding: 0px 20px;"}
       .col-12.col-sm-12.col-lg-12
         = render template: "records/index", layout: false
 

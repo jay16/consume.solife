@@ -1,13 +1,18 @@
 window.Home = 
-  downloadAndroid: ->
+  downloadMobileClient: (self, klass) ->
     if $(".cache-list").hasClass("hidden")
       $(".cache-list").removeClass("hidden")
+      $(".cache-list").slideDown("slow")
+      $(".mobile").slideUp("slow")
       $(".mobile").addClass("hidden")
+      $(self).removeClass("onfocus")
     else
+      $(".cache-list").slideUp("slow")
       $(".cache-list").addClass("hidden")
       $(".mobile").addClass("hidden")
-      $(".android").removeClass("hidden")
-    Home.resizeWindow()
+      $("." + klass).removeClass("hidden")
+      $("." + klass).slideDown("slow")
+      $(self).addClass("onfocus")
 
   resizeWindow: ->
     w = window
@@ -18,11 +23,6 @@ window.Home =
     y = w.innerHeight or e.clientHeight #|| g.clientHeight;
     $("body").css
       height: y + "px"
-      overflow: "hidden"
-
-    $("#footer").css
-      "min-height": "70px"
-      "padding-top": "15px"
 
     nh = $("#nav").height()
     sh = $("#slogn").height()
@@ -30,9 +30,7 @@ window.Home =
     ch = y - nh - sh - fh
     $("#cache").css
       height: ch + "px"
-      overflow: "hidden"
-
-    $("#cache").scrollTop $("#cache")[0].scrollHeight
+    #$("#cache").scrollTop $("#cache")[0].scrollHeight
 
 $ ->
   Home.resizeWindow()

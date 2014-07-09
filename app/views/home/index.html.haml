@@ -3,7 +3,7 @@
     %meta{:charset => "utf-8"}
     %title 爱记录 - 爱生活
     = stylesheet_link_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
-    = stylesheet_link_tag "hello.css"
+    = stylesheet_link_tag "home.css"
 
     %body{style: "padding:0px;"}
       %nav#nav.navbar.navbar-default{:role => "navigation"}
@@ -32,11 +32,11 @@
                 %p.intro.apps-download
                   获取
                   = succeed "\u{ff0c}" do
-                    %a{alt: "爱记录 iOS 客户端", href: "javascript:void(0);"} 
+                    %a.no-hover{alt: "爱记录 iOS 客户端", href: "javascript:void(0);"} 
                       %strike iPhone
                   = succeed "\u{ff0c}" do
-                    %a{onclick: "Home.downloadAndroid();"} Android
-                  %a{:alt => "爱记录 Mac 客户端", :href => "javascript:void(0);"} 
+                    %a.no-hover{onclick: "Home.downloadMobileClient(this, 'android');"} Android
+                  %a.no-hover{:alt => "爱记录 Mac 客户端", :href => "javascript:void(0);"} 
                     %Strike Mac
                   客户端
       .container#cache

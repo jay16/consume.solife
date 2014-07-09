@@ -10,3 +10,13 @@ window.Records =
     # Pass in the file element
     multi_selector.addElement( document.getElementById(input_file) );
    
+  toggleShow: (self, klass) ->
+    state = $(self).attr("checked")
+    if state == undefined
+      $(self).attr("checked", "true")
+      $(klass).removeClass("hidden")
+    else
+      $(self).removeAttr("checked")
+      $(klass).addClass("hidden")
+
+

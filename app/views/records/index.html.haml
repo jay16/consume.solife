@@ -1,14 +1,21 @@
-%table.table.table-hover.record-list
-  %thead
-    %tr
-      %th= t("view.record.value")
-      %th= t("view.record.remark")
-      %th= t("view.record.ymdhms")
-      %th= t("view.tag")
-      %th.center{colspan:"2"}= t("operation")
+.row
+  %label.checkbox-inline{style: "float: right;"}
+    %input{type: "checkbox", value: "option", onclick: "Records.toggleShow(this, '.record-operation');"} 
+    = t("operation")
 
-  %tbody
-    - @records.each do |record|
-      = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
+.row
+  %table.table.table-hover.record-list
+    %thead
+      %tr
+        %th= t("view.record.value")
+        %th= t("view.record.remark")
+        %th= t("view.record.ymdhms")
+        %th= t("view.tag")
+        %th.record-operation.hidden.center{colspan:"2"}
+          = t("operation")
 
-- will_paginate @records, :inner_window => 2
+    %tbody
+      - @records.each do |record|
+        = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
+
+  - will_paginate @records, :inner_window => 2

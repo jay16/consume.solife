@@ -1,18 +1,16 @@
-.row
-  %label.checkbox-inline
-    %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tag-table');"} 
-    标签列表 
+.row.tags-list.hidden
+  %label.checkbox-inline{style: "float: right;"}
+    %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tag-operation');"} 
+    = t("operation")
 
-.row
-  %table.tag-table.hidden.table-condensed{style: "width:100%;"}
+.row.tags-list.hidden.alert.alert-success
+  %table.table-condensed{style: "width:100%;"}
     %thead
       %tr
         %th 标签 
         %th.center.no-padding 类型
-        %th.center{colspan: "2"}
-          %label.checkbox-inline
-            %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tag-operation');"} 
-            = t("operation")
+        %th.tag-operation.hidden.center{colspan: "2"}
+          = t("operation")
     %tbody
       - @tags.each do |tag|
         = render partial: "tags/tag", locals: { tag: tag } 

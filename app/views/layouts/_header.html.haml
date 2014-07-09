@@ -52,7 +52,7 @@
                     = current_user.email
                 %li.divider
                 %li
-                  %a{"data-method" => "delete", :href => "/users/sign_out", :rel => "nofollow"}
+                  = link_to destroy_user_session_path, method: :delete do
                     %i.glyphicon.glyphicon-log-out
-                      退出
-                  - link_to "退出", destroy_user_session_path, method: :delete
+                    退出
+

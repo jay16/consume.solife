@@ -13,9 +13,15 @@ window.Tags =
     if state == undefined
       $(self).attr("checked", "true")
       $(klass).removeClass("hidden")
+      Tags.toggleWidth(".records-list", "col-sm-9", "col-sm-6")
     else
       $(self).removeAttr("checked")
       $(klass).addClass("hidden")
+      Tags.toggleWidth(".records-list", "col-sm-6", "col-sm-9")
+
+  toggleWidth: (klass, k1, k2) ->
+    $(klass).removeClass(k1)
+    $(klass).addClass(k2)
 
 
 
