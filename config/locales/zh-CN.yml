@@ -42,6 +42,7 @@
             current_password:
               blank: "当前密码为必填项!"
             confirmation_token:
+              invalid: "验证码不正确"
               blank: "确认信token失效!"
         record:
           attributes:
