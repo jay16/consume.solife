@@ -19,13 +19,17 @@
 #= require tag-it
 #= require tags
 #= require records
+#= require users
 
 window.App =
-  showLoading :->
+  showLoading: ->
     $(".loading").removeClass("hidden")
-  hideLoading :->
+  hideLoading: ->
     $(".loading").addClass("hidden")
 
+  toggleShow: (h_k, s_k) ->
+    $(h_k).addClass("hidden")
+    $(s_k).removeClass("hidden")
 
 reloadWindow =->
   window.location.reload()

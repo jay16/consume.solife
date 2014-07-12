@@ -3,10 +3,10 @@
     .row
       .list-group
         .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
-          .col-6.col-sm-6.col-lg-6
+          .col-sm-6
             = gravatar_image_tag(current_user.email, alt: current_user.name)
-          .col-6.col-sm-6.col-lg-6
-            = current_user.name
+          .col-sm-6
+            = render partial: "users/edit_user_name", layout: false
         %a.list-group-item{:href => ""}= ["消费[", @records.count, "]笔"].join
         %a.list-group-item
           %label.checkbox-inline
@@ -61,3 +61,11 @@
   // 侧边栏-标签列表
   .col-sm-3
     = render template: "tags/index", layout: false
+
+:javascript
+  $(function(){
+    $(".edit-user-name").hover(
+        function() { $(this).css("cursor", "pointer");$(".edit-user-name-btn").removeClass("hidden");},
+        function() { $(".edit-user-name-btn").addClass("hidden");}
+    );
+  });

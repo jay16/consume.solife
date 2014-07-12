@@ -1,6 +1,9 @@
 "zh-CN":
   errors:
     messages:
+      already_confirmed: "was already confirmed, please try signing in"
+      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
+      expired: "has expired, please request a new one"
       not_found: "没有找到"
       already_confirmed: "已经确认"
       not_locked: "没有锁定"
@@ -26,6 +29,17 @@
     passwords:
       send_instructions: '几分后，您将收到重置密码的电子邮件.'
       updated: '您的密码已修改成功，请重新登录.'
+    registrations:
+      destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
+      signed_up: "Welcome! You have signed up successfully."
+      signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
+      signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
+      signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+      update_needs_confirmation: "帐户信息更新成功,但需要验证你新的登陆邮箱, 请登陆邮箱点击验证链接..."
+      updated: "帐户信息更新成功."
+    sessions:
+      signed_in: "登陆成功."
+      signed_out: "再见, 退出成功."
     confirmations:
       send_instructions: '几分后，您将收到帐号激活的电子邮件.'
       confirmed: '您的帐号已经激活，请登录.'

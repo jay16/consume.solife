@@ -1,0 +1,52 @@
+.row{style:"margin-top:50px;"}
+  .col-sm-6.col-sm-offset-3
+    %h1{style: "text-align:center;margin-top:70px;margin-bottom:15px;"}
+      用户注册 
+
+:css
+  .controls { margin-bottom: 10px; }
+  .help-inline { color: red; }
+  .form-input {
+    color: #565656;
+    height: 53px;
+    padding: 0px 15px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    font-size: 18px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+
+.row{style:"margin-top:50px;"}
+  .col-sm-4.col-sm-offset-4
+    = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| 
+      = f.error_notification
+      .form-inputs
+        = f.input :name, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-user
+          = f.input_field :name, placeholder: "用户名称", autofocus: true, class: "form-input form-control" 
+
+        = f.input :email, wrapper: :prepend, label: false,  input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-envelope
+          = f.input_field :email, placeholder: "注册邮箱", class: "form-input form-control" 
+
+        = f.input :password, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-off
+          = f.input_field :password, placeholder: "登陆密码", class: "form-input form-control" 
+
+        = f.input :password_confirmation, wrapper: :prepend, label: false, input_html: { class: "input-group"} do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-off
+          = f.input_field :password, placeholder: "确认登陆密码", class: "form-input form-control" 
+
+        .form-actions
+          = f.button :submit, "注册",  id: "regSubmit", class: "hidden"
+          = link_to "", onclick: "$('#regSubmit').trigger('click');", class: "btn btn-default btn-primary", style: "float:right;" do
+            %i.glyphicon.glyphicon-arrow-right
+
+          = link_to "登陆", "/users/sign_in", class: "btn btn-default btn-link"
+
+    - render "devise/shared/links"

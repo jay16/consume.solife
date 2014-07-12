@@ -2,7 +2,7 @@ require "api.rb"
 Consume::Application.routes.draw do
   root :to => "home#index"
 
-  devise_for :users, controllers: { sessions: :sessions }
+  devise_for :users#, controllers: { sessions: :sessions }
 
   resources :users do
     collection do
@@ -21,6 +21,7 @@ Consume::Application.routes.draw do
 
   mount Consume::API => "/"
   get "/api" => "home#api"
+  patch "/users/:id" => "account#update"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,3 +1,4 @@
+#encoding: utf-8
 class UsersController < ApplicationController
   respond_to :html, :js
 
@@ -18,6 +19,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    current_user.name = params[:user][:name]
+    notice = (current_user.save ? "成功" : "失败")
+
+    flash[:notice] = "更新个人信息" + notice + "."
+    redirect_to "/users"
   end
 
   def search
@@ -50,4 +56,20 @@ class UsersController < ApplicationController
 
   end
 
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params 
+      params.require(:user).permit(:id, :name, :email, :password)
+    end
+end
+
+class AccountController < Devise::RegistrationsController
+  def update 
+    user = User.find(params[:id])
+    user.update(params[:user]) 
+    notice = (user.save ? "成功" : "失败")
+
+    flash[:notice] = "更新个人信息" + notice + "."
+    redirect_to "/users"
+  end
 end

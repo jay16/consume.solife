@@ -1,0 +1,17 @@
+.row.user-name
+  .edit-user-name
+    .col-sm-9
+      = current_user.username
+    .col-sm-3.edit-user-name-btn.hidden
+      = link_to "javascript:void(0);", class: "btn btn-default btn-sm btn-link", onclick: "App.toggleShow('.user-name', '.edit-user-name-form');" do
+        %span.glyphicon.glyphicon-pencil
+.row.edit-user-name-form.hidden
+  = simple_form_for(current_user) do |f|
+    %fieldset
+      .form-group.form-inline
+        = f.text_field :name, class: "form-control", placeholder: "用户名称", style: "width:70%;height:30px", onchange: "User.inputMonitor(this, '#editUserNameTrigger');", onkeyup: "User.inputMonitor(this, '#editUserNameTrigger');", input: "User.inputMonitor(this, '#editUserNameTrigger');"
+        = f.button :submit, id: "editUserNameSubmit", class: "hidden", onclick: "App.showLoading();"
+        %a#editUserNameTrigger.inline.btn.btn-default.btn-sm.btn-link{onclick: "$('#editUserNameSubmit').trigger('click');", disabled: "disabled", "data-toggle" => "tooltip", "data-original-title" => "提交修改", style: "padding:0px;"}
+          %span.glyphicon.glyphicon-ok
+        %a.inline.btn.btn-default.btn-sm.btn-link{"data-toggle" => "tooltip", "data-original-title" => "取消修改", style: "padding:0px;", onclick: "App.toggleShow('.edit-user-name-form', '.user-name');"}
+          %span.glyphicon.glyphicon-remove

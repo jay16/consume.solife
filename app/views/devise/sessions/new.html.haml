@@ -3,17 +3,30 @@
     %h1{style: "text-align:center;margin-top:70px;margin-bottom:30px;"}
       爱生活，爱记录
     %h3 橫向解析你的消费习惯，纵向解释你的资金去向。
-
+:css
+  .form-input {
+    color: #565656;
+    height: 53px;
+    padding: 0px 15px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    font-size: 18px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
 .row{style:"margin-top:50px;"}
   .col-sm-4.col-sm-offset-4
     .row
       .col-sm-10.col-sm-offset-1
         = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           .form-inputs
-            = f.input :email, required: false, autofocus: true, label: false, input_html: { class: "col-sm-12 form-control", style: "border-radius: 4px 4px 0px 4px;" }
-            = f.input :password, required: true, label: false, input_html: { class: "col-sm-8 form-control", style: "width:80%;border-radius: 4px 0px 0px 4px;" }, wrapper_html: { style: "display: inline;" }
+            = f.input :email, required: false, autofocus: true, label: false, input_html: { class: "col-sm-12 form-input form-control" }, placeholder: "用户邮箱"
+            = f.input :password, required: true, label: false, input_html: { class: "col-sm-8 form-input form-control", style: "width:80%;border-radius: 5px 0px 0px 5px;" }, wrapper_html: { style: "display: inline;" }, placeholder: "登陆密码"
             - f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-            = f.button :submit, "登 陆", label: false, class: "btn btn-primary", style: "border-radius: 0px 0px 4px 0px;"
+            = f.button :submit, "登 陆", label: false, class: "hidden", id: "loadSubmit"
+            = link_to "", id: "loadTrigger", onclick: "$('#loadSubmit').trigger('click');", class: "btn btn-primary", style: "height:53px;width:20%; border-radius: 0px 5px 5px 0px;" do
+              %i.glyphicon.glyphicon-arrow-right{style: "margin-top: 12px;"}
+
         - render "devise/shared/links"
     :javascript
       $(function(){
@@ -24,9 +37,9 @@
               })
               console.log(isDisabled);
               if(isDisabled == true)
-                  $("input[type=submit]").attr("disabled", "disabled");
+                  $("#loadTrigger").attr("disabled", "disabled");
               else
-                  $("input[type=submit]").removeAttr("disabled");
+                  $("#loadTrigger").removeAttr("disabled");
           }
 
           inputMonitor();

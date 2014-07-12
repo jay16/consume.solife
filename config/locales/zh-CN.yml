@@ -28,12 +28,19 @@
       models:
         user:
           attributes:
+            name:
+              blank: "用户名称不可为空."
             email:
+              blank: "登陆密码不可以为空."
               taken: "此邮箱已被注册."
             password:
               blank: "密码不可以为空."
+              too_short: "密码长度至少6位."
             password_confirmation:
-              confirmation: "确认密码不可以为空."
+              blank: "确认密码不可以为空."
+              confirmation: "密码与确认密码不一致."
+            current_password:
+              blank: "当前密码为必填项!"
         record:
           attributes:
             user_id:

@@ -6,8 +6,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :timeoutable, :timeout_in => 20.minutes
+
+  #attr_accessor :name
+  #attr_accessible :name
+  validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@]+@[^@]+\z/, message: "Error Format Email!" }
-  validates :password, length: { in: 6..20 } #minimum,maximum,is
+  validates :password, length: { minimum: 6 } #minimum,maximum,is #in: 6..20
 
   has_many :tags, -> { uniq }
   has_many :records, -> { uniq }
@@ -23,6 +27,9 @@ class User < ActiveRecord::Base
 
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
 
+  def username
+    self.name || "未设置名称"
+  end
 
   # uniq group_users and group_follows
   def group_members

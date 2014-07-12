@@ -6,10 +6,25 @@ module ApplicationHelper
   end
 
   def controller_stylesheet_link_tag
-    case controller_name
-    when "home","contacts","sms"
-      #stylesheet_link_tag "https://land.xiaomi.net/res/c9369bd/css/micloudfe/home.css"
+    fname = case controller_name
+    when "users"
+      fname = "#{controller_name}.css"
+    else ""  
     end
+
+    return "" if fname.blank?
+    raw %(<link href="#{asset_path(fname)}" rel="stylesheet" data-turbolinks-track />)
+  end
+
+  def controller_javascript_include_tag
+    fname = case controller_name
+    when "users"
+      fname = "#{controller_name}.js"
+    else ""
+    end
+
+    return "" if fname.blank?
+    raw %(<script src="#{asset_path(fname)}" data-turbolinks-track></script>)
   end
 
   def notice_message

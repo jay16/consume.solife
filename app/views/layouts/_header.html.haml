@@ -47,9 +47,9 @@
                 %b.caret
               %ul.dropdown-menu
                 %li
-                  %a{:href => "#"}
+                  %a{:href => "/users/edit"}
                     %i.glyphicon.glyphicon-user
-                    = current_user.email
+                    账户设置
                 %li.divider
                 %li
                   = link_to destroy_user_session_path, method: :delete do
