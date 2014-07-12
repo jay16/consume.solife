@@ -1,0 +1,32 @@
+.row{style:"margin-top:50px;"}
+  .col-sm-6.col-sm-offset-3
+    %h1{style: "text-align:center;margin-top:70px;margin-bottom:15px;"}
+      重新发送激活邮件
+
+:css
+  .controls { margin-bottom: 10px; }
+
+.row{style:"margin-top:50px;"}
+  .col-sm-4.col-sm-offset-4
+
+    = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+      = f.error_notification
+      = f.full_error :confirmation_token 
+
+      .form-inputs
+        = f.input :email, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-envelope
+          = f.input_field :email, autofocus: true, class: "form-input form-control", placeholder: "注册邮箱"
+          = link_to "", class: "input-group-addon btn btn-default btn-primary", onclick: "$('#reSendEmailSubmit').trigger('click');", "data-toggle" => "tooltip", "data-original-title" => "重新发送确认信" do
+            %i.glyphicon.glyphicon-arrow-right
+
+        = f.button :submit, "Resend confirmation instructions", id: "reSendEmailSubmit", class: "hidden"
+
+    = render "devise/shared/links" 
+
+  .col-sm-4
+    .alert.alert-warning
+      %ul
+        %li 非常抱歉在您注册[#{Setting.team}]过程中没有收到本系统发送的确认信所带来的不便^_^.
+        %li 若提交[重新发送激活邮件]后，提示您的邮箱不存在,表示您注册失败，请重新注册*_*.

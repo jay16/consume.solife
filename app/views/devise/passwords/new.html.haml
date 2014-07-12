@@ -1,0 +1,29 @@
+.row{style:"margin-top:50px;"}
+  .col-sm-6.col-sm-offset-3
+    %h1{style: "text-align:center;margin-top:70px;margin-bottom:15px;"}
+      忘记密码? 
+
+:css
+  .controls { margin-bottom: 10px; }
+
+.row{style:"margin-top:50px;"}
+  .col-sm-4.col-sm-offset-4
+    = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| 
+      = f.error_notification
+
+      .form-inputs
+        = f.input :email, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-envelope
+          = f.input_field :email, class: "form-input form-control", autofocus: true, placeholder: "注册邮箱"
+          = link_to "", class: "input-group-addon btn btn-default btn-primary", onclick: "$('#resetSubmit').trigger('click');", "data-toggle" => "tooltip", "data-original-title" => "提交追回密码" do
+            %i.glyphicon.glyphicon-arrow-right
+
+        = f.button :submit, "Send me reset password instructions", class: "hidden", id: "resetSubmit"
+
+    = render "devise/shared/links" 
+
+  .col-sm-4
+    .alert.alert-warning
+      %ul
+        %li 提交后，请检查注册邮箱的收信箱，根据邮件指导找回密码.

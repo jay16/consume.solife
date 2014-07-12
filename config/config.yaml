@@ -1,4 +1,16 @@
 defaults: &defaults
+  title: "爱记录"
+  slogan: "爱生活"
+  team: "爱记录"
+  contact: "jay_li@solife.us"
+  devise:
+    email: "jay_li@solife.us"
+    address: "smtp.qq.com"
+    port: 25,
+    user_name: "solife.jay@qq.com"
+    domain: "qq.com"
+    password: "527130673890106"
+    authentication: "login"
   database:
     mysql:
       user: "root"
@@ -7,9 +19,9 @@ defaults: &defaults
   mobile:
     os:
       android:
-        version: "0.2"
+        version: "0.1.c"
         describtion: "consume.solife.us"
-        url: "http://solife-apk.qiniudn.com/iconsumes-0.2.apk"
+        url: "http://solife-apk.qiniudn.com/iconsumes-0.1.c.apk"
 
 development:
   <<: *defaults

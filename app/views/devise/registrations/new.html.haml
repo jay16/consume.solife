@@ -5,17 +5,6 @@
 
 :css
   .controls { margin-bottom: 10px; }
-  .help-inline { color: red; }
-  .form-input {
-    color: #565656;
-    height: 53px;
-    padding: 0px 15px;
-    border: none;
-    transition: all 0.2s ease-in-out;
-    font-size: 18px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-  }
 
 .row{style:"margin-top:50px;"}
   .col-sm-4.col-sm-offset-4
@@ -50,3 +39,10 @@
           = link_to "登陆", "/users/sign_in", class: "btn btn-default btn-link"
 
     - render "devise/shared/links"
+
+  .col-sm-4
+    .alert.alert-warning
+      %h4.center 温馨提示
+      %ul
+        %li 推荐使用常用邮箱注册(以便发通知信).
+        %li 登陆密码位数至少6位.

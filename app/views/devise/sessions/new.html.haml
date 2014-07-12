@@ -3,17 +3,7 @@
     %h1{style: "text-align:center;margin-top:70px;margin-bottom:30px;"}
       爱生活，爱记录
     %h3 橫向解析你的消费习惯，纵向解释你的资金去向。
-:css
-  .form-input {
-    color: #565656;
-    height: 53px;
-    padding: 0px 15px;
-    border: none;
-    transition: all 0.2s ease-in-out;
-    font-size: 18px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-  }
+
 .row{style:"margin-top:50px;"}
   .col-sm-4.col-sm-offset-4
     .row
@@ -27,7 +17,11 @@
             = link_to "", id: "loadTrigger", onclick: "$('#loadSubmit').trigger('click');", class: "btn btn-primary", style: "height:53px;width:20%; border-radius: 0px 5px 5px 0px;" do
               %i.glyphicon.glyphicon-arrow-right{style: "margin-top: 12px;"}
 
-        - render "devise/shared/links"
+        = render "devise/shared/links"
+
+
+
+
     :javascript
       $(function(){
           function inputMonitor() {

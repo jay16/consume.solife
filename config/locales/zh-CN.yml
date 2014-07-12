@@ -41,6 +41,8 @@
               confirmation: "密码与确认密码不一致."
             current_password:
               blank: "当前密码为必填项!"
+            confirmation_token:
+              blank: "确认信token失效!"
         record:
           attributes:
             user_id:

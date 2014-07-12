@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    redirect_to "/users"
   end
 
   def edit
