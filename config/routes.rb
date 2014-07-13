@@ -21,7 +21,6 @@ Consume::Application.routes.draw do
 
   mount Consume::API => "/"
   get "/api" => "home#api"
-  patch "/users/:id" => "account#update"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

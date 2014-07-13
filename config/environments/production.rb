@@ -46,7 +46,7 @@ Consume::Application.configure do
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  config.log_level = :debug #:info
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -63,7 +63,7 @@ Consume::Application.configure do
   #config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "rb-cn", :compression => true}]
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w(home.css home)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -84,4 +84,17 @@ Consume::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.action_mailer.default_url_options = { :host => "#{Setting.domain}:80" }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => Setting.devise.address,
+    :port                 => Setting.devise.port,
+    :user_name            => Setting.devise.user_name,
+    :domain               => Setting.devise.domain,
+    :password             => Setting.devise.password,
+    :authentication       => Setting.devise.authentication
+    #:enable_starttls_auto => true 
+  }
 end

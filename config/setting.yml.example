@@ -2,14 +2,21 @@ defaults: &defaults
   title: "爱记录"
   slogan: "爱生活"
   team: "爱记录"
+  favicon: "http://solife-images.u.qiniudn.com/favicon.so.ico"
+  domain: "consume.solife.us"
   contact: "jay_li@solife.us"
+  cdn:
+    bootstrap:
+      v303:
+        js: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
+        css: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
   devise:
     email: "jay_li@solife.us"
-    address: "smtp.qq.com"
+    address: "smtp.ym.163.com"
     port: 25,
-    user_name: "solife.jay@qq.com"
-    domain: "qq.com"
-    password: "527130673890106"
+    user_name: "jay_li@solife.us"
+    domain: "solife.us"
+    password: "email-pwd"
     authentication: "login"
   database:
     mysql:

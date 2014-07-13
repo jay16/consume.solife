@@ -26,20 +26,16 @@ Consume::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = false
-  config.action_mailer.default_url_options = { :host => 'consume.solife.us:80' }
+  config.action_mailer.default_url_options = { :host => "#{Setting.domain}:80" }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    #:address              => "cndemo.openfind.com",
-    #:domain               => 'baci.lindsaar.net',
-    #:user_name            => 'user10',
-    #:password             => '12Nm34@sh',
-    :address              => "smtp.qq.com",
-    :port                 => 25,
-    :user_name            => 'solife.jay@qq.com',
-    :domain               => 'qq.com',
-    :password             => '527421132890106',
-    :authentication       => 'login'
+    :address              => Setting.devise.address,
+    :port                 => Setting.devise.port,
+    :user_name            => Setting.devise.user_name,
+    :domain               => Setting.devise.domain,
+    :password             => Setting.devise.password,
+    :authentication       => Setting.devise.authentication
     #:enable_starttls_auto => true 
   }
 end

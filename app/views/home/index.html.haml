@@ -1,15 +1,19 @@
+!!!
 %html{:lang => "zh-CN"}
   %head
     %meta{:charset => "utf-8"}
-    %title 爱记录 - 爱生活
-    = stylesheet_link_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
-    = stylesheet_link_tag "home.css"
+    %title= [Setting.title, "-", Setting.slogan].join(" ")
+    = javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
+    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v303.css}"
+    = stylesheet_link_tag "home", media: "all", "data-turbolinks-track" => true
+    = csrf_meta_tags
+
 
     %body{style: "padding:0px;"}
       %nav#nav.navbar.navbar-default{:role => "navigation"}
         / Brand and toggle get grouped for better mobile display
         .navbar-header
-          %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(http://solife-images.u.qiniudn.com/favicon.so.ico) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 爱记录
+          %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 爱记录
         / Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse
           %ul.nav.navbar-nav.hidden
@@ -61,7 +65,7 @@
 
       %footer#footer
         .copyright
-          %p © #{Time.now.strftime("%Y")} consume.solife.us 
+          %p © #{Time.now.strftime("%Y")} #{Setting.domain}
 
 #login-modal.modal.fade
   .modal-dialog
