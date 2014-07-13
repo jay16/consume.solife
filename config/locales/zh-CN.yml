@@ -44,6 +44,9 @@
             confirmation_token:
               invalid: "验证码不正确"
               blank: "确认信token失效!"
+            reset_password_token:
+              invalid: "重置密码token无效."
+              blank: "重置密码token不可为空."
         record:
           attributes:
             user_id:

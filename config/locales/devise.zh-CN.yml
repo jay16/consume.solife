@@ -1,9 +1,9 @@
 "zh-CN":
   errors:
     messages:
-      already_confirmed: "was already confirmed, please try signing in"
-      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
-      expired: "has expired, please request a new one"
+      already_confirmed: "帐户已经被验证, 请重新登陆."
+      confirmation_period_expired: "需要在 %{period} 时间内验证, 请再次点击新的请求."
+      expired: "已经失效, 请再次点击新的请求."
       not_found: "您提供的邮箱不存在@_@."
       already_confirmed: "已经确认"
       not_locked: "没有锁定"
