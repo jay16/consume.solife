@@ -1,6 +1,14 @@
 .row.row-offcanvas.row-offcanvas-right
   #sidebar.col-sm-3.sidebar-offcanvas{:role => "navigation"}
     .row
+      .col-sm-12
+        .alert.alert-warning
+          %a.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
+          %p.center 温馨提示
+          %ul
+            %li 本界面目前只用来查询
+            %li 数据[增][删][改]在手机端
+    .row
       .list-group
         .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
           .col-sm-6
