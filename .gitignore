@@ -17,7 +17,8 @@ config/*.yaml
 /config/*.yaml
 /.bundle
 /vendor
-/public/assets
+public
+/public
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

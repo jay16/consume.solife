@@ -3,13 +3,12 @@
   %head
     %meta{:charset => "utf-8"}
     %title= [Setting.title, "-", Setting.slogan].join(" ")
-    = javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
     = stylesheet_link_tag "#{Setting.cdn.bootstrap.v303.css}"
-    = stylesheet_link_tag "home", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
 
 
-    %body{style: "padding:0px;"}
+    %body.home-body{style: "padding:0px;"}
       %nav#nav.navbar.navbar-default{:role => "navigation"}
         / Brand and toggle get grouped for better mobile display
         .navbar-header
@@ -89,6 +88,5 @@
               %input.btn.btn.btn-primary{:label => "false", :name => "commit", :style => "border-radius: 0px 0px 4px 0px;", :type => "submit", :value => "登 陆"}
 
 
-= javascript_include_tag "http://libs.baidu.com/jquery/1.9.0/jquery.js"
-= javascript_include_tag "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
-= javascript_include_tag "home"
+= javascript_include_tag "application", "data-turbolinks-track" => true
+= javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"

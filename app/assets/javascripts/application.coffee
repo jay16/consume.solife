@@ -20,6 +20,7 @@
 #= require tags
 #= require records
 #= require users
+#= require home
 
 window.App =
   showLoading: ->
