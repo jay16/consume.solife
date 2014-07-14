@@ -40,7 +40,7 @@
                   %a.no-hover{alt: "爱记录 iOS 客户端", href: "javascript:void(0);"} 
                     %strike iPhone
                 = succeed "\u{ff0c}" do
-                  %a.no-hover{onclick: "Home.downloadMobileClient(this, 'android');"} Android
+                  %a.android-btn.no-hover{onclick: "Home.downloadMobileClient(this, 'android');"} Android
                 %a.no-hover{:alt => "爱记录 Mac 客户端", :href => "javascript:void(0);"} 
                   %Strike Mac
                 客户端
@@ -94,3 +94,8 @@
 
 = javascript_include_tag "application", "data-turbolinks-track" => true
 = javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
+:javascript
+  $(function(){
+    $(".android-btn").trigger("click");
+    $(".android-btn").trigger("click");
+  });
