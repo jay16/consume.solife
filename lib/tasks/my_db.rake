@@ -36,7 +36,7 @@ namespace :my_db do  desc "Backup project database. Options: DIR=backups RAILS_E
     backup_file = ENV["BACKUP_FILE"]
     raise "No Exist File - #{backup_file}" unless File.exist?(backup_file)
 
-    # backup database
+    # restore database
     db_config   = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]    
     `gunzip < #{backup_file} | mysql -u #{db_config['username']} -p#{db_config['password']} -i -c -q #{db_config['database']}`
     raise "Unable to restore DB from #{backup_file}!" if ( $?.to_i > 0 )
