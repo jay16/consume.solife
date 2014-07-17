@@ -17,10 +17,10 @@ config/*.yaml
 /config/*.yaml
 /.bundle
 /vendor
-public
-/public
+/public/*
 
 # Ignore the default SQLite database.
+/db/*
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
