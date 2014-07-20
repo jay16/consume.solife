@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
     n2 = self.email.length.to_s
     n1 = n2.length.to_s
     str = n1 + n2 + self.email + self.password
-    Base64.encode64(str)
+    Base64.encode64(str).strip
   end
 end
 

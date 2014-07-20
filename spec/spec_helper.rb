@@ -53,3 +53,14 @@ RSpec.configure do |config|
     file_path: /spec\/grape/
   }
 end
+
+# global function in every spec file
+# JSON parse
+def jparse str
+  begin
+  JSON.parse str
+  rescue #=> e
+    str
+  end
+end
+
