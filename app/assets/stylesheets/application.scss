@@ -106,3 +106,26 @@
   border-radius: 5px;
 }
 
+@font-face {
+    font-family: "zapfino";
+    src: url('http://solfie-cdn.qiniudn.com/ZapfinoForteLTPro.otf') format('truetype');
+    //src: url('websymbols/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    //     url('websymbols/websymbols-regular-webfont.woff') format('woff'),
+    //     url('websymbols/websymbols-regular-webfont.ttf') format('truetype'),
+    //     url('websymbols/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+    font-weight: inherit;
+    font-style: inherit;
+}
+@font-face {
+    font-family: "hangshu";
+    src: url('http://solfie-cdn.qiniudn.com/DeBiaoGangbiHangshu.otf') format('truetype');
+    font-weight: inherit;
+    font-style: inherit;
+}
+
+.zapfino {
+  font-family: "zapfino";
+}
+.hangshu {
+  font-family: "hangshu";
+}

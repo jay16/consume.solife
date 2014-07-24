@@ -11,7 +11,8 @@
     %nav#nav.navbar.navbar-default{:role => "navigation"}
       / Brand and toggle get grouped for better mobile display
       .navbar-header
-        %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 爱记录
+        %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 
+          %span.hangshu 爱记录
       / Collect the nav links, forms, and other content for toggling
       .collapse.navbar-collapse
         %ul.nav.navbar-nav.hidden
@@ -40,7 +41,7 @@
                   %a.no-hover{alt: "爱记录 iOS 客户端", href: "javascript:void(0);"} 
                     %strike iPhone
                 = succeed "\u{ff0c}" do
-                  %a.android-btn.no-hover{onclick: "Home.downloadMobileClient(this, 'android');"} Android
+                  %a.zapfino.android-btn.no-hover{onclick: "Home.downloadMobileClient(this, 'android');"} Android
                 %a.no-hover{:alt => "爱记录 Mac 客户端", :href => "javascript:void(0);"} 
                   %Strike Mac
                 客户端
@@ -68,7 +69,10 @@
 
     %footer#footer
       .copyright
-        %p © #{Time.now.strftime("%Y")} #{Setting.domain}
+        %p 
+          &copy;
+          #{Time.now.strftime("%Y")} 
+          %span.zapfino #{Setting.domain}
 
 #login-modal.modal.fade
   .modal-dialog
