@@ -32,9 +32,38 @@ window.App =
     $(h_k).addClass("hidden")
     $(s_k).removeClass("hidden")
 
-reloadWindow =->
-  window.location.reload()
-  #alert "reload"
-  return
-setInterval reloadWindow, 1200 * 1000
+  reloadWindow: ->
+    window.location.reload()
 
+  deviseResizeWindow: ->
+    w = window
+    d = document
+    e = d.documentElement
+    g = d.getElementsByTagName("body")[0]
+    x = w.innerWidth or e.clientWidth or g.clientWidth
+    y = w.innerHeight or e.clientHeight #|| g.clientHeight;
+
+    nav_height = 80 || $("nav:first").height()
+    footer_height = 100 || $("footer:first").height()
+    main_height = y-nav_height-footer_height
+    if main_height > 300
+      $("#main").css
+        height: main_height + "px"
+
+$ ->
+  # devise login stay in 12 minute without operation
+  # reload the UI to login
+  setInterval App.reloadWindow, 1200 * 1000
+
+  # css devise layout
+  if window.location.pathname.indexOf("/users") >= 0
+    App.deviseResizeWindow()
+
+  # global bootstrap japavscript plugin
+  $('body').tooltip ->
+    selector: "[data-toggle=tooltip]"
+    container: "body"
+
+  $('body').popover ->
+      selector: "[data-toggle=popover]"
+      container: "body"

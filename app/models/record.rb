@@ -20,6 +20,8 @@ class Record < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :tags, -> { uniq }, autosave: true
   
+  scope :recent, -> { order("created_at desc") }
+ 
   after_create :build_relation_with_tags
   after_update :build_relation_with_tags
   

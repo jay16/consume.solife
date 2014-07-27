@@ -1,0 +1,2 @@
+module Cpanel::RecordsHelper
+end

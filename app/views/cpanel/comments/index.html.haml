@@ -1,0 +1,17 @@
+%strong 回复列表
+
+%table.table.table-bordered.table-striped.table-condensed
+  %tr.head
+    %td.first ID
+    %td 内容 
+    %td 用户  
+    %td 创建时间
+
+  - @comments.each do |comment|
+    %tr
+      %td.first= comment.id
+      %td= comment.user.name
+      %td= comment.content
+      %td= comment.created_at
+
+= will_paginate @reocrds

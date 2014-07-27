@@ -1,0 +1,23 @@
+%strong 消费列表
+
+:css
+  td { max-width: 300px; }
+%table.table.table-bordered.table-striped.table-condensed
+  %tr.head
+    %td.first ID
+    %td 用户
+    %td 数值
+    %td 备注
+    %td 消费时间
+    %td 创建时间
+
+  - @records.each do |record|
+    %tr
+      %td.first= record.id
+      %td= record.user.name
+      %td= record.value
+      %td= record.remark
+      %td= record.ymdhms
+      %td= record.created_at
+
+= will_paginate @reocrds

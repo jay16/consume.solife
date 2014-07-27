@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
 
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
 
+  # 是否是管理员
+  def admin?
+    Setting.admin_emails.include?(self.email)
+  end
+
   def username
     self.name || "未设置名称"
   end

@@ -1,4 +1,4 @@
-%nav.navbar.navbar-default{:role => "navigation"}
+%nav#nav.navbar.navbar-default{:role => "navigation"}
   .container
     .row
       .col-sm-12
@@ -10,49 +10,55 @@
             %span.icon-bar
             %span.icon-bar
           %a.navbar-brand{:href => "/"} 爱记录
-        / Collect the nav links, forms, and other content for toggling
-        .collapse.navbar-collapse
-          %ul.nav.navbar-nav.hidden
-            %li.active
-              %a{:href => "#"} Link
-            %li
-              %a{:href => "#"} Link
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                Dropdown
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a{:href => "#"} Action
-                %li
-                  %a{:href => "#"} Another action
-                %li
-                  %a{:href => "#"} Something else here
-                %li.divider
-                %li
-                  %a{:href => "#"} Separated link
-                %li.divider
-                %li
-                  %a{:href => "#"} One more separated link
-          %form.navbar-form.hidden.navbar-left{:role => "search"}
-            .form-group
-              %input.form-control{:placeholder => "Search", :type => "text"}
-            %button.btn.btn-default{:type => "submit"} Submit
-          %ul.nav.navbar-nav.navbar-right
-            %li.hidden
-              %a{:href => "#"} Link
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                设置
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a{:href => "/users/edit"}
-                    %i.glyphicon.glyphicon-user
-                    账户设置
-                %li.divider
-                %li
-                  = link_to destroy_user_session_path, method: :delete do
-                    %i.glyphicon.glyphicon-log-out
-                    退出
+        - if current_user
+          / Collect the nav links, forms, and other content for toggling
+          .collapse.navbar-collapse
+            %ul.nav.navbar-nav.hidden
+              %li.active
+                %a{:href => "#"} Link
+              %li
+                %a{:href => "#"} Link
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  Dropdown
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "#"} Action
+                  %li
+                    %a{:href => "#"} Another action
+                  %li
+                    %a{:href => "#"} Something else here
+                  %li.divider
+                  %li
+                    %a{:href => "#"} Separated link
+                  %li.divider
+                  %li
+                    %a{:href => "#"} One more separated link
+            %form.navbar-form.hidden.navbar-left{:role => "search"}
+              .form-group
+                %input.form-control{:placeholder => "Search", :type => "text"}
+              %button.btn.btn-default{:type => "submit"} Submit
+            %ul.nav.navbar-nav.navbar-right
+              %li.hidden
+                %a{:href => "#"} Link
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  设置
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "/users/edit"}
+                      %i.glyphicon.glyphicon-user
+                      账户设置
+                  - if current_user && current_user.admin?
+                    %li
+                      %a{:href => "/cpanel"}
+                        %i.glyphicon.glyphicon-wrench
+                        后台管理
+                  %li.divider
+                  %li
+                    = link_to destroy_user_session_path, method: :delete do
+                      %i.glyphicon.glyphicon-log-out
+                      退出
 

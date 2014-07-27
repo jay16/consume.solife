@@ -1,0 +1,21 @@
+%strong 用户列表
+
+%table.table.table-bordered.table-striped.table-condensed
+  %tr.head
+    %td.first ID
+    %td 名称
+    %td 邮箱
+    %td 注册时间
+    %td 操作
+
+  - @users.each do |user|
+    %tr
+      %td.first= user.id
+      %td= user.name
+      %td= user.email
+      %td= user.created_at
+      %td
+        = link_to edit_cpanel_user_path(user) do
+          %i.glyphicon.glyphicon-edit
+
+= will_paginate @reocrds

@@ -1,0 +1,17 @@
+.row{style:"margin:30px 0px;"}
+  .col-sm-4.col-sm-offset-4
+    = simple_form_for([:cpanel, @user]) do |f| 
+      = f.error_notification
+      .form-inputs
+        = f.input :name, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-user
+          = f.input_field :name, placeholder: "用户名称", autofocus: true, class: "form-input form-control", value: @user.name
+
+        - f.input :email, wrapper: :prepend, label: false,  input_html: { class: "input-group" } do
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-envelope
+          = f.input_field :email, placeholder: "注册邮箱", class: "form-input form-control", value: @user.email
+
+        .form-actions
+          = f.button :submit, "提交", class: "btn btn-default btn-primary"

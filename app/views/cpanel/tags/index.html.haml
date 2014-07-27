@@ -1,0 +1,19 @@
+%strong 标签列表
+
+%table.table.table-bordered.table-striped.table-condensed
+  %tr.head
+    %td.first ID
+    %td 标签 
+    %td 类别
+    %td 用户
+    %td 创建时间
+
+  - @tags.each do |tag|
+    %tr
+      %td.first= tag.id
+      %td= tag.label
+      %td= tag.klass
+      %td= tag.user.name
+      %td= tag.created_at
+
+= will_paginate @reocrds

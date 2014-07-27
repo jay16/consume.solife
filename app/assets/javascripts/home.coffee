@@ -32,15 +32,3 @@ window.Home =
       height: ch + "px"
     #$("#cache").scrollTop $("#cache")[0].scrollHeight
 
-$ ->
-  Home.resizeWindow()
-  $(window).resize ->
-    Home.resizeWindow()
-
-  $("body").tooltip
-    selector: "[data-toggle=tooltip]"
-    container: "body"
-
-  $("body").popover
-    selector: "[data-toggle=popover]"
-    container: "body"

@@ -3,6 +3,18 @@
   %head
     %meta{:charset => "utf-8"}
     %title= [Setting.title, "-", Setting.slogan].join(" ")
+    - if mobile?
+      %meta{content: "no", name: "apple-mobile-web-app-capable"}
+        %meta{content: "True", name: "HandheldFriendly"}/
+        %meta{content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", name: "viewport"}/
+        %link{rel: "apple-touch-icon-precomposed", href: "#{Setting.favicon}"}/
+        %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+      :css
+        .container { width: 100%; }
+        .col-sm-offset-2 { margin-left: 0%; }
+        .col-sm-8 { width: 100%; }
+
+    %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
     = stylesheet_link_tag "#{Setting.cdn.bootstrap.v303.css}"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
@@ -54,7 +66,7 @@
       .row
         .col-sm-8.col-sm-offset-2
           .alert.alert-warning
-            %a.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
+            %a.hidden.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
             温馨提示: 若您对[爱记录]不甚了解, 请勿注册或下载app， 以免给您带来不便...
       .row.cache-list
         .col-sm-8.col-sm-offset-2
@@ -100,6 +112,10 @@
 = javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
 :javascript
   $(function(){
+    Home.resizeWindow()
+    $(window).resize(function(){
+      Home.resizeWindow()
+    });
     $(".android-btn").trigger("click");
     $(".android-btn").trigger("click");
   });

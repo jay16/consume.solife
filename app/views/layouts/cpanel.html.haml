@@ -16,15 +16,16 @@
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
   %body
-    = render partial: "layouts/header"
-    #main.container
+    = render partial: "layouts/cpanel_header"
+    .container
       .row
         .col-sm-12{style: "text-align:center;"}
           .loading.hidden 加载中...
           = notice_message
           
-      = yield
-
+      .row
+        .inner-main
+          = yield
 
     %footer#footer
       .copyright

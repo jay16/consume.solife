@@ -22,19 +22,34 @@ class ApplicationController < ActionController::Base
     super(opts)
   end
 
+  def render_404
+    render_optional_error_file(404)
+  end
+
+  def render_403
+    render_optional_error_file(403)
+  end
+
+  def render_optional_error_file(status_code)
+    status = status_code.to_s
+    if ["404","403", "422", "500"].include?(status)
+      render :template => "/errors/#{status}", :format => [:html], :handler => [:haml], :status => status, :layout => false
+    else
+      render :template => "/errors/unknown", :format => [:html], :handler => [:haml], :status => status, :layout => false
+    end
+  end
+
   protected
 
-=begin
-    There are just three actions in Devise that allows any set of parameters to be passed down to the model, 
-    therefore requiring sanitization. Their names and the permitted parameters by default are:
-    
-    sign_in (Devise::SessionsController#new) 
-      - Permits only the authentication keys (like email)
-    sign_up (Devise::RegistrationsController#create) 
-      - Permits authentication keys plus password and password_confirmation
-    account_update (Devise::RegistrationsController#update) 
-      - Permits authentication keys plus password, password_confirmation and current_password
-=end
+  #  There are just three actions in Devise that allows any set of parameters to be passed down to the model, 
+  #  therefore requiring sanitization. Their names and the permitted parameters by default are:
+  #  
+  #  sign_in (Devise::SessionsController#new) 
+  #    - Permits only the authentication keys (like email)
+  #  sign_up (Devise::RegistrationsController#create) 
+  #    - Permits authentication keys plus password and password_confirmation
+  #  account_update (Devise::RegistrationsController#update) 
+  #    - Permits authentication keys plus password, password_confirmation and current_password
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
     devise_parameter_sanitizer.for(:account_update) << :name

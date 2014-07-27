@@ -19,11 +19,9 @@
 
         = render "devise/shared/links"
 
-
-
-
     :javascript
       $(function(){
+          // monitor input change
           function inputMonitor() {
               var isDisabled = false;
               $("input").each(function(){
@@ -40,5 +38,6 @@
           $("input").bind("onchange keyup input", function(){
               inputMonitor();
           });
+          // end monitor input change
       });
 

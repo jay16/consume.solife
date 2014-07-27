@@ -4,18 +4,22 @@
     = t("operation")
 
 .row
-  %table.table.table-hover.record-list
-    %thead
-      %tr
-        %th= t("view.record.value")
-        %th= t("view.record.remark")
-        %th= t("view.record.ymdhms")
-        %th= t("view.tag")
-        %th.record-operation.hidden.center{colspan:"2"}
-          = t("operation")
+  :css
+    td:nth-child(2) { max-width: 300px; }
+  %div{style: "border-radius: 5px;background: white;padding: 5px;"}
+    %table.table.table-bordered.table-striped.table-condensed
+      %thead
+        %tr
+          %th= t("view.record.value")
+          %th= t("view.record.remark")
+          %th= t("view.record.ymdhms")
+          %th= t("view.tag")
+          %th.record-operation.hidden.center{colspan:"2"}
+            = t("operation")
 
-    %tbody
-      - @records.each do |record|
-        = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
+      %tbody
+        - @records.each do |record|
+          = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
 
-  - will_paginate @records, :inner_window => 2
+.row
+  = will_paginate @records

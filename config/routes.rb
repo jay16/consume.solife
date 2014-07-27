@@ -1,5 +1,10 @@
 require "api.rb"
 Consume::Application.routes.draw do
+  get "comments/index"
+  get "comments/show"
+  get "comments/edit"
+  get "comments/updatd"
+  get "comments/destroy"
   root :to => "home#index"
 
   devise_for :users#, controllers: { sessions: :sessions }
@@ -18,6 +23,14 @@ Consume::Application.routes.draw do
   resources :tags
   resources :tags
   resources :comments
+
+  namespace :cpanel do
+    root :to => "home#index"
+    resources :users
+    resources :records
+    resources :tags
+    resources :comments
+  end
 
   mount Consume::API => "/"
   get "/api" => "home#api"

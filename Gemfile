@@ -6,18 +6,26 @@ source "http://ruby.taobao.org"
 gem "rails", "4.0.4"
 gem "mysql2"
 gem "simple_form"
-gem "haml-rails"
-gem "devise"
 gem "settingslogic"
+
+gem "cells"
+
+gem "devise"
+gem 'devise-encryptable'
+
 #gem "protected_attributes"
 gem "grape"
 gem "grape-entity"
 
 gem "gravatar_image_tag"
+
+gem "haml-rails"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 4.0.2"
+
 gem "bootstrap-sass"
 gem "i18n", github: "svenfuchs/i18n"
+gem "rails-i18n","0.1.8"
 gem "will_paginate", "3.0.4"
 
 gem "whenever", :require => false

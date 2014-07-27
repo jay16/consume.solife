@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     #@records = current_user.group_member_records
-    @records = current_user.records.order("created_at desc").paginate(:page => params[:page], :per_page => 10, :total_entries => 1500)
+    @records = current_user.records.order("id desc").paginate :page => params[:page], :per_page => 15
     @record  = current_user.records.new
     #@record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     @tags = current_user.tags
