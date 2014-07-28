@@ -11,10 +11,10 @@
 *.tar.gz
 .*.swp
 .git*
-*.yml
-*.yaml
 
 # Ignore the default SQLite database.
+/config/*.yml
+/config/*.yaml
 /db/*.sqlite3
 /db/db.bak/*
 

@@ -35,6 +35,13 @@ window.App =
   reloadWindow: ->
     window.location.reload()
 
+  cpanelNavbarInit: ->
+    pathname = window.location.pathname
+    klass = "." + pathname.split("/").join("-")
+    console.log(klass)
+    $(klass).siblings("li").removeClass("active")
+    $(klass).addClass("active")
+
   deviseResizeWindow: ->
     w = window
     d = document
@@ -56,8 +63,17 @@ $ ->
   setInterval App.reloadWindow, 1200 * 1000
 
   # css devise layout
-  if window.location.pathname.indexOf("/users") >= 0
+  pathname = window.location.pathname.split("/")
+  if pathname[1] == "users"
     App.deviseResizeWindow()
+  else if pathname[1] == "cpanel"
+    App.cpanelNavbarInit()
+  else
+    console.log(pathname.join("-"))
+
+  $(".navbar-nav li").bind "click", ->
+    $(this).siblings("li").removeClass("active")
+    $(this).addClass("active")
 
   # global bootstrap japavscript plugin
   $('body').tooltip ->

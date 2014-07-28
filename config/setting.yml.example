@@ -5,23 +5,27 @@ defaults: &defaults
   favicon: "http://solife-images.u.qiniudn.com/favicon.so.ico"
   domain: "consume.solife.us"
   contact: "jay_li@solife.us"
+  admin_emails: "jay_li@solife.us"
   cdn:
     bootstrap:
       v303:
         js: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
         css: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
+      v320:
+        js: "http://cdn.bootcss.com/twitter-bootstrap/3.2.0/js/bootstrap.min.js"
+        css: "http://cdn.bootcss.com/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
   devise:
     email: "jay_li@solife.us"
-    address: "smtp.ym.163.com"
+    address: "smtp.solife.com"
     port: 25,
     user_name: "jay_li@solife.us"
     domain: "solife.us"
-    password: "email-pwd"
+    password: "password"
     authentication: "login"
   database:
     mysql:
       user: "root"
-      password: "iamjay"
+      password: "password"
       dbname: "consume_development"
   mobile:
     os:

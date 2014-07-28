@@ -1,4 +1,4 @@
-# 爱记录 - 爱生活
+# 爱记录
 
 > 记录点滴生活, 爱生活, 爱记录
 
@@ -19,13 +19,13 @@ bundle exec rspec spec/grape
 
 ## TODO
 
-  1. 登陆后UI优化.
-  2. ~~管理员界面~~
   3. 消费记录软删除, 以同步状态至移动端.
   4. bug#搜索共享消费记录用户
+  5. bug#bootstrap navbar点击响应active
   3. android客户端UI优化.
   4. 普通界面spec测试.
   5. ios客户端开发.
+
 
 # 更新日志
 
@@ -33,7 +33,7 @@ bundle exec rspec spec/grape
 
 +. 2014/07/20 sunday
 
-  1. spec测试api#version/users/records/tags,不必在修改api时，写http模拟测试...
+  1. spec测试api#grape,不必写http模拟测试.
 
 +. 2014/07/26 starday
 
