@@ -1,21 +1,14 @@
 .row.row-offcanvas.row-offcanvas-right
   #sidebar.col-sm-3.sidebar-offcanvas{:role => "navigation"}
     .row
-      .col-sm-12
-        .alert.alert-warning
-          %a.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
-          %p.center 温馨提示
-          %ul
-            %li 本界面目前只用来查询
-            %li 数据[增][删][改]在手机端
-    .row
       .list-group
         .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
           .col-sm-6
             = gravatar_image_tag(current_user.email, alt: current_user.name)
           .col-sm-6
             = render partial: "users/edit_user_name", layout: false
-        %a.list-group-item{:href => ""}= ["消费[", @records.count, "]笔"].join
+        %a.list-group-item{:href => ""}= ["消费数量: ", current_user.records.size].join
+        %a.list-group-item{:href => ""}= ["标签数量: ", current_user.tags.size].join
         %a.list-group-item
           %label.checkbox-inline
             %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tags-list');"} 
@@ -54,6 +47,14 @@
     .row
       .list-group
         = render partial: "users/search", layout: false
+
+    .row
+      .alert.alert-warning
+        %a.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
+        %p.center 温馨提示
+        %ul
+          %li 本界面目前只用来查询
+          %li 数据[增][删][改]在手机端
 
   //span
   .col-sm-9.records-list

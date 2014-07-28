@@ -1,5 +1,5 @@
 class RecordsController < ApplicationController
-  before_action :set_record, only: [:show, :edit, :update, :destroy]
+  before_action :find_record, only: [:show, :edit, :update, :destroy]
 
   respond_to :html, :js
   # GET /records
@@ -59,7 +59,8 @@ class RecordsController < ApplicationController
   # DELETE /records/1
   # DELETE /records/1.json
   def destroy
-    @record.destroy
+    #@record.destroy
+    @record.soft_delete
     respond_to do |format|
       format.js
       format.html { redirect_to records_url }
@@ -69,7 +70,7 @@ class RecordsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_record
+    def find_record
       @record = current_user.records.find(params[:id])
     end
 

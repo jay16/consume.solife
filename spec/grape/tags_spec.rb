@@ -75,6 +75,8 @@ describe Consume::API do
       expect(response.status).to eq(201)
 
       json = jparse(response.body)
+
+      expect(json["deleted"]).to eq(false)
       j_user = User.find(json["user_id"])
       expect(j_user).to eq(user)
 
@@ -88,6 +90,8 @@ describe Consume::API do
       expect(response.status).to eq(201)
 
       json = jparse(response.body)
+
+      expect(json["deleted"]).to eq(false)
       j_user = User.find(json["user_id"])
       expect(j_user).to eq(user)
 
@@ -103,6 +107,7 @@ describe Consume::API do
 
       json = jparse(response.body)
       expect(json["id"]).to eq(tag.id)
+      expect(json["deleted"]).to eq(false)
     end
   end
 
@@ -112,7 +117,10 @@ describe Consume::API do
     it "should destroy a tag with id" do
       delete "/api/tags/#{tag.id}.json", { token: user.token }
 
-      #expect(response.status).to eq(200)
+      expect(response.status).to eq(200)
+      json = jparse(response.body)
+      expect(json["id"]).to eq(tag.id)
+      expect(json["deleted"]).to eq(true)
     end
   end
 end

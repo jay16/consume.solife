@@ -102,7 +102,7 @@ class Consume::API < Grape::API
       else
         condition = %Q(id > #{params[:id] || 0}) 
       end
-      records = current_user.records.where(condition) 
+      records = current_user.records.undeleted.where(condition) 
       present records, with: APIEntities::Record
     end
 
@@ -144,7 +144,7 @@ class Consume::API < Grape::API
     desc "get a record."
     get "/:id" do
       authenticate!
-      record = current_user.records.find(params[:id])
+      record = current_user.records.undeleted.find(params[:id])
       present record, with: APIEntities::Record
     end
 
@@ -167,8 +167,9 @@ class Consume::API < Grape::API
     desc "delete a record."
     delete "/:id" do
       authenticate!
-      record = current_user.records.find(params[:id])
-      record.destroy if !record.nil?
+      record = current_user.records.undeleted.find(params[:id])
+      record.soft_delete
+      present record, with: APIEntities::DeletedRecord
     end
   end
 
@@ -182,7 +183,7 @@ class Consume::API < Grape::API
       else
         condition = %Q(id > #{params[:id] || 0}) 
       end
-      tags = current_user.tags.where(condition) 
+      tags = current_user.tags.undeleted.where(condition) 
       present tags, with: APIEntities::Tag
     end
 
@@ -212,7 +213,7 @@ class Consume::API < Grape::API
     desc "update a tag."
     post "/:id" do
       authenticate!
-      tag = current_user.tags.find(params[:id])
+      tag = current_user.tags.undeleted.find(params[:id])
       tag_params = must_be_hash(params[:tag]).merge(browser_with_ip)
       tag.update(tag_params)
 
@@ -221,6 +222,15 @@ class Consume::API < Grape::API
       @cache_arr.push(tag.ip)
       cache_action(@cache_arr)
       present tag, with: APIEntities::Tag
+    end
+
+    # delete /api/tags/1.json
+    desc "delete a tag."
+    delete "/:id" do
+      authenticate!
+      tag = current_user.tags.undeleted.find(params[:id])
+      tag.soft_delete
+      present tag, with: APIEntities::DeletedRecord
     end
   end
 

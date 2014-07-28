@@ -17,10 +17,12 @@ class Record < ActiveRecord::Base
   validates :value, presence: true
   validates :ymdhms, presence: true
 
-  belongs_to :user
+  belongs_to :user, counter_cache: :records_count
   has_and_belongs_to_many :tags, -> { uniq }, autosave: true
   
   scope :recent, -> { order("created_at desc") }
+  scope :deleted, -> { where(:deleted => true) }
+  scope :undeleted, -> { where(:deleted => false) }
  
   after_create :build_relation_with_tags
   after_update :build_relation_with_tags
@@ -39,6 +41,10 @@ class Record < ActiveRecord::Base
 
   def tags_string
     self.tags.map(&:label).join(",") 
+  end
+
+  def soft_delete
+    self.update_column(:deleted, true)
   end
 
   def build_relation_with_tags

@@ -82,6 +82,7 @@ describe Consume::API do
       json = jparse(response.body)
       j_user = User.find(json["user_id"])
       expect(j_user).to eq(user)
+      expect(json["deleted"]).to eq(false)
 
       j_klass = json["klass"]
       j_tags_list = json["tags_list"]
@@ -100,6 +101,7 @@ describe Consume::API do
       json = jparse(response.body)
       j_user = User.find(json["user_id"])
       expect(j_user).to eq(user)
+      expect(json["deleted"]).to eq(false)
 
       j_klass = json["klass"]
       j_tags_list = json["tags_list"]
@@ -118,6 +120,7 @@ describe Consume::API do
 
       json = jparse(response.body)
       expect(json["id"]).to eq(record.id)
+      expect(json["deleted"]).to eq(false)
     end
   end
 
@@ -128,6 +131,9 @@ describe Consume::API do
       delete "/api/records/#{record.id}.json", { token: user.token }
 
       expect(response.status).to eq(200)
+      json = jparse(response.body)
+      expect(json["id"]).to eq(record.id)
+      expect(json["deleted"]).to eq(true)
     end
   end
 end
