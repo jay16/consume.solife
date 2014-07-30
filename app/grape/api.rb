@@ -86,7 +86,7 @@ class Consume::API < Grape::API
       @cache_arr.push("更新个人信息")
       @cache_arr.push("api")
       @cache_arr.push(browser_with_ip[:ip])
-      cache_action(@cache_arr)
+      add_create_cache(@cache_arr)
       present current_user, with: APIEntities::User
     end
   end
@@ -136,7 +136,7 @@ class Consume::API < Grape::API
       @cache_arr.push("创建消费记录")
       @cache_arr.push(record.browser)
       @cache_arr.push(record.ip)
-      cache_action(@cache_arr)
+      add_create_cache(@cache_arr)
       present record, with: APIEntities::Record
     end
 
@@ -159,7 +159,7 @@ class Consume::API < Grape::API
       @cache_arr.push("修改消费记录")
       @cache_arr.push(record.browser)
       @cache_arr.push(record.ip)
-      cache_action(@cache_arr)
+      add_create_cache(@cache_arr)
       present record, with: APIEntities::Record
     end
 
@@ -205,7 +205,7 @@ class Consume::API < Grape::API
       @cache_arr.push("创建标签")
       @cache_arr.push(tag.browser)
       @cache_arr.push(tag.ip)
-      cache_action(@cache_arr)
+      add_create_cache(@cache_arr)
       present tag, with: APIEntities::Tag
     end
 
@@ -220,7 +220,7 @@ class Consume::API < Grape::API
       @cache_arr.push("修改标签")
       @cache_arr.push(tag.browser)
       @cache_arr.push(tag.ip)
-      cache_action(@cache_arr)
+      add_create_cache(@cache_arr)
       present tag, with: APIEntities::Tag
     end
 

@@ -36,8 +36,7 @@ module APIHelpers
     return { :ip => remote_ip }
   end
 
-  def cache_action(arr)
-    cache_list = File.join(Rails.root, "tmp/api_cache.list")
-    `echo #{arr.join(",")} >> #{cache_list}`
+  def add_create_cache(arr)
+    Utils::CreateCache.add_create_cache(arr)
   end
 end 

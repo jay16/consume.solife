@@ -19,11 +19,13 @@ bundle exec rspec spec/grape
 
 ## TODO
 
-  4. bug#搜索共享消费记录用户
-  5. bug#bootstrap navbar点击响应active
-  3. android客户端UI优化.
-  4. 普通界面spec测试.
-  5. ios客户端开发.
+  - [ ] devise邮箱验证rspec测试
+  - [ ] rails各种缓冲功能
+  - [ ] bug#搜索共享消费记录用户
+  - [ ] bug#bootstrap navbar点击响应active
+  - [ ] android客户端UI优化.
+  - [ ] 普通界面spec测试.
+  - [ ] ios客户端开发.
 
 
 # 更新日志
@@ -42,3 +44,9 @@ bundle exec rspec spec/grape
 
   1. 用户模型添加消费/标签的计算缓存(counter_cache).
   2. 消费/标签模型添加deleted字段用以同步状态至移动端.
+
++ 2014/07/30 thursday
+
+  1. 封装零散性功能代码.
+  2. rspec测试不符合条件情况.
+  3. devise自定义加密.

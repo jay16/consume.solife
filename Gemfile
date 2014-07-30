@@ -10,10 +10,11 @@ gem "settingslogic"
 
 gem "cells"
 
+# login system
 gem "devise"
 gem 'devise-encryptable'
 
-#gem "protected_attributes"
+# gem "protected_attributes"
 gem "grape"
 gem "grape-entity"
 

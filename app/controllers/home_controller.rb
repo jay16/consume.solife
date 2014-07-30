@@ -4,8 +4,9 @@ class HomeController < ApplicationController
 
   def index
     if current_user.nil?
-      cache_list = File.join(Rails.root, "tmp/api_cache.list")
-      @cache = IO.readlines(cache_list).last(20).reverse
+      @cache_list = Utils::CreateCache.cache_list(20).reverse
+      puts @cache_list.to_s
+
       render layout: false
     else
       redirect_to "/users"

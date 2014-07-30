@@ -1,11 +1,12 @@
 #encoding: utf-8
+require Rails.root.join('config/initializers/devise_encryptor')
 require "base64"
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :timeoutable, :timeout_in => 20.minutes
+         :encryptable, :timeoutable, :timeout_in => 20.minutes
 
   #attr_accessor :name
   #attr_accessible :name

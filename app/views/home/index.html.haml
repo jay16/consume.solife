@@ -74,7 +74,7 @@
             :css
               .table { margin: 0px; }
             %table.table.table-condensed
-              - @cache.map { |line| line.split(/,/) }.each do |row|
+              - @cache_list.each do |row|
                 %tr
                   - row.each do |data|
                     %td= data

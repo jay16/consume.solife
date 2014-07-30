@@ -17,7 +17,7 @@ class Record < ActiveRecord::Base
   validates :value, presence: true
   validates :ymdhms, presence: true
 
-  belongs_to :user, counter_cache: :records_count
+  belongs_to :user, counter_cache: true
   has_and_belongs_to_many :tags, -> { uniq }, autosave: true
   
   scope :recent, -> { order("created_at desc") }
