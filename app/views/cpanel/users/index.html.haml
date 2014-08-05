@@ -10,16 +10,18 @@
     %td 注册时间
     %td 操作
 
-  - @users.each do |user|
-    %tr
-      %td.first= user.id
-      %td= user.name
-      %td= user.email
-      %td= user.records.size
-      %td= user.tags.size
-      %td= user.created_at
-      %td
-        = link_to edit_cpanel_user_path(user) do
-          %i.glyphicon.glyphicon-edit
+  - cache(cpanel_cache_key_for_user(@users)) do
+    - @users.each do |user|
+      - cache(user) do
+        %tr
+          %td.first= user.id
+          %td= user.name
+          %td= user.email
+          %td= user.records.size
+          %td= user.tags.size
+          %td= user.created_at
+          %td
+            = link_to edit_cpanel_user_path(user) do
+              %i.glyphicon.glyphicon-edit
 
 = will_paginate @reocrds

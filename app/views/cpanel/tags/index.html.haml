@@ -8,12 +8,14 @@
     %td 用户
     %td 创建时间
 
-  - @tags.each do |tag|
-    %tr
-      %td.first= tag.id
-      %td= tag.label
-      %td= tag.klass
-      %td= tag.user.name
-      %td= tag.created_at
+  - cache(cpanel_cache_key_for_tag(@tags)) do
+    - @tags.each do |tag|
+      - cache(tag) do
+        %tr
+          %td.first= tag.id
+          %td= tag.label
+          %td= tag.klass
+          %td= tag.user.name
+          %td= tag.created_at
 
 = will_paginate @reocrds

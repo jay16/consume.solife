@@ -18,8 +18,10 @@
             = t("operation")
 
       %tbody
-        - @records.each do |record|
-          = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
+        - cache(cache_key_for_record(@records)) do
+          - @records.each do |record|
+            - cache(record) do
+              = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
 
 .row
   = will_paginate @records

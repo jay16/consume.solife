@@ -3,11 +3,11 @@
 # Record create history cache.
 #
 module Utils
-  module CreateCache
+  module ActionCache
     @@line_limit = 30
     class << self
       def cache_file(base_path = Rails.root)
-        file = File.join(base_path, "tmp/record_created_list.cache")
+        file = File.join(base_path, "tmp/action_cache.tmp")
          `test -f #{file} || touch #{file}`
          return file
       end
@@ -16,11 +16,11 @@ module Utils
         @@line_limit = limit
       end
 
-      def add_create_cache(arr)
+      def add(arr)
         `echo #{arr.join(",")} >> #{cache_file}`
       end
 
-      def cache_list(rows = @@line_limit)
+      def list(rows = @@line_limit)
         IO.readlines(cache_file).last(rows).map do |line|
           line.split(/,/).map(&:strip)
         end

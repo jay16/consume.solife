@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Consume::API do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) do 
+    !(user = User.first).nil? ?  user : FactoryGirl.create(:user) 
+  end
 
   describe "GET /api/users" do
     it "should return error without user's token" do

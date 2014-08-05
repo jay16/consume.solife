@@ -1,6 +1,5 @@
 #encoding: utf-8
 module UsersHelper
-
   def from_group_members(user)
     user.groups.map do |g| 
       if g.accept 

@@ -26,11 +26,13 @@
     %td 消费时间
     %td 创建时间
 
-  - @recent_records.each do |record|
-    %tr
-      %td.first= record.id
-      %td= record.value
-      %td= record.remark
-      %td= record.ymdhms
-      %td= record.created_at
+  - cache(cpanel_cache_key_for_record(@recent_records)) do
+    - @recent_records.each do |record|
+      - cache(record) do
+        %tr
+          %td.first= record.id
+          %td= record.value
+          %td= record.remark
+          %td= record.ymdhms
+          %td= record.created_at
 

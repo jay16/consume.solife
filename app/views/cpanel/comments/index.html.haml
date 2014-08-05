@@ -7,11 +7,13 @@
     %td 用户  
     %td 创建时间
 
-  - @comments.each do |comment|
-    %tr
-      %td.first= comment.id
-      %td= comment.user.name
-      %td= comment.content
-      %td= comment.created_at
+  - cache(cpanel_cache_key_for_comment(@comments)) do
+    - @comments.each do |comment|
+      - cache(comment) do
+        %tr
+          %td.first= comment.id
+          %td= comment.user.name
+          %td= comment.content
+          %td= comment.created_at
 
 = will_paginate @reocrds

@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Consume::API do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) do 
+    !(user = User.first).nil? ?  user : FactoryGirl.create(:user) 
+  end
   let(:timestamp) { Time.now.strftime("%Y-%m-%d %H:%M:%S") }
 
   describe "GET /api/tags" do

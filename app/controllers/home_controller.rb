@@ -4,9 +4,7 @@ class HomeController < ApplicationController
 
   def index
     if current_user.nil?
-      @cache_list = Utils::CreateCache.cache_list(20).reverse
-      puts @cache_list.to_s
-
+      @cache_list = Utils::ActionCache.list(20).reverse
       render layout: false
     else
       redirect_to "/users"

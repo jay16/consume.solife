@@ -11,13 +11,15 @@
     %td 消费时间
     %td 创建时间
 
-  - @records.each do |record|
-    %tr
-      %td.first= record.id
-      %td= record.user.name
-      %td= record.value
-      %td= record.remark
-      %td= record.ymdhms
-      %td= record.created_at
+  - cache(cpanel_cache_key_for_record(@records)) do
+    - @records.each do |record|
+      - cache(record) do
+        %tr
+          %td.first= record.id
+          %td= record.user.name
+          %td= record.value
+          %td= record.remark
+          %td= record.ymdhms
+          %td= record.created_at
 
 = will_paginate @reocrds

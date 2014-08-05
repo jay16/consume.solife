@@ -7,7 +7,7 @@ module APIHelpers
   end
   
   def current_user
-    return false unless params[:token]
+    return false if params[:token].to_s.strip.empty?
     #@current_user = JSON.parse(cookies[params[:token].to_sym]) if cookies[params[:token].to_sym]
     @current_user ||= User.validate(params[:token])
     #cookies[params[:token].to_sym] =  { value: @current_user.to_json, expires: 1.days.from_now }
@@ -37,6 +37,6 @@ module APIHelpers
   end
 
   def add_create_cache(arr)
-    Utils::CreateCache.add_create_cache(arr)
+    Utils::ActionCache.add(arr)
   end
 end 

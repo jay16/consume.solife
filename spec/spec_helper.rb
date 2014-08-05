@@ -58,7 +58,7 @@ end
 # JSON parse
 def jparse str
   begin
-  JSON.parse str
+    JSON.parse str
   rescue #=> e
     str
   end

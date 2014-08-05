@@ -1,6 +1,8 @@
 #encoding: utf-8
 require "fileutils"
-namespace :my_db do  desc "Backup project database. Options: DIR=backups RAILS_ENV=production MAX=7" 
+
+desc "Backup project database. Options: DIR=backups RAILS_ENV=production MAX=7" 
+namespace :my_db do  
   desc "usage - bundle exec rake my_db:backup  RAILS_ENV=production MAX=15 DIR=db/db.bak"
   task :backup => [:environment] do
     # config base dir
