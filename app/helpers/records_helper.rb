@@ -8,9 +8,4 @@ module RecordsHelper
     .join.html_safe
   end
 
-  def cache_key_for_record(records)
-    size = records.size
-    keystamp =  size.zero? ? 0 : records.first.updated_at.try(:utc).try(:to_s, :number)
-    "current_user/records/paginate-#{size}-#{keystamp}"
-  end
 end

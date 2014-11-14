@@ -2,7 +2,9 @@
 module ApplicationHelper
 
   def render_page_title
-    content_tag(:title, "爱记录,爱生活", nil, false)
+    site_name = Setting.title
+    title = @page_title ? "#{site_name} | #{@page_title}" : site_name rescue "SITE_NAME"
+    content_tag("title", title, nil, false)
   end
 
   def controller_stylesheet_link_tag
@@ -27,16 +29,20 @@ module ApplicationHelper
     raw %(<script src="#{asset_path(fname)}" data-turbolinks-track></script>)
   end
 
+  # flash notice
   def notice_message
     flashs = flash.reject { |t, m| t.empty? }
+
     flashs.map do |type, message|
+      next if message.to_s == "true"
       content_tag(:div, link_to("x", "#", class: "close", "data-dismiss" => "alert") + message, class: "alert alert-#{type == :notice ? :success : :warning}")
-    end.join("\n").html_safe if !flashs.empty?
+    end.join("\n").html_safe unless flashs.empty?
   end
 
   def controller_javascript_include_tag
   end
 
+  # judge client whether is mobile and tell mobile type
   MOBILE_USER_AGENTS =  'palm|blackberry|nokia|phone|midp|mobi|symbian|chtml|ericsson|minimo|' +
                         'audiovox|motorola|samsung|telit|upg1|windows ce|ucweb|astel|plucker|' +
                         'x320|x240|j2me|sgh|portable|sprint|docomo|kddi|softbank|android|mmp|' +
@@ -48,5 +54,11 @@ module ApplicationHelper
     agent_str =~ Regexp.new(MOBILE_USER_AGENTS)
   end
 
-  
+  # generate view cache key
+  def cache_key_for_view(objects, prefix = "current_user")
+    klass = objects.class.to_s.downcase.split(/_/).reverse.first #ActiveRecord::Relation::ActiveRecord_Relation_Tag
+    size  = objects.size
+    keystamp = size.zero? ? 0 : objects.map(&:updated_at).max.try(:utc).try(:to_s, :number)
+    "#{prefix}/#{klass}-#{size}-#{keystamp}"
+  end
 end

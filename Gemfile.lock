@@ -1,8 +1,12 @@
 GIT
-  remote: git://github.com/svenfuchs/i18n.git
-  revision: 1e983c043dcd97554908f512e7994d9adf8d9838
+  remote: git://github.com/huacnlee/bootstrap-helper.git
+  revision: 996419b99086b845db947c0b29ac8a782021812e
   specs:
-    i18n (0.6.10)
+    bootstrap_helper (2.1.2.1)
+      railties (>= 4.0.0.beta1, < 4.1.0)
+      simple_form (>= 3.0.0.beta1)
+      thor (~> 0.14)
+      will_paginate (>= 3.0.3)
 
 GEM
   remote: http://ruby.taobao.org/
@@ -16,6 +20,10 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    actionpack-action_caching (1.1.1)
+      actionpack (>= 4.0.0, < 5.0)
+    actionpack-page_caching (1.0.2)
+      actionpack (>= 4.0.0, < 5)
     activemodel (4.0.4)
       activesupport (= 4.0.4)
       builder (~> 3.1.0)
@@ -39,6 +47,8 @@ GEM
     bcrypt (3.1.7)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
+    bootstrap-will_paginate (0.0.10)
+      will_paginate
     builder (3.1.4)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -102,6 +112,7 @@ GEM
       railties (>= 4.0.1)
     hashie (2.1.1)
     hike (1.2.3)
+    i18n (0.6.11)
     ice_nine (0.11.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -131,6 +142,7 @@ GEM
       rack (>= 1.0.0)
     rack-test (0.6.2)
       rack (>= 1.0)
+    railroady (1.1.2)
     rails (4.0.4)
       actionmailer (= 4.0.4)
       actionpack (= 4.0.4)
@@ -141,6 +153,8 @@ GEM
       sprockets-rails (~> 2.0.0)
     rails-i18n (0.1.8)
       i18n (~> 0.5)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     railties (4.0.4)
       actionpack (= 4.0.4)
       activesupport (= 4.0.4)
@@ -221,7 +235,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-action_caching
+  actionpack-page_caching
   bootstrap-sass
+  bootstrap-will_paginate
+  bootstrap_helper!
   capybara
   cells
   coffee-rails (~> 4.0.0)
@@ -232,12 +250,13 @@ DEPENDENCIES
   grape-entity
   gravatar_image_tag
   haml-rails
-  i18n!
   jbuilder (~> 1.2)
   jquery-rails
   mysql2
+  railroady
   rails (= 4.0.4)
   rails-i18n (= 0.1.8)
+  rails-observers
   rspec-rails
   sass-rails (~> 4.0.2)
   sdoc

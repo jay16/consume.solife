@@ -5,8 +5,6 @@ class Cpanel::ApplicationController < ApplicationController
   before_filter :require_admin
 
   def require_admin
-    if not Setting.admin_emails.include?(current_user.email)
-      render_404
-    end
+    render_404 unless Setting.admin_emails.include?(current_user.email)
   end
 end

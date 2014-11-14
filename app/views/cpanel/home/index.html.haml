@@ -26,7 +26,7 @@
     %td 消费时间
     %td 创建时间
 
-  - cache(cpanel_cache_key_for_record(@recent_records)) do
+  - cache(cpanel_cache_key_for_view(@recent_records)) do
     - @recent_records.each do |record|
       - cache(record) do
         %tr

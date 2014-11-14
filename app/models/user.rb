@@ -1,6 +1,5 @@
 #encoding: utf-8
 require Rails.root.join('config/initializers/devise_encryptor')
-require "base64"
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -26,13 +25,16 @@ class User < ActiveRecord::Base
   has_many :_follow_groups, -> { where accept: true }, class_name: 'Group', foreign_key: :to_id
   has_many :group_follows, through: :_follow_groups, source: :follow_user
 
+  ACCESSABLE_ATTRS = [:name, :address, :email, :gender, :password, :password_confirmation, :password_salt]
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
+  after_update :trigger_updated_at
 
   # 是否是管理员
   def admin?
     Setting.admin_emails.include?(self.email)
   end
 
+  # 用户名称
   def username
     self.name || "未设置名称"
   end
@@ -49,26 +51,21 @@ class User < ActiveRecord::Base
   end
 
   def self.validate(token)
-    str = Base64.decode64(token)
-    n1 = str[0].to_i
-    n2 = str[1..n1]
-    str = str[n1+n2.length-1..str.length-1]
+    e, p = Utils::GrapeEncryptor.decode(token)
 
-    email = str[0..n2.to_i-1]
-    pwd   = str[n2.to_i..str.length-1]
-    if user = User.find_by(email: email)
-       return user if user.valid_password?(pwd)
+    if user = User.find_by(email: e) and user.valid_password?(p)
+      return user 
     end
   end
 
   # only use in spec/grape_spec.rb
   def token
-    self.password ||= "jay527130673"
-    n2 = self.email.length.to_s
-    n1 = n2.length.to_s
-    str = n1 + n2 + self.email + self.password
-    Base64.encode64(str).strip
+    Utils::GrapeEncryptor.encode(self.email, Utils::Encryptor.decode(self.encrypted_password))
+  end
+
+  private
+
+  def trigger_updated_at
+    self.update_column(:updated_at, Time.now)
   end
 end
-
-

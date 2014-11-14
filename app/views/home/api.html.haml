@@ -1,13 +1,13 @@
-%table.table.table-condensed
+%table.table
   %thead
     %tr
       %th.hidden Prefix
       %th.hidden Version
       %th.hidden Namespace
       %th Method
-      %th Path
+      %th URL
       %th.hidden Params
-      %th Describtion
+      %th.hidden Describtion
   %tbody
     - @routes.each do |route|
       %tr
@@ -15,6 +15,6 @@
         %td.hidden= route.route_version
         %td.hidden= route.route_namespace
         %td= route.route_method
-        %td= route.route_path
+        %td= ["http://", Setting.domain, route.route_path.sub("(.:format)",".json")].join
         %td.hidden= route.route_params
-        %td= route.route_description
+        %td.hidden= route.route_description

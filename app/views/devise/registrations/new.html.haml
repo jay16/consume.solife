@@ -29,7 +29,7 @@
         = f.input :password_confirmation, wrapper: :prepend, label: false, input_html: { class: "input-group"} do
           %span.input-group-addon
             %i.glyphicon.glyphicon-off
-          = f.input_field :password, placeholder: "确认登陆密码", class: "form-input form-control" 
+          = f.input_field :password_confirmation, placeholder: "确认登陆密码", class: "form-input form-control" 
 
         .form-actions
           = f.button :submit, "注册",  id: "regSubmit", class: "hidden"

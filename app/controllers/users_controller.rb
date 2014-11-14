@@ -3,10 +3,9 @@ class UsersController < ApplicationController
   respond_to :html, :js
 
   def index
-    #@records = current_user.group_member_records
     @records = current_user.records.order("id desc").paginate :page => params[:page], :per_page => 15
-    #@record  = current_user.records.new
-    #@record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
+    @record  = current_user.records.new
+    @record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     @tags = current_user.tags
 
     fresh_when(:etag => [@records, @tags])
@@ -20,8 +19,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.name = params[:user][:name]
-    notice = (current_user.save ? "成功" : "失败")
+    @user.update_columns(params[:user].merge({updated_at: Time.now}))
+    notice = (@user.valid? ? "成功" : "失败")
 
     flash[:notice] = "更新个人信息" + notice + "."
     redirect_to "/users"
@@ -62,15 +61,4 @@ class UsersController < ApplicationController
     def user_params 
       params.require(:user).permit(:id, :name, :email, :password)
     end
-end
-
-class AccountController < Devise::RegistrationsController
-  def update 
-    user = User.find(params[:id])
-    user.update(params[:user]) 
-    notice = (user.save ? "成功" : "失败")
-
-    flash[:notice] = "更新个人信息" + notice + "."
-    redirect_to "/users"
-  end
 end

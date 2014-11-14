@@ -1,4 +1,3 @@
-- @record.ymdhms ||= Time.now.strftime("%Y-%m-%d %H:%M:%S")
 = simple_form_for(@record, remote: true) do |f|
   = render partial: "shared/error_messages", locals: { target: @record }
 

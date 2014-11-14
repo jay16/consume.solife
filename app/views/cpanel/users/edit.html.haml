@@ -1,17 +1,40 @@
-.row{style:"margin:30px 0px;"}
-  .col-sm-4.col-sm-offset-4
+.row
+  - content_for :styles do
+    :css
+      .cpanel-table .cpanel-input { width: 100%;}
+      .cpanel-table td:nth-child(1) { width: 15%; min-width: 100px; text-align: right; }
+
+  .col-sm-8.col-sm-offset-2
+    %h3 编辑用户
     = simple_form_for([:cpanel, @user]) do |f| 
-      = f.error_notification
-      .form-inputs
-        = f.input :name, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
-          %span.input-group-addon
-            %i.glyphicon.glyphicon-user
-          = f.input_field :name, placeholder: "用户名称", autofocus: true, class: "form-input form-control", value: @user.name
+      %table.table.table-condensed.table-hover.table-strip.cpanel-table
+        %tr
+          %td 用户名称
+          %td= f.input :name, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 性别
+          %td= f.input :gender, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 城市
+          %td= f.input :address, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 登陆次数
+          %td= f.input :sign_in_count, label: false, readonly: true, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 当前登陆IP
+          %td= f.input :current_sign_in_ip, as: :string, readonly: true, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 当前登陆时间
+          %td= f.input :current_sign_in_at, as: :string, readonly: true, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 最近登陆IP
+          %td= f.input :last_sign_in_ip, as: :string, readonly: true, label: false, input_html: { class: "input-group cpanel-input" }
+        %tr
+          %td 最近登陆时间
+          %td= f.input :last_sign_in_at, as: :string, readonly: true, label: false, input_html: { class: "input-group cpanel-input" }
 
-        - f.input :email, wrapper: :prepend, label: false,  input_html: { class: "input-group" } do
-          %span.input-group-addon
-            %i.glyphicon.glyphicon-envelope
-          = f.input_field :email, placeholder: "注册邮箱", class: "form-input form-control", value: @user.email
+        %tr
+          %td.float-right{colspan: "2"}
+            = link_to t("cancel"), cpanel_users_path()
+            = f.submit t("submit"), :class => "btn btn-primary"
 
-        .form-actions
-          = f.button :submit, "提交", class: "btn btn-default btn-primary"

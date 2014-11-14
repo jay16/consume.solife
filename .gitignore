@@ -1,4 +1,20 @@
 # Ignore bundler config
+
+lib/tasks/devise_changed.rake
+# Ignore the default SQLite database.
+config/*.yml
+config/*.yaml
+# Ignore all logfiles and tempfiles.
+db/
+doc/
+log/
+tmp/
+vendor/
+script/
+public/
+backup/
+
+# files
 .*
 .bundle
 .DS_Store
@@ -11,17 +27,3 @@
 *.tar.gz
 .*.swp
 .git*
-
-# Ignore the default SQLite database.
-/config/*.yml
-/config/*.yaml
-/db/*.sqlite3
-/db/db.bak/*
-
-# Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
-/vendor
-/script
-/public
-/backup

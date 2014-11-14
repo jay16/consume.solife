@@ -1,5 +1,5 @@
 require "base64"
-
+#require "./pwd.rb"
 # usage:
 #
 #  - encode
@@ -9,7 +9,9 @@ require "base64"
 #  password = Utils::Encryptor.decode(encode_password)
 
 module Utils
-  module Encryptor
+  class Encryptor
+    #include Utils::Mixin
+
     class << self
       def encode(password)
         (1..5).each do |i| 
@@ -29,3 +31,4 @@ module Utils
     end
   end
 end
+

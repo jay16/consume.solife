@@ -12,7 +12,7 @@
         %th.tag-operation.hidden.center{colspan: "2"}
           = t("operation")
     %tbody
-      - cache(cache_key_for_tag(@tags)) do
+      - cache(cache_key_for_view(@tags)) do
         - @tags.each do |tag|
           - cache(tag) do
             = render partial: "tags/tag", locals: { tag: tag } 

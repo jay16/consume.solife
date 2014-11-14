@@ -1,10 +1,5 @@
 require "api.rb"
 Consume::Application.routes.draw do
-  get "comments/index"
-  get "comments/show"
-  get "comments/edit"
-  get "comments/updatd"
-  get "comments/destroy"
   root :to => "home#index"
 
   devise_for :users#, controllers: { sessions: :sessions }

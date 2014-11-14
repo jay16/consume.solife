@@ -21,6 +21,7 @@ bundle exec rspec spec/grape
 
   - [ ] devise邮箱验证rspec测试
   - [x] rails各种缓冲功能
+  - [ ] 用户行为记录
   - [ ] bug#搜索共享消费记录用户
   - [ ] bug#bootstrap navbar点击响应active
   - [ ] android客户端UI优化.
@@ -52,5 +53,6 @@ bundle exec rspec spec/grape
   3. devise自定义加密.
 
 + 2014/08/06 Wendnesday
-  1. 视图缓存(sql缓存待做)
+  1. (视图缓存)[http://guides.rubyonrails.org/caching_with_rails.html]
+  2. (sql缓存待做)
 

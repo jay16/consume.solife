@@ -14,6 +14,7 @@
     = javascript_include_tag "#{Setting.cdn.bootstrap.v320.js}"
     = stylesheet_link_tag "#{Setting.cdn.bootstrap.v320.css}"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = yield :styles
     = csrf_meta_tags
   %body
     = render partial: "layouts/cpanel_header"
@@ -34,3 +35,4 @@
           #{Time.now.strftime("%Y")} 
           %span.zapfino #{Setting.domain}
 
+    = yield :scripts

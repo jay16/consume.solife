@@ -16,6 +16,9 @@ body.home-body > * {
 }
 
 body.home-body {
+  a:hover {
+    text-decoration: none;
+  }
   #cache {
     overflow: hidden;
   }
@@ -25,7 +28,7 @@ body.home-body {
   .navbar {
       background: #3686be;//#3db6e4;
       margin: 0;
-      padding-top: 7px;
+      //padding-top: 7px;
       height: 70px;
   }
   .navbar .navbar-inner {
@@ -85,7 +88,7 @@ body.home-body {
       height: 95px;
       top: -10px;
       right: 0;
-      padding-top: 17px;
+      padding-top: 10px;
       -webkit-transition: top linear .2s;
       -moz-transition: top linear .2s;
       -o-transition: top linear .2s;

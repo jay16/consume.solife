@@ -14,7 +14,7 @@
  *= require tag-it
  *= require tag-it-theme
  *= require home
- *= require will_paginate
+ * require will_paginate
  */
 
 .fileinput-button {
@@ -137,10 +137,18 @@
     height: 40px;
     padding-top: 15px;
 }
-.right { float: right; }
+.right
+.float-right { float: right; }
+.text-left { text-align: left }
+.text-right { text-align: right }
+.text-center { text-align: center }
 .inner-main { 
   width: 100%;
   padding: 10px;
   background-color: #fff;
   border-radius: 3px;
+}
+
+div .pagination:first {
+  width:100%;
 }

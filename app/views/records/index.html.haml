@@ -7,7 +7,7 @@
   :css
     td:nth-child(2) { max-width: 300px; }
   %div{style: "border-radius: 5px;background: white;padding: 5px;"}
-    %table.table.table-bordered.table-striped.table-condensed
+    %table.table.table-bordered.table-striped.table-condensed.records-list
       %thead
         %tr
           %th= t("view.record.value")
@@ -18,7 +18,7 @@
             = t("operation")
 
       %tbody
-        - cache(cache_key_for_record(@records)) do
+        - cache(cache_key_for_view(@records)) do
           - @records.each do |record|
             - cache(record) do
               = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record

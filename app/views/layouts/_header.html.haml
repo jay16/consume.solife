@@ -61,4 +61,10 @@
                     = link_to destroy_user_session_path, method: :delete do
                       %i.glyphicon.glyphicon-log-out
                       退出
+        - else
+          .collapse.navbar-collapse
+            %ul.nav.navbar-nav
+              %li.active
+                %a{:href => "#"}= @page_title
+
 

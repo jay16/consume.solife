@@ -2,7 +2,6 @@
 class Cpanel::UsersController < Cpanel::ApplicationController
   before_filter :find_user, only: [:show, :edit, :update, :destroy]
 
-
   def index
     @users = User.order("id desc").paginate :page => params[:page], :per_page => 15 
   end
@@ -14,10 +13,10 @@ class Cpanel::UsersController < Cpanel::ApplicationController
   end
 
   def update
-    @user.update_columns(user_params)
+    statu = @user.update_columns(user_params)
 
-    info = "用户信息更新" + (@user ? "成功." : "失败.")
-    redirect_to(edit_cpanel_user_path(@user.id), :notice => info)
+    notice = "用户信息更新" + (statu ? "成功." : "失败.")
+    redirect_to(edit_cpanel_user_path(@user.id), :notice => notice)
   end
 
   def destroy
@@ -30,6 +29,6 @@ class Cpanel::UsersController < Cpanel::ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :gender, :address).merge({ updated_at: DateTime.now })
   end
 end

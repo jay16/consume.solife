@@ -3,7 +3,7 @@
 # Record create history cache.
 #
 module Utils
-  module ActionCache
+  class ActionCache
     @@line_limit = 30
     class << self
       def cache_file(base_path = Rails.root)
