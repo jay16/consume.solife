@@ -1,0 +1,54 @@
+= javascript_include_tag "bootstrapValidator.min.js"
+= javascript_include_tag "moment.min.js"
+= javascript_include_tag "bootstrap-datetimepicker.min.js"
+= stylesheet_link_tag "bootstrapValidator.min.css"
+= stylesheet_link_tag "bootstrap-datetimepicker.min.css"
+// Button trigger modal
+%button.btn.btn-primary.btn-lg{"data-target" => "#consumeFormModal", "data-toggle" => "modal", :type => "button"}
+  创建消费记录 
+// Modal
+#consumeFormModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content.hidden#consumeItemModal
+      .modal-header
+        .row
+          .modal-title.col-lg-6 
+            %a{onclick: "ConsumeItem.back();"} 返回
+          .modal-title.col-lg-6.right 
+            %a{onclick: "ConsumeItem.create();"} 完成
+      .modal-body
+        %form#consumeItemForm{:role => "form"}
+          .form-group
+            %label 消费值
+            %input.value.form-control.col-lg-11{:name => "consume_item['value']", :placeholder => "消费数值", :type => "number"}
+          .form-group
+            %label 参与者 
+            %input.who.form-control.col-lg-11{:name => "consume_item['who']", :placeholder => "参与者", :type => "text"}
+          .form-group
+            %label 描述
+            %textarea.desc.form-control.col-lg-11{:name => "consume_item['desc']", :rows => "2", :placeholder => "消费描述"}
+        .modal-footer
+    .modal-content#consumeModal
+      .modal-header
+        .row
+          .modal-title.col-lg-6 
+            %a{"data-dismiss" => "modal", :type => "button"} 返回
+          .modal-title.col-lg-6.right 
+            %a{onclick: "Consume.addItem();"} 添加
+      .modal-body
+        %form#consumeForm{:role => "form"}
+          %input.hash.form-control.col-lg-11{:name => "consume['hash']", :type => "hidden", :value => "[]"}
+          .form-group
+            %label 消费值
+            %input.value.form-control.col-lg-11{:name => "consume['value']", :placeholder => "消费数值", :type => "number"}
+          .form-group
+            .col-sm-5
+              #datetimePicker.input-group.date
+                %input.form-control{:name => "consume['ymdhms']", :type => "text"}/
+                %span.input-group-addon
+                  %span.glyphicon.glyphicon-calendar
+          .form-group
+            %a.form-control.btn.btn-primary{onclick: "Consume.create();"} 提交
+
+= javascript_include_tag "consume"
+= javascript_include_tag "consume_item"

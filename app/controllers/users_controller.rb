@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @record.ymdhms = Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     @tags = current_user.tags
 
-    fresh_when(:etag => [@records, @tags])
+    #fresh_when(:etag => [@records, @tags])
   end
 
   def show

@@ -57,6 +57,17 @@ window.App =
       $("#main").css
         height: main_height + "px"
 
+  getEnumPropertyNames: (obj) ->
+    props = []
+    for prop in obj
+      props.push prop
+    return props
+  printBootstrapValidatorErrors: ($validator) ->
+    $fields = $validator.getInvalidFields()
+    console.log($fields.length + " erros:")
+    $fields.each ->
+      console.log(this.tagName + "[name=" + $(this).attr("name") + "] - not validator!")
+
 $ ->
   # devise login stay in 12 minute without operation
   # reload the UI to login

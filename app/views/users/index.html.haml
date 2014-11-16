@@ -6,7 +6,11 @@
           .col-sm-6
             = gravatar_image_tag(current_user.email, alt: current_user.name)
           .col-sm-6
-            = render partial: "users/edit_user_name", layout: false
+            .row
+              = render partial: "users/edit_user_name", layout: false
+            .row
+              = render partial: "records/consume_form_modal", layout: false
+
         %a.list-group-item{:href => ""}= ["消费数量: ", current_user.records.size].join
         %a.list-group-item{:href => ""}= ["标签数量: ", current_user.tags.size].join
         %a.list-group-item
@@ -66,11 +70,11 @@
     // 消费记录列表
     .row{style: "padding: 0px 20px;"}
       .col-12.col-sm-12.col-lg-12
-        = render template: "records/index", layout: false
+        //= render template: "records/index", layout: false
 
   // 侧边栏-标签列表
   .col-sm-3
-    = render template: "tags/index", layout: false
+    //= render template: "tags/index", layout: false
 
 :javascript
   $(function(){
