@@ -4,6 +4,9 @@ window.Consume =
     $consumeItem = $("#consumeItemModal")
     $consumeItem.removeClass("hidden")
     $consume.addClass("hidden")
+    # init item timestamp
+    timestamp = new Date().getTime()
+    $("#consumeItemForm .timestamp:first").val(timestamp)
 
   # submit create consume_item
   create: ->

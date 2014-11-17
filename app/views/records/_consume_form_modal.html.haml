@@ -18,6 +18,7 @@
             %a{onclick: "ConsumeItem.create();"} 完成
       .modal-body
         %form#consumeItemForm{:role => "form"}
+          %input.timestamp{:type => "hidden"}
           .form-group
             %label 消费值
             %input.value.form-control.col-lg-11{:name => "consume_item['value']", :placeholder => "消费数值", :type => "number"}
@@ -27,6 +28,7 @@
           .form-group
             %label 描述
             %textarea.desc.form-control.col-lg-11{:name => "consume_item['desc']", :rows => "2", :placeholder => "消费描述"}
+          .form-group.action
         .modal-footer
     .modal-content#consumeModal
       .modal-header
@@ -37,16 +39,17 @@
             %a{onclick: "Consume.addItem();"} 添加
       .modal-body
         %form#consumeForm{:role => "form"}
-          %input.hash.form-control.col-lg-11{:name => "consume['hash']", :type => "hidden", :value => "[]"}
+          %input.hash{:name => "consume['hash']", :type => "hidden", :value => "[]"}
+          %input.value{:name => "consume['value']", :type => "hidden"}
           .form-group
-            %label 消费值
-            %input.value.form-control.col-lg-11{:name => "consume['value']", :placeholder => "消费数值", :type => "number"}
-          .form-group
+            .col-sm-2
+              %div ￥10
             .col-sm-5
               #datetimePicker.input-group.date
-                %input.form-control{:name => "consume['ymdhms']", :type => "text"}/
                 %span.input-group-addon
                   %span.glyphicon.glyphicon-calendar
+                %input.form-control{:name => "consume['ymdhms']", :type => "text"}/
+          .form-group.consume-items
           .form-group
             %a.form-control.btn.btn-primary{onclick: "Consume.create();"} 提交
 

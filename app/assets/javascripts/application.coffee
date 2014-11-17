@@ -68,6 +68,12 @@ window.App =
     $fields.each ->
       console.log(this.tagName + "[name=" + $(this).attr("name") + "] - not validator!")
 
+  resetForm: ($form) ->
+    $form.find("input").each ->
+      $(this).val("")
+    $form.find("textarea").each ->
+      $(this).val("")
+
 $ ->
   # devise login stay in 12 minute without operation
   # reload the UI to login
