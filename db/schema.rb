@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728140651) do
+ActiveRecord::Schema.define(version: 20141118144315) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140728140651) do
     t.string   "browser"
     t.string   "ip"
     t.boolean  "deleted",    default: false
+    t.text     "items"
   end
 
   create_table "records_tags", force: true do |t|

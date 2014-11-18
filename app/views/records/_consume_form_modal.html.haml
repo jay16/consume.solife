@@ -4,54 +4,56 @@
 = stylesheet_link_tag "bootstrapValidator.min.css"
 = stylesheet_link_tag "bootstrap-datetimepicker.min.css"
 // Button trigger modal
-%button.btn.btn-primary.btn-lg{"data-target" => "#consumeFormModal", "data-toggle" => "modal", :type => "button"}
+%button.btn.btn-primary.btn-lg{onclick: "Record.showModal();", type: "button"}
   创建消费记录 
 // Modal
-#consumeFormModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+#recordFormModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", :tabindex => "-1"}
   .modal-dialog
-    .modal-content.hidden#consumeItemModal
+    .modal-content.hidden#recordItemModal
       .modal-header
         .row
           .modal-title.col-lg-6 
-            %a{onclick: "ConsumeItem.back();"} 返回
+            %a{onclick: "RecordItem.back();"} 返回
           .modal-title.col-lg-6.right 
-            %a{onclick: "ConsumeItem.create();"} 完成
+            %a{onclick: "RecordItem.create();"} 完成
       .modal-body
-        %form#consumeItemForm{:role => "form"}
-          %input.timestamp{:type => "hidden"}
+        %form#recordItemForm{role: "form"}
+          %input.timestamp{name: "record_item[timestamp]", type: "hidden"}
           .form-group
             %label 消费值
-            %input.value.form-control.col-lg-11{:name => "consume_item['value']", :placeholder => "消费数值", :type => "number"}
+            %input.form-control.col-lg-11{name: "record_item[value]", :placeholder => "消费数值", type: "number"}
           .form-group
             %label 参与者 
-            %input.who.form-control.col-lg-11{:name => "consume_item['who']", :placeholder => "参与者", :type => "text"}
+            %input.form-control.col-lg-11{name: "record_item[who]", :placeholder => "参与者", type: "text"}
           .form-group
             %label 描述
-            %textarea.desc.form-control.col-lg-11{:name => "consume_item['desc']", :rows => "2", :placeholder => "消费描述"}
-          .form-group.action
+            %textarea.form-control.col-lg-11{name: "record_item[desc]", :rows => "2", :placeholder => "消费描述"}
+          .form-group.action-drop
         .modal-footer
-    .modal-content#consumeModal
+    .modal-content#recordModal
       .modal-header
         .row
           .modal-title.col-lg-6 
-            %a{"data-dismiss" => "modal", :type => "button"} 返回
+            %a{"data-dismiss" => "modal", type: "button"} 返回
           .modal-title.col-lg-6.right 
-            %a{onclick: "Consume.addItem();"} 添加
+            %a{onclick: "Record.addItem();"} 添加
       .modal-body
-        %form#consumeForm{:role => "form"}
-          %input.hash{:name => "consume['hash']", :type => "hidden", :value => "[]"}
-          %input.value{:name => "consume['value']", :type => "hidden"}
+        %form#recordForm{role: "form", action: "/records", method: "post", "data-remote" => true}
+          %input{name: "record[items]", type: "hidden", value: "[]"}
+          %input{name: "record[remark]", type: "hidden", value: ""}
           .form-group
-            .col-sm-2
-              %div ￥10
+            .col-sm-1
+              ￥
+            .col-sm-4
+              %input.form-control{name: "record[value]", type: "number"}/
             .col-sm-5
               #datetimePicker.input-group.date
                 %span.input-group-addon
                   %span.glyphicon.glyphicon-calendar
-                %input.form-control{:name => "consume['ymdhms']", :type => "text"}/
-          .form-group.consume-items
+                %input.form-control{name: "record[ymdhms]", type: "text"}/
+          .form-group.record-items
           .form-group
-            %a.form-control.btn.btn-primary{onclick: "Consume.create();"} 提交
+            %a.form-control.btn.btn-primary{onclick: "Record.create();"} 提交
 
-= javascript_include_tag "consume"
-= javascript_include_tag "consume_item"
+= javascript_include_tag "record"
+= javascript_include_tag "record_item"
