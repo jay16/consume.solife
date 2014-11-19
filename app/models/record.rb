@@ -7,6 +7,7 @@
 #    t.float    "value"
 #    t.text     "remark"
 #    t.string   "ymdhms"
+#    t.text     "items"
 #    t.integer  "klass"  # cloth/food/house/foot/other
 #    t.datetime "created_at"
 #    t.datetime "updated_at"

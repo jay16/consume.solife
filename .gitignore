@@ -5,7 +5,7 @@ lib/tasks/devise_changed.rake
 config/*.yml
 config/*.yaml
 # Ignore all logfiles and tempfiles.
-db/
+#db/
 doc/
 log/
 tmp/
