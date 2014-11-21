@@ -53,6 +53,24 @@ bundle exec rspec spec/grape
   3. devise自定义加密.
 
 + 2014/08/06 Wendnesday
+
   1. (视图缓存)[http://guides.rubyonrails.org/caching_with_rails.html]
   2. (sql缓存待做)
+
++ 2014/11/21 Friday
+
+  1. 数据库备份同步至七牛
+
+    ````
+    bundle exec rake db:qiniu
+    ````
+
+  2. 使用`whenever`定时执行任务
+
+    ````
+    wheneverize .
+    whenever -w
+    whenever -c
+    whenever --help
+    ````
 
