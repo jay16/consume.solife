@@ -28,10 +28,15 @@ module APIEntities
   end
 
   class DeletedRecord < Grape::Entity
+    format_with(:ymdhms_format) { |t| t.strftime("%Y-%m-%d %H:%M:%S") }
     expose :user_id,  #user id
            :id,       #record id
            :klass,    #consume klass
            :deleted
+    with_options(format_with: :ymdhms_format) do
+      expose :created_at
+      expose :updated_at
+    end
   end
 
   class Tag< Grape::Entity

@@ -66,8 +66,7 @@ namespace :db do
       test -f #{tmp_sql_file} && rm -f #{tmp_sql_file}     \n
       test -f #{today_bak_file} && rm -f #{today_bak_file} \n
       mysqldump -u#{Setting.database.mysql.user} -p#{Setting.database.mysql.password} #{ Setting.database.mysql.dbname} > #{tmp_sql_file} \n
-      tar -czvf #{today_bak_file} #{tmp_sql_file}          \n
-      rm -f #{tmp_sql_file}                                \n
+      tar -czvf #{today_bak_file} #{tmp_sql_file} && rm -f #{tmp_sql_file}
     }
 
     # execute backup mysql script.

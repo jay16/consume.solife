@@ -74,3 +74,13 @@ bundle exec rspec spec/grape
     whenever --help
     ````
 
++ 2014/12/25 Thursday
+
+    1. bug#api `Delete /api/records/id.json`
+
+      abort when RecordNotFound
+
+    2. tips#grape
+
+      reload rails server when modify grape's code
+

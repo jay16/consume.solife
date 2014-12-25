@@ -56,6 +56,7 @@ gem "jbuilder", "~> 1.2"
 
 group :development,:test do
   gem "qiniu", "~>6.3.2"
+  gem "backup", "~>3.4.0"
   gem "factory_girl_rails"
   gem "rspec-rails"
   gem "shoulda-matchers"

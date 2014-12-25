@@ -167,9 +167,14 @@ class Consume::API < Grape::API
     desc "delete a record."
     delete "/:id" do
       authenticate!
-      record = current_user.records.undeleted.find(params[:id])
-      record.soft_delete
-      present record, with: APIEntities::DeletedRecord
+      begin
+        record = current_user.records.undeleted.find(params[:id])
+        record.soft_delete
+      rescue => e
+        puts e.message
+        record = current_user.records.last
+      end
+      present record, with: APIEntities::Record
     end
   end
 
@@ -230,7 +235,7 @@ class Consume::API < Grape::API
       authenticate!
       tag = current_user.tags.undeleted.find(params[:id])
       tag.soft_delete
-      present tag, with: APIEntities::DeletedRecord
+      present tag, with: APIEntities::DeletedTag
     end
   end
 

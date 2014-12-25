@@ -38,10 +38,14 @@ window.RecordItem =
     $form.find("input[name='record_item[value]']").val(item.value)
     $form.find("input[name='record_item[who]']").val(item.who)
     $form.find("textarea[name='record_item[desc]']").val(item.desc)
-    $a = $("<a onclick='RecordItem.dropItem(" + item.timestamp + ");')></a>")
+    $a = $("<a></a>")# onclick='RecordItem.dropItem(" + item.timestamp + ");')></a>")
+      .bind "click", ((e) ->
+        ->
+          RecordItem.dropItem(e.timestamp)
+      )(item)
       .addClass("btn btn-danger")
       .text("删除")
-    $form.find(".action-drop").append($a)
+    $form.find(".action-drop").html($a)
 
     $("#recordModal").addClass("hidden")
     $("#recordItemModal").removeClass("hidden")
@@ -78,7 +82,11 @@ window.RecordItem =
       $tr.append($(td).text("￥" + item.value))
       $tr.append($(td).text(item.who))
       $tr.append($(td).text(item.desc))
-      $a = $("<a onclick='RecordItem.editItem(" + item.timestamp + ");')></a>")
+      $a = $("<a></a>") # onclick='RecordItem.editItem(" + item.timestamp + ");')></a>")
+        .bind "click", ((e) ->
+          ->
+            RecordItem.editItem(e.timestamp)
+        )(item)
         .addClass("btn btn-sm")
         #.bind "click", ->
         #  alert(item.timestamp) # it will dynamically revalue as last item

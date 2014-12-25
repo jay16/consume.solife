@@ -7,8 +7,9 @@ module APIHelpers
   end
   
   def current_user
-    return false if !@current_user && params[:token].to_s.strip.empty?
-    @current_user ||= User.validate(params[:token])
+    token = (params[:token] || "").to_s.strip
+    return false if !@current_user && token.empty?
+    @current_user ||= User.validate(token)
   end 
 
   def authenticate!

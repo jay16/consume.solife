@@ -6,15 +6,17 @@ config/*.yml
 config/*.yaml
 # Ignore all logfiles and tempfiles.
 #db/
-doc/
-log/
-tmp/
-vendor/
-script/
-public/
-backup/
+/doc/
+/log/
+/tmp/
+/vendor/
+/script/
+/public/
+/backup/
+/db
 
 # files
+*.lock
 .*
 .bundle
 .DS_Store

@@ -13,7 +13,7 @@
 #
 #
 #https://github.com/javan/whenever/wiki/Output-redirection-aka-logging-your-cron-jobs
-set :output, {:error => 'whenever.error', :standard => 'whenever.standard'}
+set :output, {:error => 'log/whenever.error', :standard => 'log/whenever.standard'}
 every 1.day, :at => "11:59 pm"  do
   rake "db:qiniu"
 end
