@@ -16,13 +16,11 @@ config/*.yaml
 /db
 
 # files
-*.lock
 .*
 .bundle
 .DS_Store
 *~
 *.out
-*.lock
 *.sql
 *.tar
 *.rar

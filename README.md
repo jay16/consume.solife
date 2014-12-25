@@ -84,3 +84,10 @@ bundle exec rspec spec/grape
 
       reload rails server when modify grape's code
 
+    3. Gemfile.lock is needed.
+
+      remote deploy on vps, `bundle install` will abort:
+
+      > You are trying to install in deployment mode after changing your Gemfile. Run `bundle install` elsewhere and add the updated Gemfile.lock to version control.
+
+      > If this is a development machine, remove the Gemfile freeze by running `bundle install --no-deployment`.
