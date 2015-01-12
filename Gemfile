@@ -55,6 +55,8 @@ gem "turbolinks"
 gem "jbuilder", "~> 1.2"
 
 group :development,:test do
+  gem "net-ssh", "~>2.7.0"
+  gem "net-scp", "~>1.2.1"
   gem "qiniu", "~>6.3.2"
   gem "backup", "~>3.4.0"
   gem "factory_girl_rails"

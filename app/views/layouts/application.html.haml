@@ -8,6 +8,11 @@
         %meta{content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", name: "viewport"}/
         %link{rel: "apple-touch-icon-precomposed", href: "#{Setting.favicon}"}/
         %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+      :css
+        body { max-width: 1000px; min-width:300px; }
+        .mobile-hidden { display: none; }
+        .table { table-layout: fixed; }
+        .table td { word-break:break-all }
 
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
     = javascript_include_tag "application", "data-turbolinks-track" => true
@@ -26,7 +31,7 @@
       = yield
 
 
-    %footer#footer
+    %div#footer
       .copyright
         %p 
           &copy;

@@ -35,9 +35,9 @@ window.Record =
     $validator = $form.data("bootstrapValidator")
     $validator.validate()
     if $validator.isValid()
+      #Record.initForm()
       $form.submit()
-      $("#recordFormModal").modal("hide")
-      Record.initForm()
+      $(".modal").modal("hide")
 
 $(document).ready ->
   $recordForm = $("#recordForm")

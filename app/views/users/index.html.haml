@@ -8,7 +8,7 @@
           .col-sm-6
             .row
               = render partial: "users/edit_user_name", layout: false
-            .row
+            .row#record_form_modal
               = render partial: "records/consume_form_modal", layout: false
 
         %a.list-group-item{:href => ""}= ["消费数量: ", current_user.records.size].join

@@ -105,6 +105,7 @@ window.RecordItem =
   # submit create record_item
   create: ->
     $form = $("#recordItemForm")
+    $submit = $("#record_submit")
     $validator = $form.data("bootstrapValidator")
     $validator.validate()
     if $validator.isValid()
@@ -112,6 +113,7 @@ window.RecordItem =
       RecordItem.listItems()
       RecordItem.back()
       App.resetForm($form) 
+      $submit.removeAttr("disabled")
     else
       App.printBootstrapValidatorErrors($validator)
 

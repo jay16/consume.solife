@@ -41,19 +41,20 @@
         %form#recordForm{role: "form", action: "/records", method: "post", "data-remote" => true}
           %input{name: "record[items]", type: "hidden", value: "[]"}
           %input{name: "record[remark]", type: "hidden", value: ""}
-          .form-group
+          .form-group.row
             .col-sm-1
               ￥
             .col-sm-4
-              %input.form-control{name: "record[value]", type: "number"}/
+              %input#record_value.form-control{name: "record[value]", type: "number", value: "0"}/
             .col-sm-5
               #datetimePicker.input-group.date
                 %span.input-group-addon
                   %span.glyphicon.glyphicon-calendar
                 %input.form-control{name: "record[ymdhms]", type: "text"}/
-          .form-group.record-items
-          .form-group
-            %a.form-control.btn.btn-primary{onclick: "Record.create();"} 提交
+          .form-group.row.record-items
+          %br
+          .form-group.row
+            %a#record_submit.form-control.btn.btn-primary{onclick: "Record.create();", disabled: "disabled"} 提交
 
 = javascript_include_tag "record"
 = javascript_include_tag "record_item"

@@ -24,4 +24,6 @@
               = render partial: "records/record", locals: { record: record, user_id: current_user.id } if record
 
 .row
+  :css
+    .pagination { display: block; }
   = will_paginate @records
