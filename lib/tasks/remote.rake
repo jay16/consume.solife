@@ -24,7 +24,7 @@ namespace :remote do
     local_config_path  = "%s/config" % Rails.root
     remote_config_path = "%s/config" % remote_root_path
     yamls = Dir.entries(local_config_path).find_all { |file| File.extname(file) == ".yaml" }
-    Net::SSH.start(Settings.server.host, Settings.server.user, :password => Settings.server.password) do |ssh|
+    Net::SSH.start(Setting.server.host, Setting.server.user, :password => Setting.server.password) do |ssh|
       _dirname  = File.dirname(remote_root_path)
       _basename = File.basename(remote_root_path)
       command = "cd %s && git reset --hard HEAD && git pull origin master" % remote_root_path

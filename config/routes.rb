@@ -29,6 +29,8 @@ Consume::Application.routes.draw do
 
   mount Consume::API => "/"
   get "/api" => "home#api"
+  get  "/solife" => "home#solife_get"
+  post "/solife" => "home#solife_post"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

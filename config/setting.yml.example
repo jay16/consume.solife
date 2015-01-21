@@ -39,11 +39,10 @@ defaults: &defaults
         describtion: "consume.solife.us"
         url: "http://solife-apk.qiniudn.com/iconsumes-0.1.c.apk"
   server:
-    host: "host.com"
-    user: "username"
-    password: "pwd"
-    path:
-      app_root_path: "/home/work/consume"
+    host: "solife.us"
+    user: "jay"
+    password: "hellojay"
+    app_root_path: "/home/work/consume"
 
 development:
   <<: *defaults
