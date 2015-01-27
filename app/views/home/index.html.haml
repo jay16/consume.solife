@@ -76,8 +76,9 @@
             %table.table.table-condensed
               - @cache_list.each do |row|
                 %tr
-                  - row.each do |data|
-                    %td= data
+                  - row.each_with_index do |data, index|
+                    - unless index == 4
+                      %td= data 
 
     %footer#footer
       .copyright

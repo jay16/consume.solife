@@ -35,7 +35,7 @@ class HomeController < ApplicationController
         :ymdhms => timestamp
       })
       email = user.email.gsub(/(.*?)\@/) { "*"*$1.to_s.length+"@" }
-      Utils::ActionCache.add([timestamp, email, "创建消费记录","", "源自微信"])
+      Utils::ActionCache.add([timestamp, email, "创建消费记录","来自微信", request.ip])
 
       params = { uid: user.id, rid: record.id }
     end
