@@ -2,6 +2,11 @@
 %html
   %head
     =  render_page_title
+    %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = javascript_include_tag "#{Setting.cdn.bootstrap.v320.js}"
+    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v320.css}"
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     - if mobile?
       %meta{content: "no", name: "apple-mobile-web-app-capable"}
         %meta{content: "True", name: "HandheldFriendly"}/
@@ -9,18 +14,23 @@
         %link{rel: "apple-touch-icon-precomposed", href: "#{Setting.favicon}"}/
         %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
       :css
-        body { max-width: 1000px; min-width:300px; }
-        .mobile-hidden { display: none; }
+        .container { width: 100%; }
+        .col-sm-offset-2 { margin-left: 0%; }
+        .col-sm-8 { width: 100%; }
         .table { table-layout: fixed; }
         .table td { word-break:break-all }
-
-    %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
-    = javascript_include_tag "application", "data-turbolinks-track" => true
-    = javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
-    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v303.css}"
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+        .navbar-brand {background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;margin-top:10px;padding-top:7px;} 
+        .navbar-collapse {background: gray;}
+        body.home-body .navbar .nav li a {text-align: left; padding-left: 30px; line-height: 30px;}
+    - else
+      :css
+        .navbar-brand {background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;margin-top:20px;padding-top:7px;} 
+        .navbar-nav .dropdown-menu { background: gray; }
+    :css
+      .col-sm-12 {padding-right: 0px;}
+      body.home-body .navbar .nav .active a { color: white; }
     = csrf_meta_tags
-  %body
+  %body.home-body{style: "padding:0px;background: white;"}
     = render partial: "layouts/header"
     #main.container
       .row

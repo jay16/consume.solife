@@ -28,7 +28,7 @@ class HomeController < ApplicationController
 
   def solife_post
     if user = User.find_by(email: params[:nToken])
-      timestamp = Time.now.strftime("%Y:%m:%d %H:%M:%S")
+      timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
       record = user.records.create({
         :value  => params[:nMoney] || 0,
         :remark => params[:nText],

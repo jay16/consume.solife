@@ -1,47 +1,23 @@
-%nav#nav.navbar.navbar-default{:role => "navigation"}
+%nav.navbar.navbar-default{role: "navigation", style:"margin-bottom:0px;"}
   .container
     .row
-      .col-sm-12
-        / Brand and toggle get grouped for better mobile display
+      %div{class: "col-sm-12", style: "padding-left:0px;"}
         .navbar-header
           %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
             %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "/"} 爱记录
-        - if current_user
-          / Collect the nav links, forms, and other content for toggling
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav.hidden
-              %li.active
-                %a{:href => "#"} Link
-              %li
-                %a{:href => "#"} Link
-              %li.dropdown
-                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  Dropdown
-                  %b.caret
-                %ul.dropdown-menu
-                  %li
-                    %a{:href => "#"} Action
-                  %li
-                    %a{:href => "#"} Another action
-                  %li
-                    %a{:href => "#"} Something else here
-                  %li.divider
-                  %li
-                    %a{:href => "#"} Separated link
-                  %li.divider
-                  %li
-                    %a{:href => "#"} One more separated link
-            %form.navbar-form.hidden.navbar-left{:role => "search"}
-              .form-group
-                %input.form-control{:placeholder => "Search", :type => "text"}
-              %button.btn.btn-default{:type => "submit"} Submit
-            %ul.nav.navbar-nav.navbar-right
-              %li.hidden
-                %a{:href => "#"} Link
+          %a.navbar-brand{href: "/", tabindex: "-1"}
+            %span.hangshu{style: "color: white;"} 爱记录
+        / Collect the nav links, forms, and other content for toggling
+        .collapse.navbar-collapse{role: "navigation", id:"bs-example-navbar-collapse-1"}
+          %ul.nav.navbar-nav.navbar-right
+            - unless current_user
+              %li 
+                %a{:href => "/users/sign_in"} 登陆
+
+            - else
               %li.dropdown
                 %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                   设置
@@ -61,10 +37,3 @@
                     = link_to destroy_user_session_path, method: :delete do
                       %i.glyphicon.glyphicon-log-out
                       退出
-        - else
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav
-              %li.active
-                %a{:href => "#"}= @page_title
-
-

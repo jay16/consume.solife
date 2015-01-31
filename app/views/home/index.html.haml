@@ -3,6 +3,9 @@
   %head
     %meta{:charset => "utf-8"}
     %title= [Setting.title, "-", Setting.slogan].join(" ")
+    %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
+    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v320.css}"
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     - if mobile?
       %meta{content: "no", name: "apple-mobile-web-app-capable"}
         %meta{content: "True", name: "HandheldFriendly"}/
@@ -13,35 +16,50 @@
         .container { width: 100%; }
         .col-sm-offset-2 { margin-left: 0%; }
         .col-sm-8 { width: 100%; }
+        .table { table-layout: fixed; }
+        .table td { word-break:break-all }
+        .navbar-brand {background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;margin-top:10px;padding-top:7px;} 
+        .navbar-collapse {background: gray;}
+        body.home-body .navbar .nav li a {text-align: left; padding-left: 30px; line-height: 30px;}
+    - else
+      :css
+        .navbar-brand {background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;margin-top:20px;padding-top:7px;} 
+    :css
+      .col-sm-12 {padding-right: 0px;}
 
-    %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
-    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v303.css}"
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
 
   %body.home-body{style: "padding:0px;background: white;"}
-    %nav#nav.navbar.navbar-default{:role => "navigation"}
-      / Brand and toggle get grouped for better mobile display
-      .navbar-header
-        %a.brand{href: "/", tabindex: "-1", style: "background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;padding-left:40px;margin-left:10px;"} 
-          %span.hangshu 爱记录
-      / Collect the nav links, forms, and other content for toggling
-      .collapse.navbar-collapse
-        %ul.nav.navbar-nav.hidden
-          %li.active
-            %a{:href => "#"} Link
-        %ul.nav.navbar-nav.navbar-right
-          %li
-            %a.hidden.login{"data-target" => "#login-modal-no", "data-toggle" => "modal", :href => "/users/sign_in", :role => "button", :type => "button"} 登录
-            %a.login{href: "/users/sign_in"} 登陆
-          %li.action
-            %a.signup{:href => "javascript:void(0);"}
-              %strike 免费注册 
+    %nav.navbar.navbar-default{role: "navigation", style:"margin-bottom:0px;"}
+      .container
+        .row
+          %div{class: "#{mobile? ? 'col-sm-12' : 'col-sm-8 col-sm-offset-2'}", style: "padding-left:0px;"}
+            .navbar-header
+              %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+                %span.sr-only Toggle navigation
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
+              %a.navbar-brand{href: "/", tabindex: "-1"}
+                %span.hangshu{style: "color: white;"} 爱记录
+            / Collect the nav links, forms, and other content for toggling
+            .collapse.navbar-collapse{role: "navigation", id:"bs-example-navbar-collapse-1"}
+              %ul.nav.navbar-nav.navbar-right
+                - if mobile?
+                  %li
+                    %a{href: "/users/sign_in"} 登陆
+                - else
+                  %li
+                    %a.login{href: "/users/sign_in"} 登陆
+                  %li.action
+                    %a.signup{:href => "javascript:void(0);"}
+                      %strike 注册 
+
     #slogn
       %header#home-hero
         .container
           .row
-            .col-sm-12{style: "text-align:center;"}
+            %div{class: "#{mobile? ? 'col-sm-12' : 'col-sm-8 col-sm-offset-2'}", style: "text-align: center;"}
               = notice_message
           .row
             .col-sm-12
@@ -110,7 +128,7 @@
 
 
 = javascript_include_tag "application", "data-turbolinks-track" => true
-= javascript_include_tag "#{Setting.cdn.bootstrap.v303.js}"
+= javascript_include_tag "#{Setting.cdn.bootstrap.v320.js}"
 :javascript
   $(function(){
     Home.resizeWindow()

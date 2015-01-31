@@ -1,5 +1,8 @@
 :css
-  .share-link .col-sm-6:nth-child(2) { text-align: right; } 
+  .share-link .col-sm-6 { text-align: left; font-size: 12px; } 
+- unless mobile?
+  :css
+    .share-link .col-sm-6:nth-child(2) { text-align: right; } 
 
 .row.share-link
   - if controller_name != 'sessions'

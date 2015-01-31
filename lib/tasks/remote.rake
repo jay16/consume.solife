@@ -27,14 +27,6 @@ namespace :remote do
     Net::SSH.start(Setting.server.host, Setting.server.user, :password => Setting.server.password) do |ssh|
       _dirname  = File.dirname(remote_root_path)
       _basename = File.basename(remote_root_path)
-      command = "cd %s && git reset --hard HEAD && git pull origin master" % remote_root_path
-      execute!(ssh, command)
-
-      command = "cd %s && bundle install --local" % remote_root_path
-      execute!(ssh, command)
-
-      command = "cd %s && bundle exec rake assets:precompile RAILS_ENV=production" % remote_root_path
-      execute!(ssh, command)
 
       # check whether remote server exist yaml file
       yamls.each do |yaml|
@@ -45,6 +37,15 @@ namespace :remote do
         end
         puts "\n"
       end
+
+      command = "cd %s && git reset --hard HEAD && git pull origin master" % remote_root_path
+      execute!(ssh, command)
+
+      command = "cd %s && bundle install --local" % remote_root_path
+      execute!(ssh, command)
+
+      command = "cd %s && bundle exec rake assets:precompile RAILS_ENV=production" % remote_root_path
+      execute!(ssh, command)
     end
   end
 end
