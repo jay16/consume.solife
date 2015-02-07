@@ -5,6 +5,7 @@ window.Record =
     $datetimePicker.data("DateTimePicker").setDate(new Date())
 
     $("#recordFormModal").modal("show")
+    $(".modal-backdrop").css("display", "none")
 
   initForm: ->
     $recordItemForm = $("#recordItemForm")
