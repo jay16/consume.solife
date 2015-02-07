@@ -7,13 +7,12 @@ config/*.yaml
 # Ignore all logfiles and tempfiles.
 #db/
 /app/assets/images/gravatar
-/public
 /doc/
 /log/
 /tmp/
 /vendor/
 /script/
-/public/
+/public/assets
 /backup/
 /db
 
