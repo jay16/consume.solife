@@ -5,7 +5,6 @@
     = f.input :user_id, as: :hidden
     = f.input :tags_list, as: :hidden
 
-
     .form-group.form-inline
       = f.text_field :value, class: "col-md-3 form-control", placeholder: "消费数值"
       = f.text_field :ymdhms,class: "col-md-6 form-control", placeholder: "消费日期"
@@ -17,20 +16,3 @@
       %ul#eventTags.col-md-10{style:"line-height:18px;font-size:14px;"}
         = tag_it_list @record
       = f.button :submit, "提交", class: "btn btn-primary pull-right", onclick: "App.showLoading();"
-
-    .form-group
-      #show_pane
-
-    %span.btn.btn-success.fileinput-button
-      %i.glyphicon.glyphicon-plus.glyphicon-white
-      %span 添加文件
-      = f.input_field :image, as: :file
-
-    %table.table#images_list
-      %tr
-
-:javascript
-  $(function(){
-    Tags.initTagIt("#eventTags",#{Tag.all.map(&:label)},"#record_tags_list","#show_pane");
-    Records.multiFileUpload("record_image","images_list");
-  });

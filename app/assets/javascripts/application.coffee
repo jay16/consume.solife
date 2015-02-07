@@ -52,10 +52,10 @@ window.App =
 
     nav_height = 80 || $("nav:first").height()
     footer_height = 100 || $("footer:first").height()
-    main_height = y-nav_height-footer_height
-    if main_height > 300
-      $("#main").css
-        height: main_height + "px"
+    #main_height = y-nav_height-footer_height
+    #if main_height > 300
+    #  $("#main").css
+    #    height: main_height + "px"
 
   getEnumPropertyNames: (obj) ->
     props = []

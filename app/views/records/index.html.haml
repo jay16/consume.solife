@@ -1,11 +1,19 @@
-.row.hidden
-  %label.checkbox-inline{style: "float: right;"}
-    %input{type: "checkbox", value: "option", onclick: "Records.toggleShow(this, '.record-operation');"} 
-    = t("operation")
+.row
+  %label.checkbox-inline
+    %input.checkbox-ctl-tag{type: "checkbox", value: "option", onclick: "Records.toggleShow(this, '.record-tag');"}  
+    标签
+  %label.checkbox-inline
+    %input.checkbox-ctl-edit{type: "checkbox", value: "option", onclick: "Records.toggleShow(this, '.operation-edit');"}  
+    编辑
+  %label.checkbox-inline
+    %input.checkbox-ctl-del{type: "checkbox", value: "option", onclick: "Records.toggleShow(this, '.operation-del');"}  
+    删除
 
 .row
   :css
-    td:nth-child(2) { max-width: 300px; }
+    .records-list thead tr th { text-align: center; }
+    .records-list tbody tr td { text-align: center; vertical-align: middle;}
+    .records-list tbody tr td:nth-child(2) { text-align: left; max-width: 300px; }
   %div{style: "border-radius: 5px;background: white;padding: 5px;"}
     %table.table.table-bordered.table-striped.table-condensed.records-list
       %thead
@@ -13,9 +21,11 @@
           %th= t("view.record.value")
           %th= t("view.record.remark")
           %th= t("view.record.ymdhms")
-          %th= t("view.tag")
-          %th.record-operation.hidden.center{colspan:"2"}
-            = t("operation")
+          %th.record-tag.hidden= t("view.tag")
+          %th.operation-edit.hidden
+            %i.glyphicon.glyphicon-pencil
+          %th.operation-del.hidden
+            %i.glyphicon.glyphicon-trash
 
       %tbody
         - cache(cache_key_for_view(@records)) do
@@ -27,3 +37,12 @@
   :css
     .pagination { display: block; }
   = will_paginate @records
+
+.modal#recordEditModal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        .modal-title
+          loading...
+      .modal-body
+        loading...

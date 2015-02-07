@@ -2,10 +2,18 @@
   %td= record.value
   %td= record.remark
   %td= record.ymdhms
-  %td= record.tags_string
+  %td.record-tag.hidden= record.tags_string
   - if record.user_id == current_user.id
-    %td.record-operation.hidden= link_to t("edit"), "/records/#{record.id}/edit", remote: true, onclick: "App.showLoading();", class: "btn btn-info btn-xs"
-    %td.record-operation.hidden= link_to t("del"), record, :method => :delete, :data => { :confirm  => 'Are you sure?' }, remote: true, class: "btn btn-danger btn-xs"
+    %td.operation-edit.hidden
+      = link_to "/records/#{record.id}/edit", remote: true, onclick: "App.showLoading();", class: "btn btn-info btn-xs" do
+        %span.glyphicon.glyphicon-pencil
+    %td.operation-del.hidden
+      = link_to record, :method => :delete, :data => { :confirm  => 'Are you sure?' }, remote: true, class: "btn btn-danger btn-xs" do
+        %span.glyphicon.glyphicon-trash
   - else
-    %td.record-operation.hidden= link_to t("edit"), "javascript:void(0);", disabled: "disabled", class: "btn btn-default btn-xs"
-    %td.record-operation.hidden= link_to t("del"), "javascript:void(0);", disabled: "disabled", class: "btn btn-default btn-xs"
+    %td.operation-edit.hidden
+      = link_to "javascript:void(0);", disabled: "disabled", class: "btn btn-default btn-xs" do
+        %span.glyphicon.glyphicon-pencil
+    %td.operation-del.hidden
+      = link_to "javascript:void(0);", disabled: "disabled", class: "btn btn-default btn-xs" do
+        %span.glyphicon.glyphicon-trash

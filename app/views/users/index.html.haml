@@ -53,19 +53,19 @@
       .list-group
         = render partial: "users/search", layout: false
     //warn
-    .row
-      .alert.alert-warning
-        %a.close{"data-dismiss" => "alert",  href: "#", onclick: "Home.resizeWindow();"} &times; 
-        %p.center 温馨提示
-        %ul
-          %li 本界面目前只用来查询
-          %li 数据[增][删][改]在手机端
+    //.row
+    //  .alert.alert-warning
+    //    %a.close{"data-dismiss" => "alert",  href: "#"} &times; 
+    //    %p.center 温馨提示
+    //    %ul
+    //      %li 本界面目前只用来查询
+    //      %li 数据[增][删][改]在手机端
 
   //span
   .col-sm-9.records-list
     // 消费记录创建框
-    .jumbotron.record_form{style: "padding:11px 40px;display:block;"}
-      // render partial: "records/form"
+    //.jumbotron.record_form{style: "padding:11px 40px;display:block;"}
+    //   render partial: "records/form"
 
     // 消费记录列表
     .row{style: "padding: 0px 20px;"}
@@ -83,3 +83,24 @@
         function() { $(".edit-user-name-btn").addClass("hidden");}
     );
   });
+
+
+    // records/_form.html.haml
+    //
+    //.form-group
+    //  #show_pane
+    //
+    //%span.btn.btn-success.fileinput-button
+    //  %i.glyphicon.glyphicon-plus.glyphicon-white
+    //  %span 添加文件
+    //  = f.input_field :image, as: :file
+    //
+    //%table.table#images_list
+    //  %tr
+//
+//:javascript
+//  $(function(){
+//    Tags.initTagIt("#eventTags",#{Tag.all.map(at:label)},"#record_tags_list","#show_pane");
+//    Records.multiFileUpload("record_image","images_list");
+//  });
+

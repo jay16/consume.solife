@@ -31,4 +31,3 @@ window.Home =
     $("#cache").css
       height: ch + "px"
     #$("#cache").scrollTop $("#cache")[0].scrollHeight
-
