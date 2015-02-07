@@ -27,7 +27,8 @@ window.Home =
     nh = $("#nav").height()
     sh = $("#slogn").height()
     fh = $("#footer").height()
-    ch = y - nh - sh - fh
+    ch = y - nh - sh - fh - 42
     $("#cache").css
       height: ch + "px"
-    #$("#cache").scrollTop $("#cache")[0].scrollHeight
+    $("#footer").css
+      "margin-top": "-15px"

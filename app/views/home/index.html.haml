@@ -51,7 +51,7 @@
                 - else
                   %li
                     %a.login{href: "/users/sign_in"} 登陆
-                  %li.action
+                  %li.action{style: "text-align: center;"}
                     %a.signup{:href => "javascript:void(0);"}
                       %strike 注册 
 
@@ -61,7 +61,7 @@
           .row
             %div{class: "#{mobile? ? 'col-sm-12' : 'col-sm-8 col-sm-offset-2'}", style: "text-align: center;"}
               = notice_message
-          .row
+          .row{style: "text-align: center;"}
             .col-sm-12
               %h1.tagline 爱生活，爱记录
               %h2.intro 橫向解析你的消费习惯，纵向解释你的资金去向。
@@ -104,27 +104,6 @@
           &copy;
           #{Time.now.strftime("%Y")} 
           %span.zapfino #{Setting.domain}
-
-#login-modal.modal.fade
-  .modal-dialog
-    .modal-content{style: "max-width:450px;"}
-      .modal-header
-        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-        %h3#login-modal-label 登录
-      .modal-body{style: "min-height: 150px;max-width:430px;"}
-        .col-sm-10.col-sm-offset-1
-          %form#new_user.simple_form.new_user{"accept-charset" => "UTF-8", :action => "/users/sign_in", :method => "post", :novalidate => "novalidate"}
-            %div{:style => "margin:0;padding:0;display:inline"}
-              %input{:name => "utf8", :type => "hidden", :value => "✓"}
-                %input{:name => "authenticity_token", :type => "hidden", :value => "speZxhxzs9RlQfPvdBPC+m8k6s/+V8JR5Nt4zj8G44U="}/
-            .form-inputs
-              .control-group.email.optional.user_email
-                .controls
-                  %input#user_email.string.email.optional.col-sm-12.form-control{:autofocus => "autofocus", :name => "user[email]", :style => "border-radius: 4px 4px 0px 4px;", :type => "email"}/
-              .control-group.password.required.user_password{:style => "display: inline;"}
-                .controls
-                  %input#user_password.password.required.col-sm-8.form-control{:name => "user[password]", :style => "width:80%;border-radius: 4px 0px 0px 4px;", :type => "password"}/
-              %input.btn.btn.btn-primary{:label => "false", :name => "commit", :style => "border-radius: 0px 0px 4px 0px;", :type => "submit", :value => "登 陆"}
 
 
 = javascript_include_tag "application", "data-turbolinks-track" => true

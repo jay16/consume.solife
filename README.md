@@ -9,12 +9,37 @@ bunlde install
 bunlde exec rake db:create
 bunlde exec rake db:migrate
 bundle exec rake assets:precompile RAILS_ENV=production
-passenger start -e production
+./unicorn.sh {start|stop|restart|force-reload|
 ````
 
 ```` ruby
 bundle exec rake db:migrate RAILS_ENV=test
 bundle exec rspec spec/grape
+````
+
+## Nginx Unciorn
+
+````
+upstream consume-solife-unicorn {
+  server unix:/home/work/consume/tmp/pids/unicorn.sock fail_timeout=0;
+}
+server {
+  listen 80;
+  server_name consume.solife.us iconsume.solife.us;
+  root /home/work/consume/public;
+
+  access_log /home/work/consume/log/nginx-access.log;
+  error_log  /home/work/consume/log/nginx-error.log;
+  location / {
+    try_files $uri @net;
+  }
+  location @net {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_pass http://consume-solife-unicorn;
+  }
+}
 ````
 
 ## TODO
