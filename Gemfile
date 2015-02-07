@@ -3,30 +3,30 @@
 source "http://ruby.taobao.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "4.0.4"
-gem "mysql2"
+gem "rails", "~>4.0.4"
+gem "mysql2", "~>0.3.16"
 
 # add these gems to help with the transition:
 # gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+gem 'rails-observers', "~>0.1.2"
+gem 'actionpack-page_caching', "~>1.0.2"
+gem 'actionpack-action_caching', "~>1.1.1"
 
-gem "simple_form"
-gem "settingslogic"
+gem "simple_form", "~>3.0.2"
+gem "settingslogic", "~>2.0.9"
 
-gem "cells"
+gem "cells", "~>3.11.1"
 
 # login system
-gem "devise"
-gem 'devise-encryptable'
+gem "devise", "~>3.2.4"
+gem 'devise-encryptable', "~>0.2.0"
 
-gem "grape"
-gem "grape-entity"
+gem "grape", "~>0.7.0"
+gem "grape-entity", "~>0.4.2"
 
-gem "gravatar_image_tag"
+gem "gravatar_image_tag", "~>1.2.0"
 
-gem "bootstrap-sass"
+gem "bootstrap-sass", "~>3.1.1.1"
 gem 'bootstrap_helper', github: 'huacnlee/bootstrap-helper'
 gem 'bootstrap-will_paginate'
 #gem "i18n", github: "svenfuchs/i18n"
@@ -38,18 +38,20 @@ gem "whenever", :require => false
 gem "uglifier", ">= 1.3.0"
 
 
-gem "haml-rails"
+gem "haml-rails", "~>0.5.3"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 4.0.2"
 # Use CoffeeScript for .js.coffee assets and views
 gem "coffee-rails", "~> 4.0.0"
 # Use jquery as the JavaScript library
-gem "jquery-rails"
+gem "jquery-rails", "~>3.1.0"
+
+gem "unicorn-rails", "~>2.2.0"
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem "therubyracer", platforms: :ruby
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem "turbolinks"
+gem "turbolinks", "~>2.2.2"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 1.2"

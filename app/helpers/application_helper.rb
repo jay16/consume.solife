@@ -1,10 +1,34 @@
 #encoding: utf-8
+require "uri"
+require "open-uri"
 module ApplicationHelper
 
   def render_page_title
     site_name = Setting.title
     title = @page_title ? "#{site_name} | #{@page_title}" : site_name rescue "SITE_NAME"
     content_tag("title", title, nil, false)
+
+  end
+
+  def gravatar_image_cache_tag(email, alt="")
+    url = gravatar_image_url(email, alt: alt)
+    uri = URI.parse(url)
+    gravatar_id = uri.path.split(/\//).last rescue "default"
+    gravatar_name = gravatar_id + ".jpg"
+    gravatar_relative_path = "gravatar/" + gravatar_name
+    gravatar_absolute_path = Rails.root.join("app/assets/images", gravatar_relative_path)
+    if File.exist?(gravatar_absolute_path)
+      image_tag gravatar_relative_path
+    else
+      begin
+        File.open(gravatar_absolute_path, "w+") do |file|
+          file.puts open(url) { |f| f.read }.force_encoding("UTF-8")
+        end
+        image_tag gravatar_relative_path
+      rescue
+        image_tag url
+      end
+    end
   end
 
   def controller_stylesheet_link_tag

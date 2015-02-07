@@ -2,9 +2,9 @@
   #sidebar.col-sm-3.sidebar-offcanvas{:role => "navigation"}
     .row
       .list-group
-        .list-group-item.active.row{style: "margin-left:0px;margin-right:0px;"}
+        .list-group-item.row{style: "margin-left:0px;margin-right:0px;"}
           .col-sm-6
-            = gravatar_image_tag(current_user.email, alt: current_user.name)
+            = gravatar_image_cache_tag(current_user.email, alt: current_user.name)
           .col-sm-6
             .row
               = render partial: "users/edit_user_name", layout: false
