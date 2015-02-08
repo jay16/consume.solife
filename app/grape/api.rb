@@ -133,7 +133,7 @@ class Consume::API < Grape::API
       record.tags_list = tags_list
       record.build_relation_with_tags
 
-      @cache_arr.push("创建消费记录")
+      @cache_arr.push("创建消费")
       @cache_arr.push(record.browser)
       @cache_arr.push(record.ip)
       add_create_cache(@cache_arr)
@@ -156,7 +156,7 @@ class Consume::API < Grape::API
       record_params = must_be_hash(params[:record]).merge(browser_with_ip)
       record.update(record_params)
 
-      @cache_arr.push("修改消费记录")
+      @cache_arr.push("修改消费")
       @cache_arr.push(record.browser)
       @cache_arr.push(record.ip)
       add_create_cache(@cache_arr)
