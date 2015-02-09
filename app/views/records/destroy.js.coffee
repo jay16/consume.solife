@@ -1,2 +1,1 @@
-alert("<%= dom_id @record %>")
-$("#<= dom_id @record %>").remove()
+$("#<%= dom_id @record %>").remove()

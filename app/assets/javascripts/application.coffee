@@ -16,9 +16,13 @@
 #= require turbolinks
 #  require bootstrap
 #= require jquery.ui
+#= require bootstrapValidator.min
+#= require moment.min
+#= require bootstrap-datetimepicker.min
 #= require tag-it
+#= require record
+#= require record_item
 #= require tags
-#= require records
 #= require users
 #= require home
 

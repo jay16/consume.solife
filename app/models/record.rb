@@ -22,8 +22,8 @@ class Record < ActiveRecord::Base
   has_and_belongs_to_many :tags, -> { uniq }, autosave: true
   
   scope :recent, -> { order("created_at desc") }
+  scope :normals, -> { where(:deleted => false) }
   scope :deleted, -> { where(:deleted => true) }
-  scope :undeleted, -> { where(:deleted => false) }
  
   after_create :build_relation_with_tags
   after_update :build_relation_with_tags

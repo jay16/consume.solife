@@ -1,4 +1,27 @@
+# TagsController 下所有页面的JS功能
+#= require "multi_selector"
+#= require "jquery.cookie"
 window.Record = 
+  # 同时上传多张图片
+  multiFileUpload : (input_file, show_pane) ->
+    # Create an instance of the multiSelector class, 
+    # pass it the output target and the max number of files
+    multi_selector = new MultiSelector( document.getElementById(show_pane), 30 );
+    # Pass in the file element
+    multi_selector.addElement( document.getElementById(input_file) );
+   
+  toggleShow: (self, klass) ->
+    cookie_name = klass.replace(/\.|#/, "")
+    state = $(self).attr("checked")
+    if state == undefined
+      $(self).attr("checked", "true")
+      $.cookie(cookie_name, 1, {expires: 1})
+      $(klass).removeClass("hidden")
+    else
+      $(self).removeAttr("checked")
+      $.cookie(cookie_name, null)
+      $(klass).addClass("hidden")
+
   # datepicker change date
   showModal: ->
     $datetimePicker = $('#datetimePicker')
@@ -41,6 +64,14 @@ window.Record =
       $(".modal").modal("hide")
 
 $(document).ready ->
+  if($.cookie("operation-tag") == "1")
+    $(".checkbox-ctl-tag").click()
+  if($.cookie("operation-edit") == "1")
+    $(".checkbox-ctl-edit").click()
+  if($.cookie("operation-del") == "1")
+    $(".checkbox-ctl-del").click()
+
+
   $recordForm = $("#recordForm")
   $datetimePicker = $('#datetimePicker')
   $datetimePicker.datetimepicker

@@ -1,8 +1,3 @@
-= javascript_include_tag "bootstrapValidator.min.js"
-= javascript_include_tag "moment.min.js"
-= javascript_include_tag "bootstrap-datetimepicker.min.js"
-= stylesheet_link_tag "bootstrapValidator.min.css"
-= stylesheet_link_tag "bootstrap-datetimepicker.min.css"
 // Button trigger modal
 %button.btn.btn-primary.btn-lg{onclick: "Record.showModal();", type: "button"}
   %i.glyphicon.glyphicon-plus.glyphicon-white
@@ -56,6 +51,3 @@
           %br
           .form-group.row
             %a#record_submit.form-control.btn.btn-primary{onclick: "Record.create();", disabled: "disabled"} 提交
-
-= javascript_include_tag "record"
-= javascript_include_tag "record_item"

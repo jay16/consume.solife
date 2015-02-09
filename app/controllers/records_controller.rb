@@ -5,7 +5,7 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    @records = current_user.records
+    @records = current_user.records.normals
   end
 
   # GET /records/1
@@ -59,8 +59,8 @@ class RecordsController < ApplicationController
   # DELETE /records/1
   # DELETE /records/1.json
   def destroy
-    #@record.destroy
     @record.soft_delete
+
     respond_to do |format|
       format.js
       format.html { redirect_to records_url }

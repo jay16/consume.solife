@@ -8,7 +8,7 @@
       = link_to "/records/#{record.id}/edit", remote: true, onclick: "App.showLoading();", class: "btn btn-info btn-xs" do
         %span.glyphicon.glyphicon-pencil
     %td.operation-del.hidden
-      = link_to record, :method => :delete, :data => { :confirm  => 'Are you sure?' }, remote: true, class: "btn btn-danger btn-xs" do
+      = link_to record, :method => :delete, :data => { :confirm  => "金额:%s\r内容:%s\r确定删除?" % [record.value, record.remark] }, remote: true, class: "btn btn-danger btn-xs" do
         %span.glyphicon.glyphicon-trash
   - else
     %td.operation-edit.hidden
