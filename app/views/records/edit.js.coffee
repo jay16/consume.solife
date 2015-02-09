@@ -28,7 +28,12 @@ $form.bootstrapValidator
         notEmpty: 
           message: '消费日期为必填项.'
         date: 
-          format: 'YYYY/MM/DD HH:mm:ss'
+          format: 'YYYY-MM-DD hh:mm:ss'
           message: "日期格式错误."
+
+$form.children("input").bind "keydown input onchange", ->
+  $record.bootstrapValidator("revalidateField", "record[value]")
+  $record.bootstrapValidator("revalidateField", "record[ymdhms]")
+
 
 App.hideLoading()
