@@ -14,7 +14,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require turbolinks
-#  require bootstrap
+#= require bootstrap.v320
 #= require jquery.ui
 #= require bootstrapValidator.min
 #= require moment.min

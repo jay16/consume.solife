@@ -1,7 +1,18 @@
-%strong 整体概况
-
+%strong 系统使用 
 :css 
   td:nth-child(1){ width: 80px; }
+%table.table.table-bordered.table-condensed
+  %thead
+    %tr
+      - ::Ps::AUX.title.each do |name|
+        %th= name
+  %tbody
+    %tr
+      - ::Ps::AUX.pid($$).flatten.each do |data|
+        %td= data
+
+
+%strong 整体概况
 %table.table.table-bordered.table-condensed
   %tr
     %td 用户数量

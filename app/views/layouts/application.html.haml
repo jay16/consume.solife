@@ -4,8 +4,6 @@
     =  render_page_title
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
     = javascript_include_tag "application", "data-turbolinks-track" => true
-    = javascript_include_tag "#{Setting.cdn.bootstrap.v320.js}"
-    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v320.css}"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     - if mobile?
       %meta{content: "no", name: "apple-mobile-web-app-capable"}
