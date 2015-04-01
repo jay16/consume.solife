@@ -19,20 +19,20 @@ module Ps
         ps_title = ps_list.shift.upcase.split(/\s+/)
         ps_list.map { |line|
           datas = line.split(/\s+/)
-          _head = datas[0..ps_title.length-2]
-          _tail = datas[ps_title.length-1..-1]
-          _head.push(_tail.join(" "))
-        }.unshift(ps_title)
+          hash  = {}
+          hash[ps_title.last] = datas[ps_title.length-1..-1].join(" ")
+          hash.merge Hash[[ps_title[0..-2], datas[0..ps_title.length-2]].transpose]
+        }
       end
 
       # find by pid
       def pid(pid)
         pid   = pid.to_s.strip
         list  = ::Ps::AUX.list
-        title = list.shift
-        index = title.index("PID")
-        list.find_all { |datas|  datas.at(index) == pid }
+        list.find_all { |hash|  hash["PID"] == pid }
       end
     end
   end
 end
+
+#puts Ps::AUX.pid($$)

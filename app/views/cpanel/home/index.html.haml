@@ -4,12 +4,21 @@
 %table.table.table-bordered.table-condensed
   %thead
     %tr
-      - ::Ps::AUX.title.each do |name|
-        %th= name
+      %th pid
+      %th user
+      %th %cpu
+      %th %mem
+      %th started
+      %th command
   %tbody
     %tr
-      - ::Ps::AUX.pid($$).flatten.each do |data|
-        %td= data
+    - ::Ps::AUX.pid($$).each do |hash|
+      %td= hash["PID"]
+      %td= hash["USER"]
+      %td= hash["%CPU"]
+      %td= hash["%MEM"]
+      %td= hash["STARTED"]
+      %td= hash["COMMAND"]
 
 
 %strong 整体概况

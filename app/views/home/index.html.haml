@@ -4,8 +4,8 @@
     %meta{:charset => "utf-8"}
     %title= [Setting.title, "-", Setting.slogan].join(" ")
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
-    = stylesheet_link_tag "#{Setting.cdn.bootstrap.v320.css}"
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag "home_without_login"
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     - if mobile?
       %meta{content: "no", name: "apple-mobile-web-app-capable"}
         %meta{content: "True", name: "HandheldFriendly"}/
