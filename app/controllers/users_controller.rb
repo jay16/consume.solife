@@ -17,6 +17,9 @@ class UsersController < ApplicationController
   end
 
   def update
+    puts "="*10
+    puts "update user info"
+    puts "="*10
     @user.update_columns(params[:user].merge({updated_at: Time.now}))
     notice = (@user.valid? ? "成功" : "失败")
 

@@ -22,6 +22,10 @@
         - if devise_mapping.confirmable? && resource.pending_reconfirmation? 
           %p Currently waiting confirmation for: #{resource.unconfirmed_email}
 
+        = f.input :current_password, wrapper: :prepend, label: false, input_html: { class: "input-group" }  do
+          %span.input-group-addon 当前密码*
+          = f.input_field :current_password, placeholder: "当前密码", class: "form-input form-control",hint: "we need your current password to confirm your changes"
+
         = f.input :password, wrapper: :prepend, label: false, input_html: { class: "input-group" } do
           %span.input-group-addon 登陆密码*
           = f.input_field :password, placeholder: "登陆密码", class: "form-input form-control", hint: "leave it blank if you don't want to change it"
@@ -30,9 +34,6 @@
           %span.input-group-addon 确认密码*
           = f.input_field :password_confirmation, placeholder: "确认密码", class: "form-input form-control"
 
-        = f.input :current_password, wrapper: :prepend, label: false, input_html: { class: "input-group" }  do
-          %span.input-group-addon 当前密码*
-          = f.input_field :current_password, placeholder: "当前密码", class: "form-input form-control",hint: "we need your current password to confirm your changes"
 
       .form-actions
         = f.button :submit, "Update", class: "hidden", id: "updateSubmit"

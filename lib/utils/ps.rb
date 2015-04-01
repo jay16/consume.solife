@@ -19,9 +19,11 @@ module Ps
         ps_title = ps_list.shift.upcase.split(/\s+/)
         ps_list.map { |line|
           datas = line.split(/\s+/)
-          hash  = {}
+          hash = Hash[[ps_title[0..-2], datas[0..ps_title.length-2]].transpose]
           hash[ps_title.last] = datas[ps_title.length-1..-1].join(" ")
-          hash.merge Hash[[ps_title[0..-2], datas[0..ps_title.length-2]].transpose]
+          hash["START"]   ||= hash["STARTED"] # Darwin - STARTED
+          hash["STARTED"] ||= hash["START"]   # Linux  - START
+          hash
         }
       end
 

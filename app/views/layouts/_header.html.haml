@@ -8,7 +8,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: "/", tabindex: "-1"}
+          %a.navbar-brand.navbar-brand-bg{href: "/", tabindex: "-1"}
             %span.hangshu{style: "color: white;"} &nbsp;
         / Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse{role: "navigation", id:"bs-example-navbar-collapse-1"}
@@ -23,7 +23,7 @@
                   设置
                   %b.caret
                 %ul.dropdown-menu
-                  %li
+                  %li.hidden
                     %a{:href => "/users/edit"}
                       %i.glyphicon.glyphicon-user
                       账户设置
