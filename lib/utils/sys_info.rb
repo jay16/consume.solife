@@ -29,7 +29,7 @@ module SysInfo
             :plantform   => `cat /etc/issue | head -n 1`.strip,
             :hardware    => `uname -m`.strip,
             :timezone    => `date -R`.strip.scan(/\+\d{4}/)[0],
-            :memory      => eval("(%s.0/1024/1024+0.5).to_i" % mem_total) +"G",
+            :memory      => eval("(%s.0/1024/1024+0.5).to_i" % mem_total).to_s + "G",
             :cpu         => `cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c`,
             :disk        => `df -h | grep "/dev/" | head -n 1`.split(/\s+/)[1]
           }
