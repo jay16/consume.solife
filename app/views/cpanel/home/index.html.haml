@@ -1,4 +1,4 @@
-%strong 系统使用 
+%strong 进程状态
 :css 
   td:nth-child(1){ width: 80px; }
 %table.table.table-bordered.table-condensed
@@ -12,27 +12,51 @@
       %th command
   %tbody
     %tr
-    - ::Ps::AUX.pid($$).each do |hash|
-      %td= hash["PID"]
-      %td= hash["USER"]
-      %td= hash["%CPU"]
-      %td= hash["%MEM"]
-      %td= hash["STARTED"]
-      %td= hash["COMMAND"]
+      - ::SysInfo::Ps.pid($$).each do |hash|
+        %td= hash["PID"]
+        %td= hash["USER"]
+        %td= hash["%CPU"]
+        %td= hash["%MEM"]
+        %td= hash["STARTED"]
+        %td= hash["COMMAND"]
 
+%strong 系统状态
+= SysInfo::PLATFORM
+%table.table.table-bordered.table-condensed
+  - sysinfo = SysInfo::Base.hash
+  - sysinfo = sysinfo.inject({}){|memo,(k,v)| memo[k.to_s] = v; memo}
+  %tr
+    %td hostname
+    %td= sysinfo["hostname"]
+  %tr
+    %td platform
+    %td= sysinfo["platform"]
+  %tr
+    %td hardware
+    %td= sysinfo["hardware"]
+  %tr
+    %td memory
+    %td= sysinfo["memory"]
+  %tr
+    %td cpu
+    %td= sysinfo["cpu"]
+  %tr
+    %td disk
+    %td= sysinfo["disk"]
+  %tr
+    %td ip
+    %td= sysinfo["ip"]
 
 %strong 整体概况
 %table.table.table-bordered.table-condensed
   %tr
     %td 用户数量
     %td=link_to User.count, cpanel_users_path() 
-  %tr
-    %td 消费记录
-    %td=link_to Record.count, cpanel_records_path()
-  %tr
     %td 标签数量
     %td=link_to Tag.count, cpanel_tags_path()
   %tr
+    %td 消费记录
+    %td=link_to Record.count, cpanel_records_path()
     %td 回复数量
     %td=link_to Comment.count, cpanel_comments_path()
 
