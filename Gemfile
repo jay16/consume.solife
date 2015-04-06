@@ -6,11 +6,13 @@ source "http://ruby.taobao.org"
 gem "rails", "~>4.0.4"
 gem "mysql2", "~>0.3.16"
 
+gem "sprockets-rails", "~>2.0.1", :require => "sprockets/railtie"
+
 # add these gems to help with the transition:
-# gem 'protected_attributes'
-gem 'rails-observers', "~>0.1.2"
-gem 'actionpack-page_caching', "~>1.0.2"
-gem 'actionpack-action_caching', "~>1.1.1"
+# gem "protected_attributes"
+gem "rails-observers", "~>0.1.2"
+gem "actionpack-page_caching", "~>1.0.2"
+gem "actionpack-action_caching", "~>1.1.1"
 
 gem "simple_form", "~>3.0.2"
 gem "settingslogic", "~>2.0.9"
@@ -19,7 +21,7 @@ gem "cells", "~>3.11.1"
 
 # login system
 gem "devise", "~>3.2.4"
-gem 'devise-encryptable', "~>0.2.0"
+gem "devise-encryptable", "~>0.2.0"
 
 gem "grape", "~>0.7.0"
 gem "grape-entity", "~>0.4.2"
@@ -27,8 +29,8 @@ gem "grape-entity", "~>0.4.2"
 gem "gravatar_image_tag", "~>1.2.0"
 
 gem "bootstrap-sass", "~>3.1.1.1"
-gem 'bootstrap_helper', github: 'huacnlee/bootstrap-helper'
-gem 'bootstrap-will_paginate'
+gem "bootstrap_helper", github: "huacnlee/bootstrap-helper"
+gem "bootstrap-will_paginate"
 #gem "i18n", github: "svenfuchs/i18n"
 gem "rails-i18n","0.1.8"
 gem "will_paginate", "3.0.4"
@@ -66,7 +68,7 @@ group :development,:test do
   gem "shoulda-matchers"
   gem "capybara"
   gem "spork"
-  gem 'railroady'
+  gem "railroady"
   #gem "autotest-rails"
 end
 

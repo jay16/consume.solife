@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -39,6 +40,7 @@ module Consume
      config.i18n.locale = 'zh-CN'
      config.i18n.default_locale = 'zh-CN'
 
+
      # Configure the default encoding used in templates for Ruby 1.9.
      config.encoding = "utf-8"
      config.timeout_in = 20.minutes
@@ -48,6 +50,8 @@ module Consume
 
      config.assets.precompile += %w(application.js records.js tags.js tag-it.js jquery.ui.js)
      config.assets.precompile += %w(application.css tag-it.css tag-it-theme.css)
+
+     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     # Configure sensitive parameters which will be filtered from the log file.
     #config.filter_parameters += [:password, :password_confirm, :token, :private_token]
 
@@ -64,5 +68,3 @@ module Consume
     #config.middleware.delete 'ActionDispatch::Callbacks' # 在请求前后设置callback
   end
 end
-
-#I18n.locale = :'zh-CN'

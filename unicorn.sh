@@ -9,6 +9,10 @@ CONFIG_FILE=config/unicorn.rb
 APP_ROOT_PATH=$(pwd)
 
 case "$1" in  
+    precompile)
+        RAILS_ENV=production bundle exec rake assets:clean
+        RAILS_ENV=production bundle exec rake assets:precompile
+        ;;
     start)  
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
