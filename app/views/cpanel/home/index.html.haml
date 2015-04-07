@@ -1,15 +1,26 @@
-%strong 进程状态
-:css 
-  td:nth-child(1){ width: 80px; }
+%h1 系统信息
+
+%h2 资源占用状况
+%table.table.table-bordered.table-condensed
+  - SysInfo::Top.array.each do |array|
+    %tr
+      - array.first(9).each_with_index do |data, index|
+        %td
+          - if index.zero?
+            %strong= data
+          - else
+            = data
+
+%h2 应用进程状态
 %table.table.table-bordered.table-condensed
   %thead
     %tr
-      %th pid
-      %th user
-      %th %cpu
-      %th %mem
-      %th started
-      %th command
+      %th PID
+      %th USER
+      %th %CPU
+      %th %MEM
+      %th STARTED
+      %th COMMAND
   %tbody
     %tr
       - app_hash = {}
@@ -22,61 +33,80 @@
         %td= hash["STARTED"]
         %td= hash["COMMAND"]
 
-%strong 系统状态
-= SysInfo::PLATFORM
-%table.table.table-bordered.table-condensed
+%h2 系统基本信息 
+:css
+  .table-244 td:nth-child(1) { width: 20%; }
+  .table-244 td:nth-child(2) { width: 40%; }
+  .table-244 td:nth-child(3) { width: 40%; }
+
+%table.table.table-244.table-bordered.table-condensed
   - sysinfo = SysInfo::Base.hash
   - sysinfo = sysinfo.inject({}){|memo,(k,v)| memo[k.to_s] = v; memo}
   %thead
     %tr
       %th 参数
-      %th sys
-      %th app
+      %th SYS
+      %th App
   %tr
-    %td hostname
+    %td 
+      %strong HostName
     %td= sysinfo["hostname"]
     %td -
   %tr
-    %td platform
+    %td 
+      %strong PlatForm
     %td= sysinfo["platform"]
     %td -
   %tr
-    %td hardware
+    %td 
+      %strong HardWare
     %td= sysinfo["hardware"]
     %td - 
   %tr
-    %td memory
+    %td 
+      %strong IP
+    %td= sysinfo["ip"]
+    %td= Rails.env
+  %tr
+    %td 
+      %strong 内存 
     %td= sysinfo["memory"]
     %td= app_hash["%MEM"] + "%"
   %tr
-    %td cpu
+    %td 
+      %strong CPU
     %td= sysinfo["cpu"]
     %td= app_hash["%CPU"] + "%"
   %tr
-    %td disk
+    %td 
+      %strong 硬盘 
     %td= sysinfo["disk"]
     %td= app_disk_info()
-  %tr
-    %td ip
-    %td= sysinfo["ip"]
-    %td -
 
-%strong 整体概况
-%table.table.table-bordered.table-condensed
+%h1 站内资源
+:css
+  .table-fixed { table-layout: fixed; }
+  .table-fixed td { word-break:break-all }
+
+%h2 基本信息 
+%table.table.table-fixed.table-bordered.table-condensed
   %tr
-    %td 用户数量
+    %td 
+      %strong 用户数量
     %td=link_to User.count, cpanel_users_path() 
-    %td 标签数量
+    %td 
+      %strong 标签数量
     %td=link_to Tag.count, cpanel_tags_path()
   %tr
-    %td 消费记录
+    %td 
+      %strong 消费记录
     %td=link_to Record.count, cpanel_records_path()
-    %td 回复数量
+    %td 
+      %strong 回复数量
     %td=link_to Comment.count, cpanel_comments_path()
 
-%strong 最近消费记录
-
-%table.table.table-bordered.table-striped.table-condensed
+%h2 最近消费
+%table.table.table-fixed.table-bordered.table-striped.table-condensed
   %tr.head
     %td.first ID
     %td 数值

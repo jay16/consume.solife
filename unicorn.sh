@@ -1,7 +1,7 @@
 #!/bin/sh  
 # 
 PORT=$(test -z "$2" && echo "4001" || echo "$2")
-ENVIRONMENT=$(test -z "$3" && echo "development" || echo "$3")
+ENVIRONMENT=$(test -z "$3" && echo "production" || echo "$3")
 
 UNICORN=unicorn  
 CONFIG_FILE=config/unicorn.rb  
