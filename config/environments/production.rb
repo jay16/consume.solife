@@ -64,7 +64,7 @@ Consume::Application.configure do
   #config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "rb-cn", :compression => true}]
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w(home_without_login.scss)# *.jpg *.jpeg *.png *.bmp *.gif *.woff *.eot *.ttf *.svg)
+  # config.assets.precompile += %w(home_without_login.scss)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

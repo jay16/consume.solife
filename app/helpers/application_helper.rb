@@ -16,8 +16,8 @@ module ApplicationHelper
     uri = URI.parse(url)
     gravatar_id = uri.path.split(/\//).last rescue "default"
     gravatar_name =  "%s.jpg" % gravatar_id
-    gravatar_relative_path = "/assets/%s" % gravatar_name
-    gravatar_absolute_path = Rails.root.join("app/assets/images/gravatar", gravatar_name)
+    gravatar_relative_path = "/assets/gravatar/%s" % gravatar_name
+    gravatar_absolute_path = Rails.root.join("public/assets/gravatar/", gravatar_name)
     if File.exist?(gravatar_absolute_path)
       image_tag gravatar_relative_path, alt
     else

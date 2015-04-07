@@ -1,4 +1,4 @@
-# 爱记录
+# [爱记录](http://consume.solife.us)
 
 > 记录点滴生活, 爱生活, 爱记录
 
@@ -20,32 +20,38 @@ bundle exec rspec spec/grape
 ## Nginx Unciorn
 
 ````
-upstream consume-solife-unicorn {
-  server unix:/home/work/consume/tmp/pids/unicorn.sock fail_timeout=0;
-}
-server {
-  listen 80;
-  server_name consume.solife.us iconsume.solife.us;
-  root /home/work/consume/public;
+  upstream consume-solife-unicorn {
+      server unix:/home/work/consume/tmp/pids/unicorn.sock fail_timeout=0;
+   }
+   server {
+      listen 80;
+      server_name consume.solife.us iconsume.solife.us;
+      root /home/work/consume/public;
 
-  access_log /home/work/consume/log/nginx-access.log;
-  error_log  /home/work/consume/log/nginx-error.log;
-  location / {
-    try_files $uri @net;
-  }
-  location @net {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
-      proxy_pass http://consume-solife-unicorn;
-  }
-}
+      access_log /home/work/consume/log/nginx-access.log;
+      error_log  /home/work/consume/log/nginx-error.log;
+      location ~ ^/(assets)/ {
+        gzip_static on;
+        expires 1h;
+        add_header Cache-Control public;
+      }
+      location / {
+        try_files $uri @net;
+      }
+      location @net {
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header Host $http_host;
+          proxy_redirect off;
+          proxy_pass http://consume-solife-unicorn;
+      }
+    }
 ````
 
 ## TODO
 
   - [ ] devise邮箱验证rspec测试
   - [x] rails各种缓冲功能
+  - [x] production运行环境 
   - [ ] 用户行为记录
   - [ ] bug#搜索共享消费记录用户
   - [ ] bug#bootstrap navbar点击响应active
@@ -116,3 +122,9 @@ server {
       > You are trying to install in deployment mode after changing your Gemfile. Run `bundle install` elsewhere and add the updated Gemfile.lock to version control.
 
       > If this is a development machine, remove the Gemfile freeze by running `bundle install --no-deployment`.
+
++ 2015/04/07 Tuesday
+
+    1. rails运行环境调整为production
+
+      [rails设置](http://guides.rubyonrails.org/asset_pipeline.html)及[nginx配置](https://ruby-china.org/topics/201)

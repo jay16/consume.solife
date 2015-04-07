@@ -11,7 +11,7 @@ APP_ROOT_PATH=$(pwd)
 case "$1" in  
     precompile)
         RAILS_ENV=production bundle exec rake assets:clean
-        RAILS_ENV=production bundle exec rake assets:precompile
+        RAILS_ENV=production bundle exec rake assets:my_precompile
         ;;
     start)  
         test -d log || mkdir log
@@ -33,7 +33,7 @@ case "$1" in
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
         sh unicorn.sh stop
         echo -e "\n\n-----------command sparate line----------\n\n"
-        sh unicorn.sh start
+        sh unicorn.sh start ${PORT} ${ENVIRONMENT}
         ;;  
     deploy)
         echo "RACK_ENV=production bundle exec rake remote:deploy"

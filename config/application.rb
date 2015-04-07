@@ -48,10 +48,9 @@ module Consume
      config.assets.enabled = true
      config.assets.version = '1.0'
 
-     config.assets.precompile += %w(application.js records.js tags.js tag-it.js jquery.ui.js)
-     config.assets.precompile += %w(application.css tag-it.css tag-it-theme.css)
+     #config.assets.precompile << %w(application.js records.js tags.js tag-it.js jquery.ui.js)
+     #config.assets.precompile << %w(application.css tag-it.css tag-it-theme.css)
 
-     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     # Configure sensitive parameters which will be filtered from the log file.
     #config.filter_parameters += [:password, :password_confirm, :token, :private_token]
 
