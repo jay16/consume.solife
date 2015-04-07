@@ -4,7 +4,7 @@ module SysInfo
 
   PS_COMMAND, TOP_COMMAND = case PLATFORM
   when "Darwin" then ["ps aux", "top -l 1 | head -n 10"]
-  when "Linux"  then ["ps aux", "top -n 1 | head -n 5"]
+  when "Linux"  then ["ps aux", "top -b -n 1 | head -n 5"]
   end
 
   class Top
@@ -33,7 +33,6 @@ module SysInfo
           klass = %w(Top 进程 CPU 内存 Swap)
         end
         max_len = title.sort { |x, y| y.length <=> x.length }.first.length
-        puts max_len
         SysInfo::Top.base.each_with_index do |data, index|
           row = [title[index], data].transpose.flatten.unshift(klass[index])
           row += Array.new(max_len*2 - row.length, nil) if row.length < max_len*2
@@ -93,6 +92,13 @@ module SysInfo
           #       Cpu(s):  0.6%us,  0.5%sy,  0.1%ni, 98.8%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
           #       Mem:   1026136k total,   875180k used,   150956k free,   138500k buffers
           #       Swap:        0k total,        0k used,        0k free,   202784k cached"
+          str = " 
+top - 23:38:09 up 31 days, 23:24,  1 user,  load average: 0.39, 0.13, 0.08
+Tasks:  81 total,   1 running,  80 sleeping,   0 stopped,   0 zombie
+Cpu(s):  0.6%us,  0.5%sy,  0.1%ni, 98.8%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:   1026136k total,   862524k used,   163612k free,   144116k buffers
+Swap:        0k total,        0k used,        0k free,   212756k cached
+          "
           array << str.scan(/top\s+-\s+(\d{2}:\d{2}:\d{2})\s+up\s+(\d+\s+days,\s+\d{2}:\d{2}),\s+(\d+)\suser,\s+load\saverage:\s+(.*?)\n/)[0]
           array << str.scan(/Tasks:\s+(\d+)\stotal,\s+(\d+)\srunning,\s+(\d+)\ssleeping,\s+(\d+)\sstopped,\s+(\d+)\szombie/)[0]
           array << str.scan(/Cpu\(s\):\s+(.*?)%us,\s+(.*?)%sy,\s+(.*?)%ni,\s+(.*?)%id,\s+(.*?)%wa,\s+(.*?)%hi,\s+(.*?)%si,\s+(.*?)%st/)[0]
