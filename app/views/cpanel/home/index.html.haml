@@ -12,7 +12,9 @@
       %th command
   %tbody
     %tr
+      - app_hash = {}
       - ::SysInfo::Ps.pid($$).each do |hash|
+        - app_hash = hash
         %td= hash["PID"]
         %td= hash["USER"]
         %td= hash["%CPU"]
@@ -25,27 +27,39 @@
 %table.table.table-bordered.table-condensed
   - sysinfo = SysInfo::Base.hash
   - sysinfo = sysinfo.inject({}){|memo,(k,v)| memo[k.to_s] = v; memo}
+  %thead
+    %tr
+      %th 参数
+      %th sys
+      %th app
   %tr
     %td hostname
     %td= sysinfo["hostname"]
+    %td -
   %tr
     %td platform
     %td= sysinfo["platform"]
+    %td -
   %tr
     %td hardware
     %td= sysinfo["hardware"]
+    %td - 
   %tr
     %td memory
     %td= sysinfo["memory"]
+    %td= app_hash["%MEM"] + "%"
   %tr
     %td cpu
     %td= sysinfo["cpu"]
+    %td= app_hash["%CPU"] + "%"
   %tr
     %td disk
     %td= sysinfo["disk"]
+    %td= app_disk_info()
   %tr
     %td ip
     %td= sysinfo["ip"]
+    %td -
 
 %strong 整体概况
 %table.table.table-bordered.table-condensed
