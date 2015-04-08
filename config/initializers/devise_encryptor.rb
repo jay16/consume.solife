@@ -13,12 +13,12 @@ module Devise
 
       class MyEncryptor < Base
         def self.digest(password, stretches, salt, pepper)
-          puts "*"*10
-          puts "password: %s" % password.to_s
-          puts "stretches: %s" % stretches.to_s
-          puts "salt: %s" % salt.to_s
-          puts "pepper: %s" % pepper.to_s
-          puts "*"*10
+          #puts "*"*10
+          #puts "password: %s" % password.to_s
+          #puts "stretches: %s" % stretches.to_s
+          #puts "salt: %s" % salt.to_s
+          #puts "pepper: %s" % pepper.to_s
+          #puts "*"*10
           (1..5).each do |i| 
             password = password.strip.reverse if (i%2).odd?
             password = Base64.encode64(password).strip

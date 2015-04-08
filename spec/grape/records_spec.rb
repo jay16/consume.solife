@@ -72,7 +72,7 @@ describe Consume::API do
         "ymdhms" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
         "remark" => ["remark", rand(1000), Time.now.strftime("%Y-%m-%d %H:%M:%S")].join(" - "),
         "klass" => rand(5),
-        "tag_list" => ["tag#{rand(1000)}", "tag#{rand(1000)}"].join(",")
+        "tags_list" => ["tag#{rand(1000)}", "tag#{rand(1000)}"].join(",")
       }
     }
 

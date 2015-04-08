@@ -25,6 +25,7 @@ gem "devise-encryptable", "~>0.2.0"
 
 gem "grape", "~>0.7.0"
 gem "grape-entity", "~>0.4.2"
+gem "grape-swagger", "~>0.8.0"
 
 gem "gravatar_image_tag", "~>1.2.0"
 

@@ -39,7 +39,7 @@ module APIEntities
     end
   end
 
-  class Tag< Grape::Entity
+  class Tag < Grape::Entity
     format_with(:ymdhms_format) { |t| t.strftime("%Y-%m-%d %H:%M:%S") }
 
     expose :user_id, :id, :label, :klass, :deleted
@@ -49,7 +49,7 @@ module APIEntities
     end
   end
 
-  class DeletedTag< Grape::Entity
+  class DeletedTag < Grape::Entity
     expose :user_id, :id, :klass, :deleted
   end
 end

@@ -24,6 +24,7 @@ class Record < ActiveRecord::Base
   scope :recent, -> { order("created_at desc") }
   scope :normals, -> { where(:deleted => false) }
   scope :deleted, -> { where(:deleted => true) }
+  scope :undeleted, -> { where(:deleted != true) }
  
   after_create :build_relation_with_tags
   after_update :build_relation_with_tags
