@@ -1,4 +1,4 @@
-require "api.rb"
+require "base.rb"
 Consume::Application.routes.draw do
   root :to => "home#index"
 
@@ -27,7 +27,7 @@ Consume::Application.routes.draw do
     resources :comments
   end
 
-  mount Consume::API => "/"
+  mount Consume::API::Base => "/"
   get "/api" => "home#api"
   get  "/solife" => "home#solife_get"
   post "/solife" => "home#solife_post"

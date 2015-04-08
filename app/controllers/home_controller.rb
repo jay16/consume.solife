@@ -1,5 +1,5 @@
 #encoding: utf-8
-require "api"
+require "base"
 class HomeController < ApplicationController
   protect_from_forgery except: :solife_post
   skip_before_filter :authenticate_user!
@@ -16,7 +16,7 @@ class HomeController < ApplicationController
   end
 
   def api
-    @routes = Consume::API::routes
+    @routes = Consume::API::Base::routes
     @page_title = "api列表"
   end
 

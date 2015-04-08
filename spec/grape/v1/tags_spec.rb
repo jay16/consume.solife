@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Consume::API do
+describe Consume::API::V1::Tags do
   let(:user) do 
     !(user = User.first).nil? ?  user : FactoryGirl.create(:user) 
   end
