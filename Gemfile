@@ -60,10 +60,13 @@ gem "turbolinks", "~>2.2.2"
 gem "jbuilder", "~> 1.2"
 
 group :development,:test do
+  #gem "quiet_assets", "~>1.1.0"
+
   gem "net-ssh", "~>2.7.0"
   gem "net-scp", "~>1.2.1"
   gem "qiniu", "~>6.3.2"
   gem "backup", "~>3.4.0"
+
   gem "factory_girl_rails"
   gem "rspec-rails"
   gem "shoulda-matchers"

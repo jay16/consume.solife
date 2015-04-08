@@ -128,3 +128,28 @@ bundle exec rspec spec/grape
     1. rails运行环境调整为production
 
       [rails设置](http://guides.rubyonrails.org/asset_pipeline.html)及[nginx配置](https://ruby-china.org/topics/201)
+
++ 2015/04/08 Wednesday
+
+    1. bug#fix api 
+
+      ````
+      # route
+      Get /api/records.json
+      # undefine method - undeleted
+      current_user.records.undeleted
+      # model - record.rb
+      scope :undeleted, -> { where(:deleted != true) }
+      ````
+
+    2. logger format
+
+      ````
+      # config/evironment.rb file bottom add:
+      class Logger  
+        def format_message(level, time, progname, msg)  
+          "%s, [%s] -- %s\n" % [level[0], time.to_s(:db), msg]
+        end  
+      end  
+      ````
+
