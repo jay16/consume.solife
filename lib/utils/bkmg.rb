@@ -29,15 +29,11 @@ module BKMG
       def _best(str, decimal=1)
         num, unit = BKMG::Base.deal(str)
         index = UNIT_SEQ.index(unit)
-        if index == UNIT_SEQ.length - 1
-          [num, unit].join 
-        else
-          while index <= UNIT_SEQ.length - 1 and num.to_f/1024 > 1
-            num = num.to_f/1024
-            index += 1
-          end
-          [num.to_f.round(decimal), UNIT_SEQ[index]].join
+        while index <= UNIT_SEQ.length - 1 and num.to_f/1024 > 1
+          num = num.to_f/1024
+          index += 1
         end
+        [num.to_f.round(decimal), UNIT_SEQ[index]].join
       end
     end
   end
