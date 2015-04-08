@@ -9,7 +9,7 @@
           - if index.zero?
             %strong= data
           - else
-            = data
+            = BKMG::Base.best(data, 0)
 
 %h2 应用进程状态
 %table.table.table-bordered.table-condensed
