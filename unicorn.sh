@@ -14,10 +14,19 @@ case "$1" in
         RAILS_ENV=production bundle exec rake assets:my_precompile
         ;;
     start)  
+
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
-        gravatar_path=app/assets/images/gravatar
-        test -d ${gravatar_path} || mkdir -p ${gravatar_path}
+        echo "## rake tasks"
+        TASK1="bundle exec rake tmp:clear"
+        `${TASK1}`
+        echo -e "\t ${TASK1} $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        TASK2="bundle exec rake assets:clobber"
+        `${TASK2} > /dev/null 2>&1`
+        echo -e "\t ${TASK2} $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        TASK3="bundle exec rake assets:precompile"
+        `${TASK3} > /dev/null 2>&1`
+        echo -e "\t ${TASK3} $(test $? -eq 0 && echo "successfully" || echo "failed")."
 
         echo "## start unicorn"
         echo -e "\t port: ${PORT} \n\t environment: ${ENVIRONMENT}"

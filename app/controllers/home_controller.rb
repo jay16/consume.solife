@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   protect_from_forgery except: :solife_post
   skip_before_filter :authenticate_user!
   # caches_page :root
-  caches_action :api
+  caches_action :apis, expires_in: 1.day, unless_exist: true
 
   def index
     if current_user.nil?
@@ -15,9 +15,8 @@ class HomeController < ApplicationController
     end
   end
 
-  def api
+  def apis
     @routes = Consume::API::Base::routes
-    @page_title = "api列表"
   end
 
   def solife_get
