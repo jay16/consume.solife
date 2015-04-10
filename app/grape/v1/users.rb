@@ -1,6 +1,5 @@
 #encoding: utf-8
 require File.expand_path("../entities", __FILE__)
-require File.expand_path("../helpers", __FILE__)
 require File.expand_path("../defaults", __FILE__)
 require "json"
 module Consume

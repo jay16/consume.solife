@@ -5,13 +5,13 @@ describe Consume::API::V1::Records do
     !(user = User.first).nil? ?  user : FactoryGirl.create(:user) 
   end
 
-  describe "GET /api/records" do
+  describe "GET /api/v1/records" do
     (0..20).each do |i|
       let("record#{i}".to_sym)  { FactoryGirl.create(:record, :user => user) }
     end
 
     it "should get a record with id" do
-      get "/api/records/#{record10.id}.json", { token: user.token }
+      get "/api/v1/records/#{record10.id}.json", { token: user.token }
 
       expect(response.status).to eq(200)
 
@@ -23,14 +23,14 @@ describe Consume::API::V1::Records do
     end
 
     it "should get records list" do
-      get "/api/records.json", { token: user.token }
+      get "/api/v1/records.json", { token: user.token }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.records)
     end
 
     it "should get records list with ID" do
-      get "/api/records.json", { token: user.token, id: record10.id }
+      get "/api/v1/records.json", { token: user.token, id: record10.id }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.records.where("id > #{record10.id}"))
@@ -39,7 +39,7 @@ describe Consume::API::V1::Records do
     it "get records list with UpdatedAt" do
       record11.update(value: record11.value + rand(100))
       updated_at = record11.updated_at.strftime('%Y-%m-%d %H:%i:%s') 
-      get "/api/records.join", { token: user.token, updated_at: updated_at }
+      get "/api/v1/records.join", { token: user.token, updated_at: updated_at }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.records.where("updated_at > '#{updated_at}'"))
@@ -47,7 +47,7 @@ describe Consume::API::V1::Records do
 
   end
 
-  describe "Get /api/records/friends" do
+  describe "Get /api/v1/records/friends" do
     it "get friends' records list" do
       #get "/api/records/friends.json", { token: user.token }
 
@@ -56,7 +56,7 @@ describe Consume::API::V1::Records do
     end
   end
 
-  describe "POST /api/records" do
+  describe "POST /api/v1/records" do
     let(:valid_params_symbol) {
       { 
         value: rand(1000).to_f,
@@ -77,7 +77,7 @@ describe Consume::API::V1::Records do
     }
 
     it "should create Record with symbol valid params" do
-      post "/api/records.json", { token: user.token, record: valid_params_symbol }
+      post "/api/v1/records.json", { token: user.token, record: valid_params_symbol }
       # httpcode 201 => created successfully
       expect(response.status).to eq(201)
 
@@ -96,7 +96,7 @@ describe Consume::API::V1::Records do
     end
 
     it "should create Record with string valid params" do
-      post "/api/records.json", { "token" => user.token, "record" => valid_params_symbol }
+      post "/api/v1/records.json", { "token" => user.token, "record" => valid_params_symbol }
       # httpcode 201 => created successfully
       expect(response.status).to eq(201)
 
@@ -117,7 +117,7 @@ describe Consume::API::V1::Records do
     let(:record)  { FactoryGirl.create(:record, :user => user) }
     it "should update a Record with id" do
       valid_params_symbol[:value] = record.value + rand(1000)
-      post "/api/records/#{record.id}.json", { token: user.token, record: valid_params_symbol }
+      post "/api/v1/records/#{record.id}.json", { token: user.token, record: valid_params_symbol }
       expect(response.status).to eq(201)
 
       json = jparse(response.body)
@@ -126,11 +126,11 @@ describe Consume::API::V1::Records do
     end
   end
 
-  describe "Delete /api/records" do
+  describe "Delete /api/v1/records" do
     let(:record)  { FactoryGirl.create(:record, :user => user) }
 
     it "should destroy a record with id" do
-      delete "/api/records/#{record.id}.json", { token: user.token }
+      delete "/api/v1/records/#{record.id}.json", { token: user.token }
 
       expect(response.status).to eq(200)
       json = jparse(response.body)

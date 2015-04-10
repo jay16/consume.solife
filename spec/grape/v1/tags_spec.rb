@@ -6,13 +6,13 @@ describe Consume::API::V1::Tags do
   end
   let(:timestamp) { Time.now.strftime("%Y-%m-%d %H:%M:%S") }
 
-  describe "GET /api/tags" do
+  describe "GET /api/v1/tags" do
     (0..20).each do |i|
       let("tag#{i}".to_sym)  { FactoryGirl.create(:tag, :user => user) }
     end
 
     it "should get a tag with id" do
-      get "/api/tags/#{tag10.id}.json", { token: user.token }
+      get "/api/v1/tags/#{tag10.id}.json", { token: user.token }
 
       expect(response.status).to eq(200)
 
@@ -24,14 +24,14 @@ describe Consume::API::V1::Tags do
     end
 
     it "should get tags list" do
-      get "/api/tags.json", { token: user.token }
+      get "/api/v1/tags.json", { token: user.token }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.tags)
     end
 
     it "should get tags list with ID" do
-      get "/api/tags.json", { token: user.token, id: tag10.id }
+      get "/api/v1/tags.json", { token: user.token, id: tag10.id }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.tags.where("id > #{tag10.id}"))
@@ -40,7 +40,7 @@ describe Consume::API::V1::Tags do
     it "get tags list with UpdatedAt" do
       tag11.update(label: tag11.label + rand(100).to_s)
       updated_at = tag11.updated_at.strftime('%Y-%m-%d %H:%i:%s') 
-      get "/api/tags.join", { token: user.token, updated_at: updated_at }
+      get "/api/v1/tags.join", { token: user.token, updated_at: updated_at }
 
       expect(response.status).to eq(200)
       expect(jparse(response.body)).to eq(user.tags.where("updated_at > '#{updated_at}'"))
@@ -48,16 +48,16 @@ describe Consume::API::V1::Tags do
 
   end
 
-  describe "Get /api/tags/friends" do
+  describe "Get /api/v1/tags/friends" do
     it "get friends' tags list" do
-      get "/api/tags/friends.json", { token: user.token }
+      get "/api/v1/tags/friends.json", { token: user.token }
 
       #expect(response.status).to eq(200)
       #expect(jparse(response.body)).to eq([])
     end
   end
 
-  describe "POST /api/tags" do
+  describe "POST /api/v1/tags" do
     let(:valid_params_symbol) {
       { 
         label: ["tag", rand(300)].join("-"),
@@ -72,7 +72,7 @@ describe Consume::API::V1::Tags do
     }
 
     it "should create tag with symbol valid params" do
-      post "/api/tags.json", { token: user.token, tag: valid_params_symbol }
+      post "/api/v1/tags.json", { token: user.token, tag: valid_params_symbol }
       # httpcode 201 => created successfully
       expect(response.status).to eq(201)
 
@@ -87,7 +87,7 @@ describe Consume::API::V1::Tags do
     end
 
     it "should create tag with string valid params" do
-      post "/api/tags.json", { "token" => user.token, "tag" => valid_params_symbol }
+      post "/api/v1/tags.json", { "token" => user.token, "tag" => valid_params_symbol }
       # httpcode 201 => created successfully
       expect(response.status).to eq(201)
 
@@ -104,7 +104,7 @@ describe Consume::API::V1::Tags do
     let(:tag)  { FactoryGirl.create(:tag, :user => user) }
     it "should update a tag with id" do
       valid_params_symbol[:label] += rand(1000).to_s
-      post "/api/tags/#{tag.id}.json", { token: user.token, tag: valid_params_symbol }
+      post "/api/v1/tags/#{tag.id}.json", { token: user.token, tag: valid_params_symbol }
       expect(response.status).to eq(201)
 
       json = jparse(response.body)
@@ -113,11 +113,11 @@ describe Consume::API::V1::Tags do
     end
   end
 
-  describe "Delete /api/tags" do
+  describe "Delete /api/v1/tags" do
     let(:tag)  { FactoryGirl.create(:tag, :user => user) }
 
     it "should destroy a tag with id" do
-      delete "/api/tags/#{tag.id}.json", { token: user.token }
+      delete "/api/v1/tags/#{tag.id}.json", { token: user.token }
 
       expect(response.status).to eq(200)
       json = jparse(response.body)
