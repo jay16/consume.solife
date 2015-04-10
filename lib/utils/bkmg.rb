@@ -11,12 +11,16 @@
 #   usage:
 #
 #   BKMG::Base.to("123 b", "G", -1) => 1.1455267667770386e-07G
+#   BKMG::Base.to("123 b", "k", 0) => 0K
 #   BKMG::Base.best("123 b") => 123B
 #   BKMG::Base.to("123 kb", "G", -1) => 0.00011730194091796875G
+#   BKMG::Base.to("123 kb", "k", 0) => 123K 
 #   BKMG::Base.best("123 kb") => 123K
 #   BKMG::Base.to("2423 mb", "G", -1) => 2.3662109375G
+#   BKMG::Base.to("2423 mb", "k", 0) => 2481152K 
 #   BKMG::Base.best("2423 mb") => 2G
 #   BKMG::Base.to("1424 g", "G", -1) => 1424G
+#   BKMG::Base.to("1424 g", "k", 0) => 1493172224K
 #   BKMG::Base.best("1424 g") => 1424G
 #
 module BKMG
@@ -24,7 +28,7 @@ module BKMG
     class << self
       UNIT_SEQ = %w(B K M G)
 
-      # turn up to target unit
+      # unit turn up or down to target unit
       # params:
       #   str: size string and unit
       #   to_unit: target unit
@@ -34,7 +38,7 @@ module BKMG
         _to(str, to_unit, ndigits) rescue str
       end
 
-      # turn up and numberic great zero
+      # unit turn up and numberic great zero
       # params:
       #   str: size string and unit 
       #   ndigits: keep dot position
@@ -51,8 +55,9 @@ module BKMG
       def _to(str, to_unit, ndigits=1)
         to_unit.upcase!
         num, unit = _deal(str)
-        if (diff = UNIT_SEQ.index(to_unit) - UNIT_SEQ.index(unit)) > 0
-          num  = num.to_f/1024**diff
+        diff = UNIT_SEQ.index(to_unit) - UNIT_SEQ.index(unit)
+        unless diff.zero?
+          num  = num.to_f.send(diff > 0 ? :/ : :*, 1024**diff.abs)
           num  = num.round(ndigits) if ndigits >= 0
           unit = to_unit 
         end
@@ -74,7 +79,8 @@ module BKMG
 end
 
 #["2124", "asdfa k", "123 b", "123 kb", "123 k","2423 mb", "1424 g"].each_with_index do |str, index|
-#  puts "%s - %s" % [str, BKMG::Base.to(str, "g", -1).to_s]
+#  puts "%s - %s" % [str, BKMG::Base.to(str, "g", 0).to_s]
+#  puts "%s - %s" % [str, BKMG::Base.to(str, "k", 0).to_s]
 #  puts "%s - %s" % [str, BKMG::Base.best(str, 0)]
 #  puts "="*10
 #end
