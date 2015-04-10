@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   def group_member_records(whether_include_self = true)
     uids = group_members.map { |u| u.id }
     uids.push(id) if whether_include_self
-    Record.where("user_id in (#{uids.join(',')})")
+    Record.where("user_id in (#{uids.uniq.join(',')})")
   end
 
   def self.validate(token)

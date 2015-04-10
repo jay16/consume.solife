@@ -1,5 +1,6 @@
 %tr{id: "#{dom_id record}"}
-  %td= record.value
+  %td= gravatar_image_cache_tag(record.user.email, height: "25px")
+  %td= record.value.zero? ? "日志" : record.value
   %td= record.remark
   %td= record.ymdhms
   %td.record-tag.hidden= record.tags_string

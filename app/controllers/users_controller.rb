@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   respond_to :html, :js
 
   def index
-    @records = current_user.records.normals.order("id desc").paginate :page => params[:page], :per_page => 15
+    @records = current_user.group_member_records.normals.order("id desc").paginate :page => params[:page], :per_page => 15
     @tags = current_user.tags
 
     #fresh_when(:etag => [@records, @tags])

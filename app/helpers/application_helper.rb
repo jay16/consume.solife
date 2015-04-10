@@ -11,15 +11,15 @@ module ApplicationHelper
 
   end
 
-  def gravatar_image_cache_tag(email, alt="")
-    url = gravatar_image_url(email, alt: alt)
+  def gravatar_image_cache_tag(email, opts={})
+    url = gravatar_image_url(email, alt: opts["alt"])
     uri = URI.parse(url)
     gravatar_id = uri.path.split(/\//).last rescue "default"
     gravatar_name =  "%s.jpg" % gravatar_id
     gravatar_relative_path = "/assets/gravatar/%s" % gravatar_name
     gravatar_absolute_path = Rails.root.join("public/assets/gravatar/", gravatar_name)
     if File.exist?(gravatar_absolute_path)
-      image_tag gravatar_relative_path, alt
+      image_tag gravatar_relative_path, opts
     else
       gravatar_dirname = File.dirname(gravatar_absolute_path)
       FileUtils.mkdir_p(gravatar_dirname) unless File.exist?(gravatar_dirname)
@@ -27,7 +27,7 @@ module ApplicationHelper
         File.open(gravatar_absolute_path, "w+") do |file|
           file.puts open(url) { |f| f.read }.force_encoding("UTF-8")
         end
-        image_tag gravatar_relative_path, alt
+        image_tag gravatar_relative_path, opts 
       rescue
         image_tag url
       end
