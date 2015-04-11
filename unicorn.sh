@@ -24,7 +24,7 @@ case "$1" in
         TASK2="bundle exec rake assets:clobber"
         `${TASK2} > /dev/null 2>&1`
         echo -e "\t ${TASK2} $(test $? -eq 0 && echo "successfully" || echo "failed")."
-        TASK3="bundle exec rake assets:precompile"
+        TASK3="bundle exec rake assets:my_precompile"
         `${TASK3} > /dev/null 2>&1`
         echo -e "\t ${TASK3} $(test $? -eq 0 && echo "successfully" || echo "failed")."
 

@@ -59,14 +59,19 @@ gem "turbolinks", "~>2.2.2"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 1.2"
 
-group :development,:test do
-  #gem "quiet_assets", "~>1.1.0"
+group :development do
+  # gem "quiet_assets", "~>1.1.0"
+  gem "capistrano", "~> 3.4.0"
+  # gem "capistrano-rails", "~>1.1.2"
+  # gem 'capistrano-rbenv', "~>2.0.3"
 
   gem "net-ssh", "~>2.7.0"
   gem "net-scp", "~>1.2.1"
   gem "qiniu", "~>6.3.2"
   gem "backup", "~>3.4.0"
+end
 
+group :test do
   gem "factory_girl_rails"
   gem "rspec-rails"
   gem "shoulda-matchers"
@@ -87,8 +92,6 @@ end
 # Use unicorn as the app server
 # gem "unicorn"
 
-# Use Capistrano for deployment
-# gem "capistrano", group: :development
 
 # Use debugger
 # gem "debugger", group: [:development, :test]
