@@ -12,6 +12,7 @@ set :stages, %w(production)
 
 set :application, 'consume'
 set :deploy_user, 'jay'
+set :deploy_host, "solife.us"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/work/%s" % fetch(:application)
 
@@ -55,7 +56,7 @@ set :default_env, { path: "/root/.rbenv/versions/1.9.3-p392/bin:$PATH" }
 # set :keep_releases, 5
 
 role :web, "solife.us" # Your HTTP server, Apache/etc
-role :app, "jay@solife.us" # This may be the same as your `Web` server
+role :app, "solife.us" # This may be the same as your `Web` server
 role :db, "solife.us", :primary => true
 
 

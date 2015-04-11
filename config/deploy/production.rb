@@ -47,12 +47,13 @@
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
+ask(:password, "#{fetch(:deploy_user)}@#{fetch(:deploy_host)}", echo: false)
 set :ssh_options, {
-  user: "jay",
+  user: fetch(:deploy_user),
   keys: %w(/Users/lijunjie/.ssh/id_rsa),
   forward_agent: false,
   auth_methods: %w(publickey password),
-  password: "hellojay"
+  password: fetch(:password) 
 }
 #
 # The server-based syntax can be used to override options:
