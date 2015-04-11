@@ -23,8 +23,6 @@ set :scm, :git
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, :master
 
-
-
 set :user, "jay"
 set :group, "jay"
 
@@ -76,7 +74,6 @@ task :my_deploy do
     #execute("ls #{fetch(:deploy_to)}")
     cmds = ["git reset --hard HEAD"]
     cmds << "git pull origin master"
-    cmds << "bundle install"
     cmds << "/bin/sh unicorn.sh restart"
     cmds.each do |cmd|
       execute "cd %s && %s" % [fetch(:deploy_to), cmd]

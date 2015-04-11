@@ -13,8 +13,18 @@ case "$1" in
         RAILS_ENV=production bundle exec rake assets:my_precompile
         ;;
     start)  
+        echo "## bundle install"
+        bundle --local
+        if test $? -eq 0 
+        then
+          echo -e "\t bundle --local successfully."
+        else
+          bundle install
+        fi
+      
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
+
         echo "## rake tasks"
         TASK1="bundle exec rake tmp:clear"
         `${TASK1}`
