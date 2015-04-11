@@ -14,10 +14,10 @@ case "$1" in
         ;;
     start)  
         echo "## bundle install"
-        bundle --local
+        bundle install --local > /dev/null 2>&1 
         if test $? -eq 0 
         then
-          echo -e "\t bundle --local successfully."
+          echo -e "\t bundle install --local successfully."
         else
           bundle install
         fi
@@ -43,12 +43,18 @@ case "$1" in
         ;;  
     stop)  
         echo "## stop unicorn"
-        kill -QUIT `cat tmp/pids/unicorn.pid`  
-        echo -e "\t unicorn stop $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        TMP_PID=tmp/pids/unicorn.pid
+        if test -f ${TMP_PID} 
+        then 
+          kill -QUIT `cat ${TMP_PID}`  
+          echo -e "\t unicorn stop $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        else
+          echo -e "\t unicorn stop failed for has not been started."
+        fi
         ;;  
     restart)  
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
-        sh unicorn.sh stop
+        sh unicorn.sh stop 
         echo -e "\n\n-----------command sparate line----------\n\n"
         sh unicorn.sh start ${PORT} ${ENVIRONMENT}
         ;;  
