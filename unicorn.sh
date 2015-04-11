@@ -1,11 +1,10 @@
 #!/bin/sh  
-# 
-PORT=$(test -z "$2" && echo "4001" || echo "$2")
-ENVIRONMENT=$(test -z "$3" && echo "production" || echo "$3")
+# Program to operate Rails with Unicorn 
 
+PORT=$(test -z "$2" && echo "4001" || echo "$2") # default 4001
+ENVIRONMENT=$(test -z "$3" && echo "production" || echo "$3") # default production
 UNICORN=unicorn  
 CONFIG_FILE=config/unicorn.rb  
- 
 APP_ROOT_PATH=$(pwd)
 
 case "$1" in  
@@ -14,7 +13,6 @@ case "$1" in
         RAILS_ENV=production bundle exec rake assets:my_precompile
         ;;
     start)  
-
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
         echo "## rake tasks"
@@ -38,17 +36,18 @@ case "$1" in
         kill -QUIT `cat tmp/pids/unicorn.pid`  
         echo -e "\t unicorn stop $(test $? -eq 0 && echo "successfully" || echo "failed")."
         ;;  
-    restart|force-reload)  
+    restart)  
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
         sh unicorn.sh stop
         echo -e "\n\n-----------command sparate line----------\n\n"
         sh unicorn.sh start ${PORT} ${ENVIRONMENT}
         ;;  
     deploy)
-        echo "RACK_ENV=production bundle exec rake remote:deploy"
+        # echo "RACK_ENV=production bundle exec rake remote:deploy"
+        bundle exec cap production my_deploy
         ;;
     *)  
-        echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload|deploy}" >&2  
+        echo "Usage: $SCRIPTNAME {start|stop|restart|deploy}" >&2  
         exit 3  
         ;;  
 esac  
