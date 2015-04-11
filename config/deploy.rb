@@ -2,7 +2,15 @@
 lock '3.4.0'
 
 set :stage, "production"
-set :stages, %w(production)
+
+begin
+  # require "yaml"
+  config = YAML.load_file(File.expand_path("../setting.yml", __FILE__))["production"]
+  puts config["server"]["app_path"] 
+rescue => e
+  puts e.message
+end
+
 
 # rbenv
 # set :rbenv_type, :user # or :system, depends on your rbenv setup
@@ -11,10 +19,10 @@ set :stages, %w(production)
 # set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
 set :application, 'consume'
-set :deploy_user, 'jay'
-set :deploy_host, "solife.us"
-# Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/work/%s" % fetch(:application)
+set :deploy_user, config["server"]["user"] || 'jay'
+set :deploy_host, config["server"]["host"] || "solife.us"
+set :deploy_password, config["server"]["password"] || nil
+set :deploy_to, config["server"]["app_path"] || "/home/work/%s" % fetch(:application)
 
 set :repo_url, 'git@github.com:jay16/consume.solife.git'
 # Default value for :scm is :git

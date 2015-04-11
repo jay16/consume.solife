@@ -2,47 +2,39 @@ defaults: &defaults
   title: "爱记录"
   slogan: "爱生活"
   team: "爱记录"
-  favicon: "/assets/favicon.so.ico"
-  domain: "solife.us"
-  contact: "contact@me.com"
-  admin_emails: "admin@email.com"
-  cdn:
-    bootstrap:
-      v303:
-        js: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
-        css: "http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
-      v320:
-        js: "http://cdn.bootcss.com/twitter-bootstrap/3.2.0/js/bootstrap.min.js"
-        css: "http://cdn.bootcss.com/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
+  favicon: "http://solife-images.u.qiniudn.com/favicon.so.ico"
+  domain: "consume.solife.us"
+  contact: "jay_li@solife.us"
+  admin_emails: "jay_li@solife.us"
   devise:
-    email: "your-email"
-    address: "smtp-email"
+    email: "jay_li@solife.us"
+    address: "smtp.ym.163.com"
     port: 25,
-    user_name: "your-email"
+    user_name: "jay_li@solife.us"
     domain: "solife.us"
-    password: "email-password"
+    password: "password"
     authentication: "login"
   database:
     mysql:
       user: "root"
       password: "password"
-      dbname: "db-name"
+      dbname: "consume_development"
   qiniu:
-    bucket: "bucket-name"
-    access_key: 'qiniu-access-key'
-    secret_key: 'qiniu-secret-key'
-    out_link: "http://bucket-name.qiniudn.com"
+    bucket: "consume-db"
+    access_key: 'access-key'
+    secret_key: 'secret-key'
+    out_link: "http://bucket.qiniudn.com"
   mobile:
     os:
       android:
-        version: "0.1.c"
+        version: "0.3"
         describtion: "consume.solife.us"
-        url: "http://solife-apk.qiniudn.com/iconsumes-0.1.c.apk"
+        url: "http://solife-apk.qiniudn.com/iconsumes-0.3.apk"
   server:
     host: "solife.us"
-    user: "jay"
-    password: "hellojay"
-    app_root_path: "/home/work/consume"
+    user: "deploy"
+    password: "password"
+    app_path: "/home/work/consume"
 
 development:
   <<: *defaults

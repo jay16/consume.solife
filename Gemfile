@@ -5,7 +5,6 @@ source "http://ruby.taobao.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "~>4.0.4"
 gem "mysql2", "~>0.3.16"
-
 gem "sprockets-rails", "~>2.0.1", :require => "sprockets/railtie"
 
 # add these gems to help with the transition:
