@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412155645) do
+ActiveRecord::Schema.define(version: 20150412160149) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20150412155645) do
     t.integer  "tags_count",             default: 0
     t.string   "password_salt"
     t.string   "remember_me"
+    t.string   "remember_token"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
