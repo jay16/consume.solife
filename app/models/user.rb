@@ -34,6 +34,11 @@ class User < ActiveRecord::Base
     Setting.admin_emails.include?(self.email)
   end
 
+  # remember_me necessary.
+  def remember_token
+    "remember-token-%d" % id
+  end
+
   # 用户名称
   def username
     self.name || "未设置名称"

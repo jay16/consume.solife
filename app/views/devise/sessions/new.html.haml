@@ -24,8 +24,14 @@
             - f.input :remember_me, as: :boolean if devise_mapping.rememberable?
             = link_to "", id: "loadTrigger", class: "login-submit", onclick: "$('#loadSubmit').trigger('click');", class: "btn btn-primary", style: "height:53px;width:20%; border-radius: 0px 5px 5px 0px;" do
               %i.glyphicon.glyphicon-arrow-right{style: "margin-top: 12px;"}
+          - if devise_mapping.rememberable?
+            .from-group.checkbox
+              %label{:for => "user_remember_me"}
+                = f.check_box :remember_me
+                = t("simple_form.remember_me")
+            
             = f.button :submit, "登 陆", label: false, class: "hidden", id: "loadSubmit"
-
+            
         = render "devise/shared/links"
 
     :javascript

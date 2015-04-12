@@ -70,6 +70,7 @@
 
   simple_form:
     submit: "提交"
+    remember_me: "记住登陆状态"
     error_notification:
       default_message: "请查看下列错误信息:"
 

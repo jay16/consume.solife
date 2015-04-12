@@ -106,13 +106,8 @@
 
 
 = javascript_include_tag "application", "data-turbolinks-track" => true
-= javascript_include_tag "#{Setting.cdn.bootstrap.v320.js}"
-:javascript
-  $(function(){
-    Home.resizeWindow()
-    $(window).resize(function(){
-      Home.resizeWindow()
-    });
-    $(".android-btn").trigger("click");
-    $(".android-btn").trigger("click");
-  });
+= javascript_tag defer: "defer" do
+  Home.resizeWindow()
+  $(window).resize(function(){ Home.resizeWindow() })
+  $(".android-btn").trigger("click");
+  $(".android-btn").trigger("click");
