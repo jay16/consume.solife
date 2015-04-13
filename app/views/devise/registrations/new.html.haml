@@ -32,7 +32,8 @@
 
         .form-actions
           = f.button :submit, "注册",  id: "regSubmit", class: "hidden"
-          = link_to "", onclick: "$('#regSubmit').trigger('click');", class: "btn btn-default btn-primary", style: "float:right;" do
+          = link_to "", onclick: "$('#regSubmit').trigger('click');", class: "btn btn-default btn-primary" do
+            %span 提交
             %i.glyphicon.glyphicon-arrow-right
 
           = link_to "登陆", "/users/sign_in", class: "btn btn-default btn-link"

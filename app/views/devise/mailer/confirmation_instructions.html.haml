@@ -1,9 +1,12 @@
-%p 你好 #{@email},
-%p 感谢您注册[#{Setting.team}]!
+%p 尊敬的用户，#{@resource.name}:
+%br
+%p 您好！
+%p 感谢您注册#{Setting.team} - 记录生活点滴，您的登陆邮件为：#{@email}。
 %p 请点击下面链接来确认您的帐户邮箱:
 %p= link_to '激活我的帐户', confirmation_url(@resource, confirmation_token: @token)
-
 %br
-%p ----------------------------------------
-%p 您的[#{Setting.team}]团队
+%p 此敬
+%p #{Setting.team}账户小组敬上
 %p 联系我们: #{Setting.contact} 
+%br
+%small 本电子邮件地址可以接受回复邮件。
