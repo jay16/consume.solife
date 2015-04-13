@@ -1,11 +1,10 @@
 .row{style:"margin-top:30px;"}
   .col-sm-6.col-sm-offset-3
-    %h1{style: "text-align:center;margin-top:70px;margin-bottom:15px;"}
-      用户注册 
+    %h1{style: "text-align:center;margin-top:30px;margin-bottom:15px;"}
+      注册 
 
 :css
   .controls { margin-bottom: 10px; }
-
 .row{style:"margin-top:30px;"}
   .col-sm-4.col-sm-offset-4
     = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| 
