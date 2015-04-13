@@ -1,9 +1,15 @@
 #encoding: utf-8
 #   Computer storage measuremen conversion.
+#
 #     1 B = 1 byte = 8 bit 
-#     1 KB = 1024 bytes
-#     1 MB = 1024 KB
-#     1 GB = 1024 MB
+#     1 KB = 1024 bytes    , kilo
+#     1 MB = 1024 KB       , mega 
+#     1 GB = 1024 MB       , giga
+#     1 TB = 1024 GB       , tera
+#     1 PB = 1024 TB       , peta
+#     1 EB = 1024 PB       , exa
+#     1 ZB = 1024 EB       , zetta
+#     1 YB = 1024 ZB       , yotta
 #
 #   author: jay(jay_li@solife.us) 
 #   date: 2015/04/07
@@ -26,7 +32,7 @@
 module BKMG
   class Base 
     class << self
-      UNIT_SEQ = %w(B K M G)
+      UNIT_SEQ = %w(B K M G T P)
 
       # unit turn up or down to target unit
       # params:
@@ -77,10 +83,3 @@ module BKMG
     end
   end
 end
-
-#["2124", "asdfa k", "123 b", "123 kb", "123 k","2423 mb", "1424 g"].each_with_index do |str, index|
-#  puts "%s - %s" % [str, BKMG::Base.to(str, "g", 0).to_s]
-#  puts "%s - %s" % [str, BKMG::Base.to(str, "k", 0).to_s]
-#  puts "%s - %s" % [str, BKMG::Base.best(str, 0)]
-#  puts "="*10
-#end
