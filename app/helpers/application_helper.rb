@@ -8,7 +8,6 @@ module ApplicationHelper
     site_name = Setting.title
     title = @page_title ? "#{site_name} | #{@page_title}" : site_name rescue "SITE_NAME"
     content_tag("title", title, nil, false)
-
   end
 
   def gravatar_image_cache_tag(email, opts={})
@@ -34,39 +33,13 @@ module ApplicationHelper
     end
   end
 
-  def controller_stylesheet_link_tag
-    fname = case controller_name
-    when "users"
-      fname = "#{controller_name}.css"
-    else ""  
-    end
-
-    return "" if fname.blank?
-    raw %(<link href="#{asset_path(fname)}" rel="stylesheet" data-turbolinks-track />)
-  end
-
-  def controller_javascript_include_tag
-    fname = case controller_name
-    when "users"
-      fname = "#{controller_name}.js"
-    else ""
-    end
-
-    return "" if fname.blank?
-    raw %(<script src="#{asset_path(fname)}" data-turbolinks-track></script>)
-  end
-
   # flash notice
   def notice_message
     flashs = flash.reject { |t, m| t.empty? }
-
     flashs.map do |type, message|
       next if message.to_s == "true"
       content_tag(:div, link_to("x", "#", class: "close", "data-dismiss" => "alert") + message, class: "alert alert-#{type == :notice ? :success : :warning}")
     end.join("\n").html_safe unless flashs.empty?
-  end
-
-  def controller_javascript_include_tag
   end
 
   # judge client whether is mobile and tell mobile type
@@ -86,6 +59,11 @@ module ApplicationHelper
     klass = objects.class.to_s.downcase.split(/_/).reverse.first #ActiveRecord::Relation::ActiveRecord_Relation_Tag
     size  = objects.size
     keystamp = size.zero? ? 0 : objects.map(&:updated_at).max.try(:utc).try(:to_s, :number)
-    "#{prefix}/#{klass}-#{size}-#{keystamp}"
+    # {prefix}/#{klass}-#{size}-#{keystamp}"
+    "%s/%s-%d-%s" % [prefix, klass, size, keystamp]
+  end
+
+  def toggle_mobile_dom_id(id)
+    "%s%s" % [mobile? ? "mobile_" : "", id]
   end
 end
