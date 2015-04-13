@@ -63,6 +63,10 @@ case "$1" in
         bundle exec rake remote:upload
         bundle exec cap production my_deploy
         ;;
+    log-analyzer)
+        # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
+        echo "yes"
+      ;;
     *)  
         echo "Usage: $SCRIPTNAME {start|stop|restart|deploy}" >&2  
         exit 3  

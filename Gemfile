@@ -66,6 +66,8 @@ group :development do
   # gem "capistrano-rails", "~>1.1.2"
   # gem 'capistrano-rbenv', "~>2.0.3"
 
+  gem "request-log-analyzer"
+
   gem "net-ssh", "~>2.7.0"
   gem "net-scp", "~>1.2.1"
   gem "qiniu", "~>6.3.2"
