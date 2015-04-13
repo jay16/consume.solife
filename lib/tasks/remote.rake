@@ -19,11 +19,11 @@ namespace :remote do
   end
 
   desc "scp local config files to remote server."
-  task :deploy => :environment do
+  task :update => :environment do
     remote_app_path = Setting.server.app_path
     local_config_path  = "%s/config" % Rails.root
     remote_config_path = "%s/config" % remote_app_path
-    yamls = Dir.entries(local_config_path).find_all { |file| File.extname(file) == ".yaml" }
+    yamls = Dir.entries(local_config_path).find_all { |file| File.extname(file) == ".yml" }
     Net::SSH.start(Setting.server.host, Setting.server.user, :password => Setting.server.password) do |ssh|
       _dirname  = File.dirname(remote_app_path)
       _basename = File.basename(remote_app_path)
@@ -38,11 +38,11 @@ namespace :remote do
         puts "\n"
       end
 
-      command = "cd %s && git reset --hard HEAD && git pull origin master" % remote_app_path
-      execute!(ssh, command)
+      # command = "cd %s && git reset --hard HEAD && git pull origin master" % remote_app_path
+      # execute!(ssh, command)
 
-      command = "cd %s && bundle install --local" % remote_app_path
-      execute!(ssh, command)
+      # command = "cd %s && bundle install --local" % remote_app_path
+      # execute!(ssh, command)
 
       #command = "cd %s && bundle exec rake assets:precompile RAILS_ENV=production" % remote_app_path
       #execute!(ssh, command)

@@ -60,6 +60,7 @@ case "$1" in
         ;;  
     deploy)
         # echo "RACK_ENV=production bundle exec rake remote:deploy"
+        bundle exec rake remote:upload
         bundle exec cap production my_deploy
         ;;
     *)  
