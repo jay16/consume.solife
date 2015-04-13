@@ -9,7 +9,7 @@ module Consume
       # common Grape settings
       included do
         # version "v1"
-        prefix "api"
+        # prefix "api" # routes.rb mount /api 
         format :json
         default_format :json
         default_error_formatter :json

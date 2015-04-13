@@ -31,8 +31,9 @@ Consume::Application.routes.draw do
   get "/solife"  => "home#solife_get"
   post "/solife" => "home#solife_post"
 
-  mount Consume::API::Base => "/"
+  mount Consume::API::Base => "/api"
 
+  match "*path", via: :all, to: "home#not_found"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

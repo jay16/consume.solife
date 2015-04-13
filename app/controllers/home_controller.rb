@@ -4,7 +4,8 @@ class HomeController < ApplicationController
   protect_from_forgery except: :solife_post
   skip_before_filter :authenticate_user!
   # caches_page :root
-  # caches_action :apis, expires_in: 1.day, unless_exist: true
+  #caches_action :apis, expires_in: 1.day, unless_exist: true
+  #caches_action :not_found, expires_in: 1.day, unless_exist: true
 
   def index
     if current_user.nil?
@@ -41,6 +42,13 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.json { render :json => params.to_json }
+    end
+  end
+
+  # Page 404
+  def not_found
+    respond_to do |format|
+      format.html { render :file => "home/not_found.html", status: 404 } #, layout: false }
     end
   end
 end
