@@ -12,10 +12,11 @@
 .row
   :css
     .records-list thead tr th { text-align: center; }
-    .records-list tbody tr td { text-align: center; vertical-align: middle;}
     .records-list tbody tr td:nth-child(2) { text-align: left; max-width: 300px; }
+    #mobile_record_list .table { table-layout: auto; }
+    #mobile_record_list .table td { word-break: break-all }
   %div
-    %table.table.table-bordered.table-striped.table-condensed.records-list
+    %table.table.table-bordered.table-striped.table-condensed.records-list{id: toggle_mobile_dom_id("record_list")}
       %thead
         %tr
           %th - 
