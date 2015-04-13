@@ -85,6 +85,7 @@ Consume::Application.configure do
 
   config.action_mailer.default_url_options = { :host => "#{Setting.domain}:80" }
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
     :address              => Setting.devise.address,
     :port                 => Setting.devise.port,
@@ -93,5 +94,13 @@ Consume::Application.configure do
     :password             => Setting.devise.password,
     :authentication       => Setting.devise.authentication
     #:enable_starttls_auto => true 
+  }
+
+  # gem "exception_notifiction"
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[Consume] ",
+      :sender_address => %{"Exception" <#{Setting.devise.user_name}>},
+      :exception_recipients => Setting.exception.receiver
   }
 end

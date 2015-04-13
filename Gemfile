@@ -22,6 +22,9 @@ gem "cells", "~>3.11.1"
 gem "devise", "~>3.2.4"
 gem "devise-encryptable", "~>0.2.0"
 
+# exception
+gem 'exception_notification', "~>4.0.1"
+
 gem "grape", "~>0.7.0"
 gem "grape-entity", "~>0.4.2"
 # gem "grape-swagger", "~>0.8.0"
@@ -38,7 +41,6 @@ gem "will_paginate", "3.0.4"
 gem "whenever", :require => false
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
-
 
 gem "haml-rails", "~>0.5.3"
 # Use SCSS for stylesheets
