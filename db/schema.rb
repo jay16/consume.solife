@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 20150412160149) do
     t.integer  "records_count",          default: 0
     t.integer  "tags_count",             default: 0
     t.string   "password_salt"
-    t.string   "remember_me"
     t.string   "remember_token"
   end
 
