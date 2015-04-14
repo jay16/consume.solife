@@ -48,7 +48,7 @@ class HomeController < ApplicationController
   # Page 404
   def not_found
     respond_to do |format|
-      format.html { render :file => "home/not_found.html", status: 404 } #, layout: false }
+      format.all { render :file => "home/not_found.html", status: 404 } #, layout: false }
     end
   end
 end

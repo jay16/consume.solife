@@ -7,6 +7,12 @@ UNICORN=unicorn
 CONFIG_FILE=config/unicorn.rb  
 APP_ROOT_PATH=$(pwd)
 
+# user bash environment for crontab job.
+source ~/.bash_profile
+source ~/.bashrc
+# maybe enter other dir after source.
+cd ${APP_ROOT_PATH}
+
 case "$1" in  
     precompile)
         RAILS_ENV=production bundle exec rake assets:clean
@@ -67,9 +73,9 @@ case "$1" in
         bundle exec cap production my_deploy
         ;;
     log-analyzer)
-        /bin/sh ./bin/bash/log_split.sh "$(pwd)" "$2"
+        /bin/sh bin/bash/log_split.sh "$(pwd)" "$2"
         # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
-      ;;
+        ;;
     crond)
         echo "59 23 * * * cd $(pwd) && /bin/sh unicorn.sh log-analyzer production >> log/log-analyzer.log 2>&1"
         ;;
