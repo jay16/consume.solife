@@ -82,6 +82,7 @@ task :my_deploy do
     #execute("ls #{fetch(:deploy_to)}")
     cmds = ["git reset --hard HEAD"]
     cmds << "git pull origin master"
+    cmds << "/bin/sh unicorn.sh bundle"
     cmds << "bundle exec rake db:migrate"
     cmds << "/bin/sh unicorn.sh restart"
     cmds.each do |cmd|

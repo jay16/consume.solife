@@ -12,7 +12,7 @@ case "$1" in
         RAILS_ENV=production bundle exec rake assets:clean
         RAILS_ENV=production bundle exec rake assets:my_precompile
         ;;
-    start)  
+    bundle)
         echo "## bundle install"
         bundle install --local > /dev/null 2>&1 
         if test $? -eq 0 
@@ -21,7 +21,10 @@ case "$1" in
         else
           bundle install
         fi
-      
+        ;;
+    start)  
+        /bin/sh unicorn.sh bundle
+
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
 
@@ -54,9 +57,9 @@ case "$1" in
         ;;  
     restart)  
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
-        sh unicorn.sh stop 
+        /bin/sh unicorn.sh stop 
         echo -e "\n\n-----------command sparate line----------\n\n"
-        sh unicorn.sh start ${PORT} ${ENVIRONMENT}
+        /bin/sh unicorn.sh start ${PORT} ${ENVIRONMENT}
         ;;  
     deploy)
         # echo "RACK_ENV=production bundle exec rake remote:deploy"
@@ -64,9 +67,12 @@ case "$1" in
         bundle exec cap production my_deploy
         ;;
     log-analyzer)
+        /bin/sh ./bin/bash/log_split.sh "$(pwd)" "$2"
         # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
-        echo "yes"
       ;;
+    crond)
+        echo "59 23 * * * cd $(pwd) && /bin/sh unicorn.sh log-analyzer production >> log/log-analyzer.log 2>&1"
+        ;;
     *)  
         echo "Usage: $SCRIPTNAME {start|stop|restart|deploy}" >&2  
         exit 3  

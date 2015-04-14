@@ -19,7 +19,7 @@ namespace :remote do
   end
 
   desc "scp local config files to remote server."
-  task :update => :environment do
+  task :upload => :environment do
     remote_app_path = Setting.server.app_path
     local_config_path  = "%s/config" % Rails.root
     remote_config_path = "%s/config" % remote_app_path
