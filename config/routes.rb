@@ -21,6 +21,8 @@ Consume::Application.routes.draw do
 
   namespace :cpanel do
     root :to => "home#index"
+    get "reports" => "home#reports"
+    get "report"  => "home#report"
     resources :users
     resources :records
     resources :tags
