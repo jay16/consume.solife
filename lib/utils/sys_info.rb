@@ -3,8 +3,8 @@ module SysInfo
   PLATFORM = `uname -s`.strip
 
   PS_COMMAND, TOP_COMMAND = case PLATFORM
-  when "Darwin" then ["ps aux", "top -l 1 | head -n 10"]
-  when "Linux"  then ["ps aux", "top -b -n 1 | head -n 5"]
+  when "Darwin" then ["/bin/ps aux", "/usr/bin/top -l 1 | /usr/bin/head -n 10"]
+  when "Linux"  then ["/bin/ps aux", "/usr/bin/top -b -n 1 | /usr/bin/head -n 5"]
   end
 
   class Top
@@ -109,28 +109,28 @@ module SysInfo
         case SysInfo::PLATFORM
         when "Darwin"
           { :hostname   => `/bin/hostname`.strip,
-            :ip          => `ifconfig | sed -n -e '/inet6/d' -e '/broadcast/p' | awk '{ print $2 }'`.strip,
-            :kernal_name => `uname -v | cut -d : -f 1`.strip,
-            :platform   => `uname -v | cut -d : -f 1`.strip,
-            :hardware    => `uname -m`.strip,
-            :timezone    => `date`.strip.scan(/\+\d{4}/)[0],
-            :memory      => (`top -l 1 | head -n 10 | grep PhysMem`.scan(/(\d+)M/).flatten.map(&:to_i).reduce(:+)/1024).to_s + "G",
+            :ip          => `/sbin/ifconfig | /usr/bin/sed -n -e '/inet6/d' -e '/broadcast/p' | awk '{ print $2 }'`.strip,
+            :kernal_name => `/usr/bin/uname -v | /usr/bin/cut -d : -f 1`.strip,
+            :platform   => `/usr/bin/uname -v | /usr/bin/cut -d : -f 1`.strip,
+            :hardware    => `/usr/bin/uname -m`.strip,
+            :timezone    => `/bin/date`.strip.scan(/\+\d{4}/)[0],
+            :memory      => (`/usr/bin/top -l 1 | /usr/head/head -n 10 | grep PhysMem`.scan(/(\d+)M/).flatten.map(&:to_i).reduce(:+)/1024).to_s + "G",
             :cpu         => "TODO",
-            :disk        => (`top -l 1 | grep Disks`.scan(/(\d+)\/\d+M written/).flatten[0].to_i/1024).to_s+"G"
+            :disk        => (`/usr/bin/top -l 1 | grep Disks`.scan(/(\d+)\/\d+M written/).flatten[0].to_i/1024).to_s+"G"
           }
         when "Linux"
             mem_total = IO.read("/proc/meminfo").scan(/MemTotal:\s+(\d+)\skB/)[0][0] rescue "-1"
             mem_free  = IO.read("/proc/meminfo").scan(/MemFree:\s+(\d+)\skB/)[0][0] rescue "-1"
           { :hostname    => `/bin/hostname`.strip,
-            :ip          => `ifconfig|sed -n -e '/inet6/d' -e '/Bcast/p'|cut -d : -f 2|awk '{print $1}'`.strip,
-            :kernal_name => `uname -o`.strip,
-            :platform   => `cat /etc/issue | head -n 1`.strip,
-            :hardware    => `uname -m`.strip,
-            :timezone    => `date -R`.strip.scan(/\+\d{4}/)[0],
+            :ip          => `/sbin/ifconfig | /bin/sed -n -e '/inet6/d' -e '/Bcast/p'|cut -d : -f 2|awk '{print $1}'`.strip,
+            :kernal_name => `/bin/uname -o`.strip,
+            :platform   => `/bin/cat /etc/issue | /usr/bin/head -n 1`.strip,
+            :hardware    => `/bin/uname -m`.strip,
+            :timezone    => `/bin/date -R`.strip.scan(/\+\d{4}/)[0],
             :memory      => eval("(%s.0/1024/1024+0.5).to_i" % mem_total).to_s + "G",
             :mem_free    => eval("(%s.0/1024/1024+0.5).to_i" % mem_free).to_s + "G",
-            :cpu         => `cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c`,
-            :disk        => `df -h | grep "/dev/" | head -n 1`.split(/\s+/)[1]
+            :cpu         => `/bin/cat /proc/cpuinfo | /bin/grep name | /bin/cut -f2 -d: | uniq -c`,
+            :disk        => `/bin/df -h | /bin/grep "/dev/" | /usr/bin/head -n 1`.split(/\s+/)[1]
           }
         else {"is" => SysInfo::PLATFORM }
         end
