@@ -64,7 +64,7 @@ case "$1" in
     restart)  
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
         /bin/sh unicorn.sh stop 
-        echo -e "\n\n-----------command sparate line----------\n\n"
+        printf "\n\n%10s command sparate line %10s\n\n" |  tr ' ' -
         /bin/sh unicorn.sh start ${PORT} ${ENVIRONMENT}
         ;;  
     deploy)

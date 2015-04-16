@@ -1,4 +1,5 @@
 #!/bin/bash
+# split Rails.env.log by day and analyzed with gem 'request-log-analyzer'.
 
 apppath=$(test -z "$1" && echo "not exist" || echo "$1")
 environment=$(test -z "$2" && echo "production" || echo "$2") # default production
