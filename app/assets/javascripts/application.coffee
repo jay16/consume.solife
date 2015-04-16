@@ -81,7 +81,7 @@ window.App =
 $ ->
   # devise login stay in 12 minute without operation
   # reload the UI to login
-  setInterval App.reloadWindow, 1200 * 1000
+  # setInterval App.reloadWindow, 1200 * 1000
 
   # css devise layout
   pathname = window.location.pathname.split("/")

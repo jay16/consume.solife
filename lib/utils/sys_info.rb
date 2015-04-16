@@ -189,7 +189,7 @@ module SysInfo
             :timezone    => `#{SysInfo::COMMAND[:date]} -R`.strip.scan(/\+\d{4}/)[0],
             :memory      => eval("(%s.0/1024/1024+0.5).to_i" % mem_total).to_s + "G",
             :mem_free    => eval("(%s.0/1024/1024+0.5).to_i" % mem_free).to_s + "G",
-            :cpu         => `#{SysInfo::COMMAND[:cat]} /proc/cpuinfo | #{SysInfo::COMMAND[:grep]} name | #{SysInfo::COMMAND[:cut]} -f2 -d: | #{SysInfo::COMMAND[:uniq]}-c`,
+            :cpu         => `#{SysInfo::COMMAND[:cat]} /proc/cpuinfo | #{SysInfo::COMMAND[:grep]} name | #{SysInfo::COMMAND[:cut]} -f2 -d: | #{SysInfo::COMMAND[:uniq]} -c`,
             :disk        => `#{SysInfo::COMMAND[:df]} -h | #{SysInfo::COMMAND[:grep]} "/dev/" | #{SysInfo::COMMAND[:head]} -n 1`.split(/\s+/)[1]
           }
         else {"is" => SysInfo::PLATFORM }
