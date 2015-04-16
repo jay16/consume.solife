@@ -1,19 +1,70 @@
 #encoding: utf-8
 module SysInfo
   PLATFORM = `uname -s`.strip
-
+  COMMAND =  case PLATFORM
+  when "Darwin" then 
+    { :grep     => "/usr/bin/grep",
+      :ps       => "/bin/ps",
+      :hostname => "/bin/hostname",
+      :date     => "/bin/date",
+      :top      => "/usr/bin/top",
+      :head     => "/usr/bin/head",
+      :tail     => "/usr/bin/tail",
+      :ifconfig => "/sbin/ifconfig",
+      :uname    => "/usr/bin/uname",
+      :sed      => "/usr/bin/sed",
+      :cut      => "/usr/bin/cut",
+      :cat      => "/bin/cat",
+      :df       => "/bin/df",
+      :awk      => "/usr/bin/awk",
+      :uniq     => "/usr/bin/uniq"}
+  when "Linux"  then 
+    { :grep     => "/bin/grep",
+      :ps       => "/bin/ps",
+      :hostname => "/bin/hostname",
+      :date     => "/bin/date",
+      :top      => "/usr/bin/top",
+      :head     => "/usr/bin/head",
+      :tail     => "/usr/bin/tail",
+      :ifconfig => "/sbin/ifconfig",
+      :uname    => "/bin/uname",
+      :sed      => "/bin/sed",
+      :cut      => "/bin/cut",
+      :cat      => "/bin/cat",
+      :df       => "/bin/df",
+      :awk      => "/bin/awk",
+      :uniq     => "/usr/bin/uniq"}
+  end
   PS_COMMAND, TOP_COMMAND = case PLATFORM
-  when "Darwin" then ["/bin/ps aux", "/usr/bin/top -l 1 | /usr/bin/head -n 10"]
-  when "Linux"  then ["/bin/ps aux", "/usr/bin/top -b -n 1 | /usr/bin/head -n 5"]
+  when "Darwin" then 
+    ["#{SysInfo::COMMAND[:ps]} aux", "#{SysInfo::COMMAND[:top]} -l 1 | #{SysInfo::COMMAND[:head]} -n 10"]
+  when "Linux"  then 
+    ["#{SysInfo::COMMAND[:ps]} aux", "#{SysInfo::COMMAND[:top]} -b -n 1 | #{SysInfo::COMMAND[:head]} -n 5"]
+  end
+  class Syntax
+    def self.check
+      not_exist = SysInfo::COMMAND.select { |key, value| not File.exist?(value) }
+      if not_exist.empty?
+        puts "SysInfo::COMMAND is ok."
+      else
+        puts "Some command cannot found on system."
+        not_exist.each_pair do |key, value|
+          puts "%s - %s" % [key, value]
+        end
+      end
+    end
   end
 
   class Top
     class << self
       def hash_and_array
-        [SysInfo::Top.hash, SysInfo::Top.array]
+        [hash, array]
       end
 
       def array
+        _array rescue []
+      end
+      def _array
         title, result = [], []
         case SysInfo::PLATFORM
         when "Darwin"
@@ -34,14 +85,22 @@ module SysInfo
         end
         max_len = title.sort { |x, y| y.length <=> x.length }.first.length
         SysInfo::Top.base.each_with_index do |data, index|
+          begin
           row = [title[index], data].transpose.flatten.unshift(klass[index])
           row += Array.new(max_len*2 - row.length, nil) if row.length < max_len*2
           result << row
+          rescue => e
+            puts "Exception - SysInfo::PS"
+            puts e.message
+          end
         end
         return result
       end
 
       def hash
+        _hash rescue {}
+      end
+      def _hash
         title, result = [], {}
         case SysInfo::PLATFORM
         when "Darwin"
@@ -65,6 +124,7 @@ module SysInfo
         end
         return result
       end
+
       def base
         str = `#{TOP_COMMAND}`
         array = []
@@ -108,29 +168,29 @@ module SysInfo
       def hash 
         case SysInfo::PLATFORM
         when "Darwin"
-          { :hostname   => `/bin/hostname`.strip,
-            :ip          => `/sbin/ifconfig | /usr/bin/sed -n -e '/inet6/d' -e '/broadcast/p' | awk '{ print $2 }'`.strip,
-            :kernal_name => `/usr/bin/uname -v | /usr/bin/cut -d : -f 1`.strip,
-            :platform   => `/usr/bin/uname -v | /usr/bin/cut -d : -f 1`.strip,
-            :hardware    => `/usr/bin/uname -m`.strip,
-            :timezone    => `/bin/date`.strip.scan(/\+\d{4}/)[0],
-            :memory      => (`/usr/bin/top -l 1 | /usr/head/head -n 10 | grep PhysMem`.scan(/(\d+)M/).flatten.map(&:to_i).reduce(:+)/1024).to_s + "G",
+          { :hostname   => `#{SysInfo::COMMAND[:hostname]}`.strip,
+            :ip          => `#{SysInfo::COMMAND[:ifconfig]} | #{SysInfo::COMMAND[:sed]} -n -e '/inet6/d' -e '/broadcast/p' | #{SysInfo::COMMAND[:awk]} '{ print $2 }'`.strip,
+            :kernal_name => `#{SysInfo::COMMAND[:uname]} -v | #{SysInfo::COMMAND[:cut]} -d : -f 1`.strip,
+            :platform   => `#{SysInfo::COMMAND[:uname]} -v | #{SysInfo::COMMAND[:cut]} -d : -f 1`.strip,
+            :hardware    => `#{SysInfo::COMMAND[:uname]} -m`.strip,
+            :timezone    => `#{SysInfo::COMMAND[:date]}`.strip.scan(/\+\d{4}/)[0],
+            :memory      => (`#{SysInfo::COMMAND[:top]} -l 1 | #{SysInfo::COMMAND[:head]} -n 10 | #{SysInfo::COMMAND[:grep]} PhysMem`.scan(/(\d+)M/).flatten.map(&:to_i).reduce(:+)/1024).to_s + "G",
             :cpu         => "TODO",
-            :disk        => (`/usr/bin/top -l 1 | grep Disks`.scan(/(\d+)\/\d+M written/).flatten[0].to_i/1024).to_s+"G"
+            :disk        => (`#{SysInfo::COMMAND[:top]} -l 1 | #{SysInfo::COMMAND[:grep]} Disks`.scan(/(\d+)\/\d+M written/).flatten[0].to_i/1024).to_s+"G"
           }
         when "Linux"
             mem_total = IO.read("/proc/meminfo").scan(/MemTotal:\s+(\d+)\skB/)[0][0] rescue "-1"
             mem_free  = IO.read("/proc/meminfo").scan(/MemFree:\s+(\d+)\skB/)[0][0] rescue "-1"
-          { :hostname    => `/bin/hostname`.strip,
-            :ip          => `/sbin/ifconfig | /bin/sed -n -e '/inet6/d' -e '/Bcast/p'|cut -d : -f 2|awk '{print $1}'`.strip,
-            :kernal_name => `/bin/uname -o`.strip,
-            :platform   => `/bin/cat /etc/issue | /usr/bin/head -n 1`.strip,
-            :hardware    => `/bin/uname -m`.strip,
-            :timezone    => `/bin/date -R`.strip.scan(/\+\d{4}/)[0],
+          { :hostname    => `#{SysInfo::COMMAND[:hostname]}`.strip,
+            :ip          => `#{SysInfo::COMMAND[:ifconfig]} | #{SysInfo::COMMAND[:sed]} -n -e '/inet6/d' -e '/Bcast/p'| #{SysInfo::COMMAND[:cut]} -d : -f 2| #{SysInfo::COMMAND[:awk]} '{print $1}'`.strip,
+            :kernal_name => `#{SysInfo::COMMAND[:uname]} -o`.strip,
+            :platform   => `#{SysInfo::COMMAND[:cat]} /etc/issue | #{SysInfo::COMMAND[:head]} -n 1`.strip,
+            :hardware    => `#{SysInfo::COMMAND[:uname]} -m`.strip,
+            :timezone    => `#{SysInfo::COMMAND[:date]} -R`.strip.scan(/\+\d{4}/)[0],
             :memory      => eval("(%s.0/1024/1024+0.5).to_i" % mem_total).to_s + "G",
             :mem_free    => eval("(%s.0/1024/1024+0.5).to_i" % mem_free).to_s + "G",
-            :cpu         => `/bin/cat /proc/cpuinfo | /bin/grep name | /bin/cut -f2 -d: | uniq -c`,
-            :disk        => `/bin/df -h | /bin/grep "/dev/" | /usr/bin/head -n 1`.split(/\s+/)[1]
+            :cpu         => `#{SysInfo::COMMAND[:cat]} /proc/cpuinfo | #{SysInfo::COMMAND[:grep]} name | #{SysInfo::COMMAND[:cut]} -f2 -d: | #{SysInfo::COMMAND[:uniq]}-c`,
+            :disk        => `#{SysInfo::COMMAND[:df]} -h | #{SysInfo::COMMAND[:grep]} "/dev/" | #{SysInfo::COMMAND[:head]} -n 1`.split(/\s+/)[1]
           }
         else {"is" => SysInfo::PLATFORM }
         end
@@ -170,6 +230,6 @@ module SysInfo
 end
 
 #puts SysInfo::Ps.pid($$)
+#puts SysInfo::Base.hash.to_s
 #puts SysInfo::Top.array.to_s
-#puts SysInfo::Top.hash.to_s
-#puts SysInfo::Top.array.to_s
+#SysInfo::Syntax.check
