@@ -34,6 +34,10 @@ case "$1" in
         test -d log || mkdir log
         test -d tmp || mkdir -p tmp/pids
 
+        echo "## release cache/buffer."
+        sync && echo 3 > /proc/sys/vm/drop_caches > /dev/null 2>&1
+        echo -e "\t release cache/buffer $(test $? -eq 0 && echo "successfully" || echo "failed")."
+
         echo "## rake tasks"
         TASK1="bundle exec rake tmp:clear"
         `${TASK1}`

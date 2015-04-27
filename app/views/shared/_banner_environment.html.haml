@@ -1,0 +1,17 @@
+/
+  \           _ _  __
+  \ ___  ___ | (_)/ _| ___
+  \/ __|/ _ \| | | |_ / _ \
+  \\__ \ (_) | | |  _|  __/
+  \|___/\___/|_|_|_|  \___|
+  \========================================================
+  solife.us
+  
+  App Environments:
+  \--------------------------------------------------------
+  = %Q{Ruby:   #{RUBY_VERSION} #{"-p#{RUBY_PATCHLEVEL}" if defined? RUBY_PATCHLEVEL}}
+  = %Q{Rails:  #{Rails.version} }
+  = %Q{IP:     #{request.remote_ip}}
+  = %Q{Agent:  #{request.user_agent}}
+  = %Q{Mobile: #{(!mobile?.nil?).to_s.capitalize}}
+  = %Q{Login:  #{(!current_user.nil?).to_s.capitalize}}

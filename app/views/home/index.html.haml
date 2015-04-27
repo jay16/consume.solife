@@ -1,3 +1,4 @@
+= render partial: "shared/banner_environment"
 !!!
 %html{:lang => "zh-CN"}
   %head
@@ -5,7 +6,11 @@
     %title= [Setting.title, "-", Setting.slogan].join(" ")
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    - main_div_class = 'col-sm-10 col-sm-offset-1'
+    - platform, li_register_state = 'non-mobile', 'normal'
     - if mobile?
+      - platform, li_register_state = 'is-mobile', 'hidden'
+      - main_div_class = 'col-sm-12'
       %meta{content: "no", name: "apple-mobile-web-app-capable"}
         %meta{content: "True", name: "HandheldFriendly"}/
         %meta{content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", name: "viewport"}/
@@ -25,14 +30,15 @@
         .navbar-brand {background: transparent url(#{Setting.favicon}) no-repeat;text-indent: 15px;margin-top:20px;padding-top:7px;} 
     :css
       .col-sm-12 {padding-right: 0px;}
+      .table { margin: 0px; }
 
     = csrf_meta_tags
 
-  %body.home-body{style: "padding:0px;background: white;"}
+  %body.home-body{class: platform, style: "padding:0px;background: white;"}
     %nav.navbar.navbar-default{role: "navigation", style:"margin-bottom:0px;"}
       .container
         .row
-          %div{class: "#{mobile? ? 'col-sm-12' : 'col-sm-8 col-sm-offset-2'}", style: "padding-left:0px;"}
+          %div{class: main_div_class, style: "padding-left:0px;"}
             .navbar-header
               %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
                 %span.sr-only Toggle navigation
@@ -44,21 +50,17 @@
             / Collect the nav links, forms, and other content for toggling
             .collapse.navbar-collapse{role: "navigation", id:"bs-example-navbar-collapse-1"}
               %ul.nav.navbar-nav.navbar-right
-                - if mobile?
-                  %li
-                    %a{href: "/users/sign_in"} 登陆
-                - else
-                  %li
-                    %a.login{href: "/users/sign_in"} 登陆
-                  %li.action{style: "text-align: center;"}
-                    %a.signup{:href => "javascript:void(0);"}
-                      %strike 注册 
+                %li
+                  %a.login{href: "/users/sign_in"} 登陆
+                %li.action{class: li_register_state, style: "text-align: center;"}
+                  %a.signup{:href => "javascript:void(0);"}
+                    %strike 注册 
 
     #slogn
       %header#home-hero
         .container
           .row
-            %div{class: "#{mobile? ? 'col-sm-12' : 'col-sm-8 col-sm-offset-2'}", style: "text-align: center;"}
+            %div{class: main_div_class, style: "text-align: center;"}
               = notice_message
           .row{style: "text-align: center;"}
             .col-sm-12
@@ -88,8 +90,6 @@
       .row.cache-list
         .col-sm-8.col-sm-offset-2
           .alert.alert-info
-            :css
-              .table { margin: 0px; }
             %table.table.table-condensed
               - @cache_list.each do |row|
                 %tr
