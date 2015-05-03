@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   ACCESSABLE_ATTRS = [:name, :address, :email, :gender, :password, :password_confirmation, :password_salt]
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
+  after_create :generate_user_report
   after_update :trigger_updated_at
 
   # 是否是管理员
@@ -36,12 +37,14 @@ class User < ActiveRecord::Base
   end
 
 
-  def generate_user_report
-    return user_report if user_report
+  def update_user_report
+    generate_user_report.update_columns(user_report_params)
+  end
 
-    user_report.new({
-      :maximum_per_one => 0
-    }).save
+  def generate_user_report
+    return self.user_report if self.user_report
+
+    self.user_report = UserReport.create(user_report_params)
   end
 
   # remember_me necessary.
@@ -82,5 +85,16 @@ class User < ActiveRecord::Base
 
   def trigger_updated_at
     self.update_column(:updated_at, Time.now)
+  end
+
+  def user_report_params
+    { :maximum_per_one  => records.normals.maximum_value_per_one,
+      :maximum_per_day  => records.normals.maximum_value_per_day,
+      :summary_by_day   => records.normals.summary_value_by_day,
+      :summary_by_week  => records.normals.summary_value_by_week,
+      :summary_by_month => records.normals.summary_value_by_month,
+      :summary_by_year  => records.normals.summary_value_by_year,
+      :summary_by_all   => records.normals.summary_value_by_all
+    }
   end
 end

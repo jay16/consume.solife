@@ -1,5 +1,6 @@
 class RecordsController < ApplicationController
   before_action :find_record, only: [:show, :edit, :update, :destroy]
+  after_action :update_user_report, only: [:create, :update, :destroy]
 
   respond_to :html, :js
   # GET /records
@@ -59,7 +60,7 @@ class RecordsController < ApplicationController
   # DELETE /records/1
   # DELETE /records/1.json
   def destroy
-    @record.soft_delete
+    @record.soft_destroy
 
     respond_to do |format|
       format.js
@@ -72,6 +73,10 @@ class RecordsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def find_record
       @record = current_user.records.find(params[:id])
+    end
+
+    def update_user_report
+      current_user.update_user_report
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

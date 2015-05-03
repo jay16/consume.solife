@@ -2,8 +2,7 @@
 require "qiniu"
 require "fileutils"
 
-desc "database operation."
-namespace :db do
+namespace :qiniu do
   def days_ago(num)
     now_i = Time.now.to_i
     ago_i = now_i - num*24*60*60
@@ -26,16 +25,10 @@ namespace :db do
     put_policy = Qiniu::Auth::PutPolicy.new(bucket)
     uptoken = Qiniu::Auth.generate_uptoken(put_policy)
 
-    code, result, response_headers = Qiniu::Storage.stat(
-        bucket,
-        key   
-    )
+    code, result, response_headers = Qiniu::Storage.stat(bucket, key)
     if code == 200
       puts "[%s] already exist in [%s] then delete..." % [key, bucket]
-      code, result, response_headers = Qiniu::Storage.delete(
-          bucket,
-          key  
-      )
+      code, result, response_headers = Qiniu::Storage.delete(bucket, key)
       raise "Fail delete [%s] in [%s] with qiniu." % [key, bucket] if code != 200
     else
       puts "[%s] not found in [%s] then upload..." % [key, bucket]
@@ -50,8 +43,33 @@ namespace :db do
     return code == 200
   end
 
+  task :download => :environment do
+    bucket = Setting.qiniu.bucket
+    key    = bak_file_name(days_ago(1))
+    download_url = "http://%s.qiniudn.com/%s" % [bucket, key]
+
+    tmp_file = Rails.root.join("tmp/%s" % key)
+    File.delete(tmp_file) if File.exist?(tmp_file)
+
+    curl_command = "curl -o %s %s" % [tmp_file, download_url]
+    system(curl_command)
+
+    # use `2>&1` then ruby variable will catch the output
+    extract_command = "cd %s && tar -xvf %s 2>&1" % [Rails.root.join("tmp"), key]
+    extract_file = `#{extract_command}`.split(/\s+/).last rescue nil
+    if extract_file
+      filepath = Rails.root.join("tmp", extract_file)
+      rake_command = "bundle exec rake my_db:restore RAILS_ENV=production BACKUP_FILE=%s" % filepath
+      `#{rake_command}`
+      rake_command = "bundle exec rake db:migrate"
+      `#{rake_command}`
+    else
+      puts "Error: fail download from qiniu."
+    end
+  end
+
   # backup database and upload to qiniu.
-  task :qiniu => :environment do
+  task :upload => :environment do
     # database backup location.
     db_bak_path = "#{Rails.root}/db"
     raise "db_bak_path:#{db_bak_path}" unless File.exist?(db_bak_path)
@@ -76,5 +94,14 @@ namespace :db do
     # raise when database's backup file not exist.
     raise "bak today's database fails!" unless File.exists?(today_bak_path)
     puts upload_file_2_qiniu(today_bak_path)
+  end
+end
+
+desc "database operation."
+namespace :db do
+  # backup database and upload to qiniu.
+  task :qiniu => :environment do
+    rake_command = "bundle exec rake qiniu:upload"
+    system(rake_command)
   end
 end

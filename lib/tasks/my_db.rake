@@ -40,7 +40,7 @@ namespace :my_db do
 
     # restore database
     db_config   = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]    
-    `gunzip < #{backup_file} | mysql -u #{db_config['username']} -p#{db_config['password']} -i -c -q #{db_config['database']}`
+    `mysql -u #{db_config['username']} -p#{db_config['password']} -i -c -q #{db_config['database']} < #{backup_file}`
     raise "Unable to restore DB from #{backup_file}!" if ( $?.to_i > 0 )
     puts "Restore DB from #{backup_file} successfully!"
   end
