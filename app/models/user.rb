@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   has_many :tags, -> { uniq }
   has_many :records, -> { uniq }
+  has_one  :user_report
 
   has_many :follow_groups, -> { where accept: false }, class_name: 'Group', foreign_key: :to_id
   has_many :ask_groups, -> { where accept: false }, class_name: 'Group', foreign_key: :from_id
@@ -34,6 +35,15 @@ class User < ActiveRecord::Base
     Setting.admin_emails.include?(self.email)
   end
 
+
+  def generate_user_report
+    return user_report if user_report
+
+    user_report.new({
+      :maximum_per_one => 0
+    }).save
+  end
+
   # remember_me necessary.
   def remember_token
     "remember-token-%d" % id
@@ -41,7 +51,7 @@ class User < ActiveRecord::Base
 
   # 用户名称
   def username
-    self.name || "未设置名称"
+    name || "未设置名称"
   end
 
   # uniq group_users and group_follows

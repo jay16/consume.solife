@@ -25,8 +25,17 @@ class Record < ActiveRecord::Base
   scope :normals, -> { where(:deleted => false) }
   scope :deleted, -> { where(:deleted => true) }
   scope :undeleted, -> { where(:deleted != true) }
+
+  # user report necessary
+  scope :maximum_value_per_one, -> { maximum(:value) }
+  scope :maximum_value_per_day, -> { select("sum(value) as value,str_to_date(ymdhms, '%Y-%m-%d') as ymd").group("ymd").order("value desc").first.value || 0 }
+  scope :summary_value_by_day, -> { select("sum(value) as value").where("left(ymdhms, 10) = date_format(now(), '%Y-%m-%d')") }
+  scope :summary_value_by_week, -> { select("sum(value) as value").where("weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())") }
+  scope :summary_value_by_month, -> { select("sum(value) as value").where("left(ymdhms, 7) = date_format(now(), '%Y-%m')") }
+  scope :summary_value_by_year,  -> { select("sum(value) as value").where("left(ymdhms, 4) = date_format(now(), '%Y')") }
+  scope :summary_value_by_all, -> { sum(:value) }
  
-  after_create :build_relation_with_tags
+  after_create :ymdhms_must_be_exist, :build_relation_with_tags
   after_update :build_relation_with_tags
   
   def klass_mapping
@@ -49,6 +58,9 @@ class Record < ActiveRecord::Base
     self.update_column(:deleted, true)
   end
 
+  def ymdhms_must_be_exist
+    update_column(:ymdhms, created_at.strftime("%Y-%m-%d %H:%M:%S")) unless ymdhms
+  end
   def build_relation_with_tags
     if self.tags_list.strip.empty?
       # clear all relation with tag

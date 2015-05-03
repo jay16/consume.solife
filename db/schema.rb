@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412160149) do
+ActiveRecord::Schema.define(version: 20150503062327) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(version: 20150412160149) do
     t.string   "ip"
     t.string   "browser"
     t.boolean  "deleted",    default: false
+  end
+
+  create_table "user_reports", force: true do |t|
+    t.integer  "user_id"
+    t.float    "maximum_per_one"
+    t.float    "maximum_per_day"
+    t.float    "summary_by_day"
+    t.float    "summary_by_week"
+    t.float    "summary_by_month"
+    t.float    "summary_by_year"
+    t.float    "summary_by_all"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
