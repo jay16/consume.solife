@@ -30,7 +30,7 @@ class Record < ActiveRecord::Base
   scope :maximum_value_per_one, -> { maximum(:value) }
   scope :maximum_value_per_day, -> { select("sum(value) as value,str_to_date(ymdhms, '%Y-%m-%d') as ymd").group("ymd").order("value desc").first.value || 0 }
   scope :summary_value_by_day, -> { select("sum(value) as value").where("left(ymdhms, 10) = date_format(now(), '%Y-%m-%d')").first.value || 0 }
-  scope :summary_value_by_week, -> { select("sum(value) as value").where("weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())").first.value || 0 }
+  scope :summary_value_by_week, -> { select("sum(value) as value").where("year(str_to_date(ymdhms, '%Y')) = year(now()) and weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())").first.value || 0 }
   scope :summary_value_by_month, -> { select("sum(value) as value").where("left(ymdhms, 7) = date_format(now(), '%Y-%m')").first.value || 0 }
   scope :summary_value_by_year,  -> { select("sum(value) as value").where("left(ymdhms, 4) = date_format(now(), '%Y')").first.value || 0 }
   scope :summary_value_by_all, -> { sum(:value) }

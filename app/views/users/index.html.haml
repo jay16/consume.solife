@@ -63,24 +63,9 @@
 
   .col-sm-9.records-list
     .row.nomobile-width
-      = current_user.user_report.inspect
-    .row.nomobile-width
-      = current_user.records.maximum_value_per_day
-    .row.nomobile-width
-      day
-      = current_user.records.summary_value_by_day
-    .row.nomobile-width
-      week
-      = current_user.records.summary_value_by_week
-    .row.nomobile-width
-      month
-      = current_user.records.summary_value_by_month
-    .row.nomobile-width
-      year
-      = current_user.records.summary_value_by_year
-    .row.nomobile-width
-      all 
-      = current_user.records.summary_value_by_all || 0
+      .col-12.col-sm-12.col-lg-12
+        = render partial: "users/user_report"
+
     // 消费记录列表
     .row.nomobile-width
       .col-12.col-sm-12.col-lg-12
