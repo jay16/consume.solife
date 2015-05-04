@@ -88,13 +88,14 @@ class User < ActiveRecord::Base
   end
 
   def user_report_params
-    { :maximum_per_one  => self.records.normals.maximum_value_per_one,
-      :maximum_per_day  => self.records.normals.maximum_value_per_day,
-      :summary_by_day   => self.records.normals.summary_value_by_day,
-      :summary_by_week  => self.records.normals.summary_value_by_week,
-      :summary_by_month => self.records.normals.summary_value_by_month,
-      :summary_by_year  => self.records.normals.summary_value_by_year,
-      :summary_by_all   => self.records.normals.summary_value_by_all
+    normal_records = self.records.normals
+    { :maximum_per_one  => normal_records.count.zero? ? 0 : normal_records.maximum_value_per_one,
+      :maximum_per_day  => normal_records.count.zero? ? 0 : normal_records.maximum_value_per_day,
+      :summary_by_day   => normal_records.count.zero? ? 0 : normal_records.summary_value_by_day,
+      :summary_by_week  => normal_records.count.zero? ? 0 : normal_records.summary_value_by_week,
+      :summary_by_month => normal_records.count.zero? ? 0 : normal_records.summary_value_by_month,
+      :summary_by_year  => normal_records.count.zero? ? 0 : normal_records.summary_value_by_year,
+      :summary_by_all   => normal_records.count.zero? ? 0 : normal_records.summary_value_by_all
     }
   end
 end

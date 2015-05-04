@@ -28,7 +28,10 @@ class Record < ActiveRecord::Base
 
   # user report necessary
   scope :maximum_value_per_one,  -> { maximum(:value) }
-  scope :maximum_value_per_day,  -> { select("sum(value) as value").group("str_to_date(ymdhms, '%Y-%m-%d')").order("value desc").limit(1).first.value rescue 0 }
+  scope :maximum_value_per_day,  -> { 
+    result = select("sum(value) as value").group("str_to_date(ymdhms, '%Y-%m-%d')").order("value desc")
+    result.length.zero? ? 0 : result.first.value 
+  }
   scope :summary_value_by_day,   -> { where("left(ymdhms, 10) = date_format(now(), '%Y-%m-%d')").sum(:value) }
   scope :summary_value_by_week,  -> { where("year(str_to_date(ymdhms, '%Y')) = year(now()) and weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())").sum(:value) }
   scope :summary_value_by_month, -> { where("left(ymdhms, 7) = date_format(now(), '%Y-%m')").sum(:value) }
