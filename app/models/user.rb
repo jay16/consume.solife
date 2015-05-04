@@ -28,7 +28,6 @@ class User < ActiveRecord::Base
 
   ACCESSABLE_ATTRS = [:name, :address, :email, :gender, :password, :password_confirmation, :password_salt]
   #scope :members, lambda {|groups| groups.map { |g| where(:id => g.to_id) }}
-  after_create :generate_user_report
   after_update :trigger_updated_at
 
   # 是否是管理员
@@ -42,9 +41,10 @@ class User < ActiveRecord::Base
   end
 
   def generate_user_report
-    return self.user_report if self.user_report
-
-    self.user_report = UserReport.create(user_report_params)
+    unless self.user_report
+      self.user_report = UserReport.create(user_report_params)
+    end
+    self.user_report
   end
 
   # remember_me necessary.
@@ -88,13 +88,13 @@ class User < ActiveRecord::Base
   end
 
   def user_report_params
-    { :maximum_per_one  => records.normals.maximum_value_per_one,
-      :maximum_per_day  => records.normals.maximum_value_per_day,
-      :summary_by_day   => records.normals.summary_value_by_day,
-      :summary_by_week  => records.normals.summary_value_by_week,
-      :summary_by_month => records.normals.summary_value_by_month,
-      :summary_by_year  => records.normals.summary_value_by_year,
-      :summary_by_all   => records.normals.summary_value_by_all
+    { :maximum_per_one  => self.records.normals.maximum_value_per_one,
+      :maximum_per_day  => self.records.normals.maximum_value_per_day,
+      :summary_by_day   => self.records.normals.summary_value_by_day,
+      :summary_by_week  => self.records.normals.summary_value_by_week,
+      :summary_by_month => self.records.normals.summary_value_by_month,
+      :summary_by_year  => self.records.normals.summary_value_by_year,
+      :summary_by_all   => self.records.normals.summary_value_by_all
     }
   end
 end

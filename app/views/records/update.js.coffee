@@ -3,6 +3,8 @@ $domRecord = $("#<%= dom_id @record %>")
 $domRecord.replaceWith "<%= j render partial: 'records/record', locals: { record: @record, user_id: current_user.id } %>"
 $domRecord.removeClass "active"
 
+$("#user_report").replaceWith "<%= j render partial: 'users/user_report' %>"
+
 
 $state = $(".checkbox-ctl-tag:first").attr("checked")
 if $state != undefined

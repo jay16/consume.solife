@@ -59,7 +59,7 @@ describe Consume::API::V1::Records do
   describe "POST /api/v1/records" do
     let(:valid_params_symbol) {
       { 
-        value: rand(1000).to_f,
+        value: rand(1000),
         ymdhms: Time.now.strftime("%Y-%m-%d %H:%M:%S"),
         remark: ["remark", rand(1000), Time.now.strftime("%Y-%m-%d %H:%M:%S")].join(" - "),
         klass: rand(5),
@@ -68,7 +68,7 @@ describe Consume::API::V1::Records do
     }
     let(:valid_params_string) {
       { 
-        "value" => rand(1000).to_f,
+        "value" => rand(1000),
         "ymdhms" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
         "remark" => ["remark", rand(1000), Time.now.strftime("%Y-%m-%d %H:%M:%S")].join(" - "),
         "klass" => rand(5),
@@ -79,6 +79,7 @@ describe Consume::API::V1::Records do
     it "should create Record with symbol valid params" do
       post "/api/v1/records.json", { token: user.token, record: valid_params_symbol }
       # httpcode 201 => created successfully
+      expect(response.message).to eq("Created")
       expect(response.status).to eq(201)
 
       json = jparse(response.body)
@@ -90,7 +91,7 @@ describe Consume::API::V1::Records do
       j_tags_list = json["tags_list"]
       j_tags_list.split(",").each do |label|
         # post tags_list will create or find tag
-        tag = Tag.where(klass: j_klass, label: label).first
+        tag = j_user.tags.where(klass: j_klass, label: label).first
         expect(tag.valid?).to eq(true)
       end
     end

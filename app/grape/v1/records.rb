@@ -50,6 +50,7 @@ module Consume
             record.tags_list = tags_list
             record.build_relation_with_tags
 
+            current_user.update_user_report
             @cache_arr.push("创建消费")
             @cache_arr.push(record.browser)
             @cache_arr.push(record.ip)
@@ -73,6 +74,7 @@ module Consume
             record_params = must_be_hash(params[:record]).merge(browser_with_ip)
             record.update(record_params)
 
+            current_user.update_user_report
             @cache_arr.push("修改消费")
             @cache_arr.push(record.browser)
             @cache_arr.push(record.ip)
@@ -86,9 +88,12 @@ module Consume
             authenticate!
             begin
               record = current_user.records.undeleted.find(params[:id])
-              record.soft_delete
+              record.soft_destroy
+              # Bug: scope value should be `Float` but `ActiveRecord::AssociationRelation::ActiveRecord_AssociationRelation_Record`
+              # current_user.generate_user_report
             rescue => e
               puts e.message
+              # puts e.backtrace
               record = current_user.records.last
             end
             present record, with: APIEntities::Record

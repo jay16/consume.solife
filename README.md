@@ -152,4 +152,18 @@ bundle exec rspec spec/grape
         end  
       end  
       ````
++ 2015/05/04 Monday
+
+    1. add#user_report
+
+    2. rspec run a single test
+
+      Where 133 represents the line of the test I want to run.
+
+      ````
+      bundle exec rspec spec/grape/v1/records_spec.rb:133
+      ````
+
+      [stackoverflow](http://stackoverflow.com/questions/6116668/rspec-how-to-run-a-single-test)
+
 

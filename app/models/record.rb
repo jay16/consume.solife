@@ -27,13 +27,13 @@ class Record < ActiveRecord::Base
   scope :undeleted, -> { where(:deleted != true) }
 
   # user report necessary
-  scope :maximum_value_per_one, -> { maximum(:value) }
-  scope :maximum_value_per_day, -> { select("sum(value) as value,str_to_date(ymdhms, '%Y-%m-%d') as ymd").group("ymd").order("value desc").first.value || 0 }
-  scope :summary_value_by_day, -> { select("sum(value) as value").where("left(ymdhms, 10) = date_format(now(), '%Y-%m-%d')").first.value || 0 }
-  scope :summary_value_by_week, -> { select("sum(value) as value").where("year(str_to_date(ymdhms, '%Y')) = year(now()) and weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())").first.value || 0 }
-  scope :summary_value_by_month, -> { select("sum(value) as value").where("left(ymdhms, 7) = date_format(now(), '%Y-%m')").first.value || 0 }
-  scope :summary_value_by_year,  -> { select("sum(value) as value").where("left(ymdhms, 4) = date_format(now(), '%Y')").first.value || 0 }
-  scope :summary_value_by_all, -> { sum(:value) }
+  scope :maximum_value_per_one,  -> { maximum(:value) }
+  scope :maximum_value_per_day,  -> { select("sum(value) as value").group("str_to_date(ymdhms, '%Y-%m-%d')").order("value desc").limit(1).first.value rescue 0 }
+  scope :summary_value_by_day,   -> { where("left(ymdhms, 10) = date_format(now(), '%Y-%m-%d')").sum(:value) }
+  scope :summary_value_by_week,  -> { where("year(str_to_date(ymdhms, '%Y')) = year(now()) and weekofyear(str_to_date(ymdhms, '%Y-%m-%d')) = weekofyear(now())").sum(:value) }
+  scope :summary_value_by_month, -> { where("left(ymdhms, 7) = date_format(now(), '%Y-%m')").sum(:value) }
+  scope :summary_value_by_year,  -> { where("left(ymdhms, 4) = date_format(now(), '%Y')").sum(:value) }
+  scope :summary_value_by_all,   -> { sum(:value) }
  
   after_create :ymdhms_must_be_exist, :build_relation_with_tags
   after_update :build_relation_with_tags
