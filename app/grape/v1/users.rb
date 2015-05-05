@@ -29,6 +29,22 @@ module Consume
             present users, with: APIEntities::User
           end
 
+          # get /api/users/user_report.json
+          desc "get user report"
+          get "/user_report" do
+            authenticate!
+            user_report = current_user.generate_user_report
+            present user_report, with: APIEntities::UserReport
+          end
+
+          # get /api/users/group_member_report.json
+          desc "get group members report"
+          get "/group_member_report" do
+            authenticate!
+            group_report = current_user.group_member_report(params[:report_type] || "text")
+            { report: group_report }
+          end
+
           # put /api/users.json?name=new_name
           desc "update user info."
           post do

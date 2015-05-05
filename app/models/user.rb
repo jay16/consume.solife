@@ -35,6 +35,23 @@ class User < ActiveRecord::Base
     Setting.admin_emails.include?(self.email)
   end
 
+  # group members consume report
+  def group_member_report(type = "text")
+    yesterday_records = group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')")
+    report = { member: group_members.map(&:name) + [name],
+      count: yesterday_records.count,
+      value: yesterday_records.inject(0) { |sum, r| sum += r.value }
+    }
+    case type
+    when "text" then
+      "昨日消费报告\n\n" +
+      "组员: %s\n" % report[:member].join(",") + (
+      report[:count].zero? ? "无消费." : (
+      "笔数: %s\n" % report[:count].to_s +
+      "总额: ￥%s" % report[:value].to_i.to_s))
+    else report
+    end
+  end
 
   def update_user_report
     generate_user_report.update_columns(user_report_params)
