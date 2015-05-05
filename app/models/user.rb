@@ -106,13 +106,17 @@ class User < ActiveRecord::Base
 
   def user_report_params
     normal_records = self.records.normals
-    { :maximum_per_one  => normal_records.count.zero? ? 0 : normal_records.maximum_value_per_one,
-      :maximum_per_day  => normal_records.count.zero? ? 0 : normal_records.maximum_value_per_day,
-      :summary_by_day   => normal_records.count.zero? ? 0 : normal_records.summary_value_by_day,
-      :summary_by_week  => normal_records.count.zero? ? 0 : normal_records.summary_value_by_week,
-      :summary_by_month => normal_records.count.zero? ? 0 : normal_records.summary_value_by_month,
-      :summary_by_year  => normal_records.count.zero? ? 0 : normal_records.summary_value_by_year,
-      :summary_by_all   => normal_records.count.zero? ? 0 : normal_records.summary_value_by_all
-    }
+    normal_records_count = normal_records.count
+    _lambda = lambda { |method| normal_records_count.zero? ? 0 : normal_records.send(method) } 
+    [:maximum_per_one,
+     :maximum_per_day,
+     :summary_by_day,
+     :summary_by_week,
+     :summary_by_month,
+     :summary_by_year,
+     :summary_by_all].inject({}) { |hash, method| 
+       hash[method] = _lambda.call(method) 
+       hash
+     }
   end
 end
