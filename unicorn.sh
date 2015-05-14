@@ -80,11 +80,14 @@ case "$1" in
         /bin/sh bin/bash/log_split.sh "$(pwd)" "$2"
         # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
         ;;
-    crond)
-        echo "59 23 * * * cd $(pwd) && /bin/sh unicorn.sh log-analyzer production >> log/log-analyzer.log 2>&1"
+    restore)
+        bundle exec rake qiniu:download
+        ;;
+    whenever)
+        bundle exec whenever config/schedule.rb
         ;;
     *)  
-        echo "Usage: $SCRIPTNAME {start|stop|restart|deploy}" >&2  
+        echo "Usage: $SCRIPTNAME {bundle|start|stop|restart|deploy|log-analyzer|whenever|restore}" >&2  
         exit 3  
         ;;  
 esac  
