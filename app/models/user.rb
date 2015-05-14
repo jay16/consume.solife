@@ -35,21 +35,30 @@ class User < ActiveRecord::Base
     Setting.admin_emails.include?(self.email)
   end
 
-  # group members consume report
+  # group members consume report of yesterday
   def group_member_report(type = "text")
-    yesterday_records = group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')")
+    cache_key = "%d_group_member_records_ids_%s" % [id, 1.day.ago.strftime("%Y%m%d")]
+    ids = Rails.cache.fetch(cache_key) do
+      group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')").pluck(:id)
+    end
+
+    records_yesterday = ::Record.find(ids)
     report = { member: group_members.map(&:name) + [name],
-      count: yesterday_records.count,
-      value: yesterday_records.inject(0) { |sum, r| sum += r.value }
-    }
+                count: records_yesterday.count,
+                value: records_yesterday.inject(0) { |sum, record| sum + record.value }
+             }
+
     case type
-    when "text" then
-      "昨日消费报告\n\n" +
-      "组员: %s\n" % report[:member].join(",") + (
-      report[:count].zero? ? "无消费." : (
-      "笔数: %s\n" % report[:count].to_s +
-      "总额: ￥%s" % report[:value].to_i.to_s))
-    else report
+    when "text"
+      report_consume_content = report[:count].zero? ? "无消费." : ("笔数: %s\n总额: ￥%s" % [report[:count].to_s, report[:value].to_i.to_s])
+  
+      "#{1.day.ago.strftime('%m/%d %a')}消费报告\n\n" +
+      "组员: %s\n" % report[:member].join(",") +  
+      report_consume_content
+    when "json"
+      report
+    else
+      report
     end
   end
 
@@ -82,7 +91,7 @@ class User < ActiveRecord::Base
   def group_member_records(whether_include_self = true)
     uids = group_members.map { |u| u.id }
     uids.push(id) if whether_include_self
-    Record.where("user_id in (#{uids.uniq.join(',')})")
+    ::Record.where("user_id in (#{uids.uniq.join(',')})")
   end
 
   def self.validate(token)
@@ -114,7 +123,8 @@ class User < ActiveRecord::Base
      :summary_by_week,
      :summary_by_month,
      :summary_by_year,
-     :summary_by_all].inject({}) { |hash, method| 
+     :summary_by_all
+     ].inject({}) { |hash, method| 
        hash[method] = _lambda.call(method) 
        hash
      }
