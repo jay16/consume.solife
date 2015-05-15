@@ -22,8 +22,11 @@ gem "cells", "~>3.11.1"
 gem "devise", "~>3.2.4"
 gem "devise-encryptable", "~>0.2.0"
 
+# permission
+gem "cancancan", "~>1.8.4"
+
 # exception
-gem 'exception_notification', "~>4.0.1"
+gem "exception_notification", "~>4.0.1"
 
 gem "grape", "~>0.7.0"
 gem "grape-entity", "~>0.4.2"

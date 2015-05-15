@@ -35,26 +35,29 @@ class User < ActiveRecord::Base
     Setting.admin_emails.include?(self.email)
   end
 
-  # group members consume report of yesterday
-  def group_member_report(type = "text")
-    cache_key = "%d_group_member_records_ids_%s" % [id, 1.day.ago.strftime("%Y%m%d")]
-    ids = Rails.cache.fetch(cache_key) do
-      group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')").pluck(:id)
-    end
+  # group members consume report of yesterday default
+  # cache every day for frequently call
+  # `Rails.cache.clear` when need
+  def group_member_report(num_day_ago=1, type="text")
+    cache_key = "%d_group_member_records_ids_%s" % [id, num_day_ago.day.ago.strftime("%Y%m%d")]
+    report = Rails.cache.fetch(cache_key) do
+      ids =  group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')").pluck(:id)
 
-    records_yesterday = ::Record.find(ids)
-    report = { member: group_members.map(&:name) + [name],
-                count: records_yesterday.count,
-                value: records_yesterday.inject(0) { |sum, record| sum + record.value }
-             }
+      report = Hash.new(0)
+      report[:member] = group_members.map(&:name) + [name]
+      report[:count]  = ids.count
+      report[:value]  = ::Record.where("id in (?)", ids).sum(:value).to_i
+      report # cache return 
+    end
 
     case type
     when "text"
-      report_consume_content = report[:count].zero? ? "无消费." : ("笔数: %s\n总额: ￥%s" % [report[:count].to_s, report[:value].to_i.to_s])
-  
-      "#{1.day.ago.strftime('%m/%d %a')}消费报告\n\n" +
-      "组员: %s\n" % report[:member].join(",") +  
-      report_consume_content
+      report_consume_content = report[:count].zero? ? "无消费" : "笔数: #{report[:count]}\n总额: ￥#{report[:value]}"
+      <<-`REPORT`
+        echo 消费报告 #{1.day.ago.strftime('%m/%d %a')}\n
+        echo 组员: #{report[:member].join(",")}
+        echo #{report_consume_content} 
+      REPORT
     when "json"
       report
     else
@@ -73,14 +76,9 @@ class User < ActiveRecord::Base
     self.user_report
   end
 
-  # remember_me necessary.
-  def remember_token
-    "remember-token-%d" % id
-  end
-
   # 用户名称
   def username
-    name || "未设置名称"
+    name || "未设置名称<#{email}>"
   end
 
   # uniq group_users and group_follows
@@ -91,7 +89,16 @@ class User < ActiveRecord::Base
   def group_member_records(whether_include_self = true)
     uids = group_members.map { |u| u.id }
     uids.push(id) if whether_include_self
-    ::Record.where("user_id in (#{uids.uniq.join(',')})")
+    ::Record.where("user_id in (?)", uids.uniq)
+  end
+
+
+  def has_role?(role)
+    case role
+      when :admin  then admin?
+      when :member then !id.nil?
+      else false
+    end
   end
 
   def self.validate(token)
@@ -116,7 +123,7 @@ class User < ActiveRecord::Base
   def user_report_params
     normal_records = self.records.normals
     normal_records_count = normal_records.count
-    _lambda = lambda { |method| normal_records_count.zero? ? 0 : normal_records.send(method) } 
+    lambda_call_method = lambda { |method| normal_records_count.zero? ? 0 : normal_records.send(method) } 
     [:maximum_per_one,
      :maximum_per_day,
      :summary_by_day,
@@ -125,7 +132,7 @@ class User < ActiveRecord::Base
      :summary_by_year,
      :summary_by_all
      ].inject({}) { |hash, method| 
-       hash[method] = _lambda.call(method) 
+       hash[method] = lambda_call_method.call(method) 
        hash
      }
   end

@@ -84,7 +84,8 @@ case "$1" in
         bundle exec rake qiniu:download
         ;;
     whenever)
-        bundle exec whenever config/schedule.rb
+        command="$1"
+        bundle exec whenever ${command} -i config/schedule.rb
         ;;
     *)  
         echo "Usage: $SCRIPTNAME {bundle|start|stop|restart|deploy|log-analyzer|whenever|restore}" >&2  

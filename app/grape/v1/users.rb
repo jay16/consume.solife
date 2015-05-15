@@ -41,7 +41,7 @@ module Consume
           desc "get group members report"
           get "/group_member_report" do
             authenticate!
-            group_report = current_user.group_member_report(params[:report_type] || "text")
+            group_report = current_user.group_member_report(params[:num_day_ago] || 1, params[:report_type] || "text")
             { report: group_report }
           end
 

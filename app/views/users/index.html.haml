@@ -10,7 +10,7 @@
               = render partial: "users/edit_user_name", layout: false
             .row#record_form_modal
               = render partial: "records/consume_form_modal", layout: false
-
+        %a.list-group-item{:href => ""}= ["admin?: ", current_user.admin?].join
         %a.list-group-item{:href => ""}= ["消费数量: ", current_user.records.size].join
         %a.list-group-item{:href => ""}= ["标签数量: ", current_user.tags.size].join
         %a.list-group-item
@@ -23,7 +23,7 @@
       .list-group
         - current_user.ask_groups.each do |group|
           .list-group-item
-            = (user = User.find(group.to_id)).email
+            = (user = User.find(group.to_id)).username
             - if group.state == "wait"
               = content_tag(:span, "等待同意", { class: "label label-info", style: "float:right;"})
             - elsif group.state == "refuse"
@@ -39,7 +39,7 @@
         - current_user.follow_groups.each do |group|
           - next if group.state == "refuse"
           .list-group-item
-            = (user = User.find(group.from_id)).email
+            = (user = User.find(group.from_id)).username
             = link_to "同意", agree_group_user_path(user), remote: true, method: :post, class: "btn btn-default btn-primary btn-xs", style: "float: right"
             = link_to "拒绝", refuse_group_user_path(user), remote: true, method: :delete, class: "btn btn-default btn-danger btn-xs", style: "float: right"
 
@@ -52,14 +52,6 @@
     .row
       .list-group
         = render partial: "users/search", layout: false
-    //warn
-    //.row
-    //  .alert.alert-warning
-    //    %a.close{"data-dismiss" => "alert",  href: "#"} &times; 
-    //    %p.center 温馨提示
-    //    %ul
-    //      %li 本界面目前只用来查询
-    //      %li 数据[增][删][改]在手机端
 
   .col-sm-9.records-list
     .row.nomobile-width
@@ -70,36 +62,3 @@
     .row.nomobile-width
       .col-12.col-sm-12.col-lg-12
         = render template: "records/index", layout: false
-
-  // 侧边栏-标签列表
-  .col-sm-3
-    //= render template: "tags/index", layout: false
-
-    //:javascript
-    //$(function(){
-    //  //$(".edit-user-name").hover(
-    //  //    function() { $(this).css("cursor", "pointer");$(".edit-user-name-btn").removeClass("hidden");},
-    //  //    function() { $(".edit-user-name-btn").addClass("hidden");}
-    //  //);
-    //});
-
-
-    // records/_form.html.haml
-    //
-    //.form-group
-    //  #show_pane
-    //
-    //%span.btn.btn-success.fileinput-button
-    //  %i.glyphicon.glyphicon-plus.glyphicon-white
-    //  %span 添加文件
-    //  = f.input_field :image, as: :file
-    //
-    //%table.table#images_list
-    //  %tr
-//
-//:javascript
-//  $(function(){
-//    Tags.initTagIt("#eventTags",#{Tag.all.map(at:label)},"#record_tags_list","#show_pane");
-//    Records.multiFileUpload("record_image","images_list");
-//  });
-
