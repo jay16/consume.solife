@@ -8,23 +8,20 @@ class Ability
     elsif user.has_role?(:member)
       # Record
       can :create, Record
-      can :read, Record, deleted: false
-      can :update, Record do |record|
-        (record.user_id == user.id)
+      can :read, Record do |record|
+        record.deleted == false and
+        user.group_members(true).map(&:id).include?(record.user_id)
       end
-      can :soft_destroy, Record do |record|
-        (record.user_id == user.id)
-      end
+      can :update, Record, user_id: user.id
+      can :soft_destroy, Record, user_id: user.id
+      cannot :destroy, Record
 
       # Tag
       can :create, Tag
       can :read, Tag, deleted: false
-      can :update, Tag do |tag|
-        (tag.user_id == user.id)
-      end
-      can :soft_destroy, Tag do |tag|
-        (tag.user_id == user.id)
-      end
+      can :update, Tag, user_id: user.id
+      can :soft_destroy, user_id: user.id
+      cannot :destroy, Tag
     else
       # not logged in
       cannot :manage, :all

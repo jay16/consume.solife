@@ -1,15 +1,4 @@
 .row
-  %label.checkbox-inline
-    %input.checkbox-ctl-tag{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.record-tag');"}  
-    标签
-  %label.checkbox-inline
-    %input.checkbox-ctl-edit{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.operation-edit');"}  
-    编辑
-  %label.checkbox-inline
-    %input.checkbox-ctl-del{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.operation-del');"}  
-    删除
-
-.row
   :css
     .records-list thead tr th { text-align: center; }
     .records-list tbody tr td:nth-child(2) { text-align: left; max-width: 300px; }
@@ -50,3 +39,26 @@
           loading...
       .modal-body
         loading...
+
+        // Modal
+.modal#recordStateModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        .modal-title
+          状态栏编辑
+      .modal-body
+        .row
+          .col-sm-6.col-sm-offset-3
+            %label.checkbox-inline
+              %input.checkbox-ctl-tag{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.record-tag');"}  
+              标签
+            %label.checkbox-inline
+              %input.checkbox-ctl-edit{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.operation-edit');"}  
+              编辑
+            %label.checkbox-inline
+              %input.checkbox-ctl-del{type: "checkbox", value: "option", onclick: "Record.toggleShow(this, '.operation-del');"}  
+              删除
+      .modal-footer

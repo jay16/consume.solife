@@ -17,6 +17,7 @@ class Tag < ActiveRecord::Base
   scope :recent, -> { order("created_at desc") }
   scope :deleted, -> { where(:deleted => true) }
   scope :undeleted, -> { where(:deleted => false) }
+  scope :normals, -> { where(:deleted => false) }
 
   def klass_mapping
     { 1 => "衣", 2 => "食", 3 => "住", 4 => "行", -1 => "其他" }

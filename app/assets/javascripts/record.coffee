@@ -23,6 +23,11 @@ window.Record =
       $(klass).addClass("hidden")
 
   # datepicker change date
+  showStateModal: ->
+
+    $("#recordStateModal").modal("show")
+
+  # datepicker change date
   showModal: ->
     $datetimePicker = $('#datetimePicker')
     $datetimePicker.data("DateTimePicker").setDate(new Date())

@@ -8,29 +8,35 @@
           .col-sm-6
             .row
               = render partial: "users/edit_user_name", layout: false
-            .row#record_form_modal
-              = render partial: "records/consume_form_modal", layout: false
-        %a.list-group-item{:href => ""}= ["admin?: ", current_user.admin?].join
-        %a.list-group-item{:href => ""}= ["消费数量: ", current_user.records.size].join
-        %a.list-group-item{:href => ""}= ["标签数量: ", current_user.tags.size].join
-        %a.list-group-item
+            .row
+              = "记录: %d" % current_user.records.normals.size
+            .row
+              = "标签: %d" % current_user.tags.normals.size
+        %a.list-group-item{onclick: "Record.showModal();"}
+          %i.glyphicon.glyphicon-plus
+          = render partial: "records/consume_form_modal", layout: false
+        %a.list-group-item.hidden
           %label.checkbox-inline
             %input{type: "checkbox", value: "option", onclick: "Tags.toggleShow(this, '.tags-list');"} 
-            标签列表 
+            标签列表
         %a.list-group-item{:href => ""}= Time.now.strftime("%Y-%m-%d %H:%M:%S")
+
+
+    .row
+      .list-group#user_report
+        = render partial: "users/user_report"
     // ask other to join group
     .row
       .list-group
         - current_user.ask_groups.each do |group|
           .list-group-item
             = (user = User.find(group.to_id)).username
-            - if group.state == "wait"
-              = content_tag(:span, "等待同意", { class: "label label-info", style: "float:right;"})
-            - elsif group.state == "refuse"
-              = link_to "再请求", ask_group_user_path(user), remote: true, method: :get, class: "btn btn-default btn-xs", style: "float:right;"
-              = content_tag(:span, "被拒", { class: "label label-danger", style: "float:right;"})
-            - else
-              = content_tag(:span, "$_$", { class: "label label-warn", style: "float:right;"})
+            = ask_user_state(group)
+    //search
+    .row
+      .list-group
+        = render partial: "users/search", layout: false
+
 
     // be asked to join group
     .row
@@ -44,19 +50,13 @@
             = link_to "拒绝", refuse_group_user_path(user), remote: true, method: :delete, class: "btn btn-default btn-danger btn-xs", style: "float: right"
 
         // group users
-        - current_user.group_members.each do |user|
+        - current_user.group_members(false).each do |user|
           .list-group-item
-            = user.email
+            = gravatar_image_cache_tag(user.email, height: "25px")
+            = content_tag(:span, user.username)
 
-    //search
-    .row
-      .list-group
-        = render partial: "users/search", layout: false
 
   .col-sm-9.records-list
-    .row.nomobile-width
-      .col-12.col-sm-12.col-lg-12#user_report
-        = render partial: "users/user_report"
 
     // 消费记录列表
     .row.nomobile-width

@@ -23,13 +23,17 @@
                   设置
                   %b.caret
                 %ul.dropdown-menu
+                  %li
+                    %a{onclick: "Record.showStateModal();"}
+                      %i.glyphicon.glyphicon-tasks
+                      状态栏编辑
                   %li.hidden
-                    %a{:href => "/users/edit"}
+                    %a{href: "/users/edit"}
                       %i.glyphicon.glyphicon-user
                       账户设置
                   - if current_user && current_user.admin?
                     %li
-                      %a{:href => "/cpanel"}
+                      %a{href: "/cpanel"}
                         %i.glyphicon.glyphicon-wrench
                         后台管理
                   %li.divider

@@ -17,6 +17,8 @@ module ApplicationHelper
     gravatar_name =  "%s.jpg" % gravatar_id
     gravatar_relative_path = "/assets/gravatar/%s" % gravatar_name
     gravatar_absolute_path = Rails.root.join("public/assets/gravatar/", gravatar_name)
+    
+    opts[:class] = opts[:class] || "img-circle"
     if File.exist?(gravatar_absolute_path)
       image_tag gravatar_relative_path, opts
     else
