@@ -68,4 +68,8 @@ module ApplicationHelper
   def toggle_mobile_dom_id(id)
     "%s%s" % [mobile? ? "mobile_" : "", id]
   end
+
+  def number_format_to_currency(number)
+    number_to_currency(number, unit: "￥", delimiter: ",", precision: 0, separator: ".")
+  end
 end

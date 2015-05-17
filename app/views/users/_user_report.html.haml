@@ -9,19 +9,19 @@
       - user_report = current_user.generate_user_report
       %tr
         %td 今日消费
-        %td= "￥ %d" % user_report.summary_by_day.to_i
+        %td= number_format_to_currency(user_report.summary_by_day)
       %tr
         %td 本周消费
-        %td= "￥ %d" % user_report.summary_by_week.to_i
+        %td= number_format_to_currency(user_report.summary_by_week)
       %tr
         %td 本月消费
-        %td= "￥ %d" % user_report.summary_by_month.to_i
+        %td= number_format_to_currency(user_report.summary_by_month)
       %tr
         %td 本年消费
-        %td= "￥ %d" % user_report.summary_by_year.to_i
+        %td= number_format_to_currency(user_report.summary_by_year)
       %tr.warning
         %td 单笔最大消费
-        %td= "￥ %d" % user_report.maximum_per_one.to_i
+        %td= number_format_to_currency(user_report.maximum_per_one)
       %tr.warning
         %td 单日最大消费
-        %td= "￥ %d" % user_report.maximum_per_day.to_i
+        %td= number_format_to_currency(user_report.maximum_per_day)

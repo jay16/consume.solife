@@ -24,4 +24,5 @@ module UsersHelper
       content_tag(:span, "$_$", { class: "label label-warn", style: "float:right;"})
     end
   end
+
 end

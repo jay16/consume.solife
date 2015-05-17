@@ -1,8 +1,8 @@
 %tr{id: "#{dom_id record}"}
   %td= gravatar_image_cache_tag(record.user.email, height: "25px")
-  %td= record.value.zero? ? "日志" : record.value
+  %td= record.value.zero? ? "日志" : number_format_to_currency(record.value)
   %td= record.remark
-  %td= record.ymdhms
+  %td= record.ymdhms.first(16)
   %td.record-tag.hidden= record.tags_string
   %td.operation-edit.hidden
     - if can? :update, record
