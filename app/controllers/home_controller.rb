@@ -8,11 +8,11 @@ class HomeController < ApplicationController
   #caches_action :not_found, expires_in: 1.day, unless_exist: true
 
   def index
-    if current_user.nil?
+    if current_user
+      redirect_to "/users"
+    else
       @cache_list = Utils::ActionCache.list(20).reverse
       render layout: false
-    else
-      redirect_to "/users"
     end
   end
 
@@ -21,9 +21,10 @@ class HomeController < ApplicationController
   end
 
   def solife_get
-    respond_to do |format|
-      format.text { render :text => params[:echostr] }
-    end
+    render :text => params[:echostr]
+    #respond_to do |format|
+    #  format.text { render :text => params[:echostr] }
+    #end
   end
 
   def solife_post

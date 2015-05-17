@@ -31,6 +31,7 @@
     :css
       .col-sm-12 {padding-right: 0px;}
       .table { margin: 0px; }
+      .col-no-padding { padding-left:0px; padding-right:0px; }
 
     = csrf_meta_tags
 
@@ -60,7 +61,7 @@
       %header#home-hero
         .container
           .row
-            %div{class: main_div_class, style: "text-align: center;"}
+            %div.center.col-no-padding{class: main_div_class, style: "text-align: center;"}
               = notice_message
           .row{style: "text-align: center;"}
             .col-sm-12

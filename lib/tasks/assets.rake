@@ -3,6 +3,7 @@ require "fileutils"
 namespace :assets do
   desc "customize rake assets:precompile"
   task :my_precompile => [:environment] do
+  	Rails.cache.clear
     Rake::Task["assets:precompile"].invoke
     fonts_path  = Rails.root.join("app/assets/fonts")
     assets_path = Rails.root.join("public/assets/fonts") 

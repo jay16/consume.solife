@@ -52,7 +52,7 @@ bundle exec rspec spec/grape
   - [ ] devise邮箱验证rspec测试
   - [x] rails各种缓冲功能
   - [x] production运行环境 
-  - [ ] 用户行为记录
+  - [x] 用户行为记录
   - [ ] bug#搜索共享消费记录用户
   - [ ] bug#bootstrap navbar点击响应active
   - [ ] android客户端UI优化.
@@ -166,4 +166,7 @@ bundle exec rspec spec/grape
 
       [stackoverflow](http://stackoverflow.com/questions/6116668/rspec-how-to-run-a-single-test)
 
++ 2015/05/17
+
+    use gem#cancancan manage resource authorization.
 

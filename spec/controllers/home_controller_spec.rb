@@ -21,6 +21,12 @@ describe HomeController do
       expect(page).to have_content(user.name)
       response.should be_success
     end
+
+    it "should response normally as third api" do
+      timestamp = Time.now.to_s
+      get "/solife", { echostr: timestamp }
+      expect(response.body).to be(timestamp)
+    end
   end
 
 end

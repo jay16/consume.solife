@@ -62,3 +62,22 @@
     .row.nomobile-width
       .col-12.col-sm-12.col-lg-12
         = render template: "records/index", layout: false
+
+
+// Modal
+.modal#personalInfoModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        .modal-title
+          用户隐私信息
+      .modal-body
+        .row
+          .form-horizontal
+            .form-group
+              %label.col-sm-2.control-label{for: "userToken"} Token
+              .col-sm-8
+                %input.form-control#userToken{type: "text", value: "#{current_user.token}" }
+      .modal-footer

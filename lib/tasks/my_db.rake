@@ -10,7 +10,8 @@ namespace :my_db do
     base_path = Rails.root
     backup_folder = File.join(base_path, ENV["DIR"] || "backups")
     FileUtils.mkdir_p(backup_folder) unless File.exist?(backup_folder)
-
+    
+    make_sure_mysql_running
     # backup database
     db_config   = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]    
     backup_file = File.join(backup_folder, "#{db_config['database']}_#{ENV['RAILS_ENV']}_#{datestamp}.sql")    
@@ -38,11 +39,21 @@ namespace :my_db do
     backup_file = ENV["BACKUP_FILE"]
     raise "No Exist File - #{backup_file}" unless File.exist?(backup_file)
 
+    make_sure_mysql_running
+
     # restore database
     db_config   = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]    
     `mysql -u #{db_config['username']} -p#{db_config['password']} -i -c -q #{db_config['database']} < #{backup_file}`
     raise "Unable to restore DB from #{backup_file}!" if ( $?.to_i > 0 )
     puts "Restore DB from #{backup_file} successfully!"
+  end
+
+  def make_sure_mysql_running
+    case os = `uname -s`.strip
+      when "Darwin" then `mysql.server start`
+      when "Linux" then `/sbin/service mysqld start`
+      else raise "Unkown Platform OS - #{os}"
+    end
   end
 end
  

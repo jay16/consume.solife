@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
       ids =  group_member_records.where("left(ymdhms,10) = date_format(date_add(now(), interval -1 day), '%Y-%m-%d')").pluck(:id)
 
       report = Hash.new(0)
-      report[:member] = group_members.map(&:name) + [name]
+      report[:member] = group_members.map(&:name)
       report[:count]  = ids.count
       report[:value]  = ::Record.where("id in (?)", ids).sum(:value).to_i
       report # cache return 
@@ -104,8 +104,8 @@ class User < ActiveRecord::Base
         report_consume_content = report[:count].zero? ? "无消费" : "笔数: #{report[:count]}\n总额: ￥#{report[:value]}"
         <<-`REPORT`
           echo 消费报告 #{1.day.ago.strftime('%m/%d %a')}\n
-          echo 组员: #{report[:member].join(",")}
-          echo #{report_consume_content} 
+          echo 组员: #{report[:member].join(',')}
+          echo "#{report_consume_content}" 
         REPORT
       when "json"
         report

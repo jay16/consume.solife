@@ -4,3 +4,6 @@ window.User =
       $(klass).removeAttr("disabled")
     else
       $(klass).attr("disabled", "disabled")
+
+   showPersonalInfoModal: ->
+     $("#personalInfoModal").modal("show")

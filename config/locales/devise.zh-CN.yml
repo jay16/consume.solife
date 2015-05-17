@@ -39,7 +39,7 @@
       updated: "帐户信息更新成功."
     sessions:
       signed_in: "登陆成功."
-      signed_out: "再见, 退出成功."
+      signed_out: "退出成功."
     confirmations:
       send_instructions: '几分后，您将收到帐号激活的电子邮件.'
       confirmed: '您的帐号已经激活，请登录.'
