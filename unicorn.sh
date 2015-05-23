@@ -1,6 +1,7 @@
 #!/bin/sh  
-# Program to operate Rails with Unicorn 
+test -n "${DEBUG}" && set -x
 
+# Program to operate Rails with Unicorn 
 PORT=$(test -z "$2" && echo "4001" || echo "$2") # default 4001
 ENVIRONMENT=$(test -z "$3" && echo "production" || echo "$3") # default production
 UNICORN=unicorn  
@@ -8,8 +9,11 @@ CONFIG_FILE=config/unicorn.rb
 APP_ROOT_PATH=$(pwd)
 
 # user bash environment for crontab job.
-source ~/.bash_profile
-source ~/.bashrc
+shell_used=${SHELL##*/}
+echo "** shell used: ${shell_used}"
+test -f ~/.${shell_used}_profile && source ~/.${shell_used}_profile > /dev/null 2>1&
+test -f ~/.${shell_used}rc && source ~/.${shell_used}rc > /dev/null 2>1&
+
 # maybe enter other dir after source.
 cd ${APP_ROOT_PATH}
 
