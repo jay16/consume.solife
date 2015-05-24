@@ -17,21 +17,28 @@ test -f ~/.${shell_used}rc && source ~/.${shell_used}rc > /dev/null 2>1&
 # maybe enter other dir after source.
 cd ${APP_ROOT_PATH}
 
-case "$1" in  
+# use the current .ruby-version's command
+bundle_command=$(rbenv which bundle)
+gem_command=$(rbenv which gem)
+case "$1" in 
+    gem)
+        shift 1
+        $gem_commnd $@
+    ;;
     precompile)
-        RAILS_ENV=production bundle exec rake assets:clean
-        RAILS_ENV=production bundle exec rake assets:my_precompile
-        ;;
+        RAILS_ENV=production $bundle_command exec rake assets:clean
+        RAILS_ENV=production $bundle_command exec rake assets:my_precompile
+    ;;
     bundle)
         echo "## bundle install"
-        bundle install --local > /dev/null 2>&1 
+        $bundle_command install --local > /dev/null 2>&1 
         if test $? -eq 0 
         then
           echo -e "\t bundle install --local successfully."
         else
-          bundle install
+          $bundle_command install
         fi
-        ;;
+    ;;
     start)  
         /bin/sh unicorn.sh bundle
 
@@ -43,21 +50,21 @@ case "$1" in
         echo -e "\t release cache/buffer $(test $? -eq 0 && echo "successfully" || echo "failed")."
 
         echo "## rake tasks"
-        TASK1="bundle exec rake tmp:clear"
-        `${TASK1}`
-        echo -e "\t ${TASK1} $(test $? -eq 0 && echo "successfully" || echo "failed")."
-        TASK2="bundle exec rake assets:clobber"
-        `${TASK2} > /dev/null 2>&1`
-        echo -e "\t ${TASK2} $(test $? -eq 0 && echo "successfully" || echo "failed")."
-        TASK3="bundle exec rake assets:my_precompile"
-        `${TASK3} > /dev/null 2>&1`
-        echo -e "\t ${TASK3} $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        bundle_task="$bundle_command exec rake tmp:clear"
+        `${bundle_task}`
+        echo -e "\t ${bundle_task##*/} $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        bundle_task="$bundle_command exec rake assets:clobber"
+        `${bundle_task} > /dev/null 2>&1`
+        echo -e "\t ${bundle_task##*/} $(test $? -eq 0 && echo "successfully" || echo "failed")."
+        bundle_task="$bundle_command exec rake assets:my_precompile"
+        `${bundle_task} > /dev/null 2>&1`
+        echo -e "\t ${bundle_task##*/} $(test $? -eq 0 && echo "successfully" || echo "failed")."
 
         echo "## start unicorn"
         echo -e "\t port: ${PORT} \n\t environment: ${ENVIRONMENT}"
-        bundle exec ${UNICORN} -c ${CONFIG_FILE} -p ${PORT} -E ${ENVIRONMENT} -D > /dev/null 2>&1
+        $bundle_command exec ${UNICORN} -c ${CONFIG_FILE} -p ${PORT} -E ${ENVIRONMENT} -D > /dev/null 2>&1
         echo -e "\t unicorn start $(test $? -eq 0 && echo "successfully" || echo "failed")."
-        ;;  
+    ;;  
     stop)  
         echo "## stop unicorn"
         TMP_PID=tmp/pids/unicorn.pid
@@ -68,31 +75,31 @@ case "$1" in
         else
           echo -e "\t unicorn stop failed for has not been started."
         fi
-        ;;  
+    ;;  
     restart)  
         #kill -USR2 `cat tmp/pids/unicorn.pid`  
         /bin/sh unicorn.sh stop 
         printf "\n\n%10s command sparate line %10s\n\n" |  tr ' ' -
         /bin/sh unicorn.sh start ${PORT} ${ENVIRONMENT}
-        ;;  
+    ;;  
     deploy)
         # echo "RACK_ENV=production bundle exec rake remote:deploy"
-        bundle exec rake remote:upload
-        bundle exec cap production my_deploy
-        ;;
+        $bundle_command exec rake remote:upload
+        $bundle_command exec cap production my_deploy
+    ;;
     log-analyzer)
         /bin/sh bin/bash/log_split.sh "$(pwd)" "$2"
         # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
-        ;;
+    ;;
     restore)
-        bundle exec rake qiniu:download
-        ;;
+        $bundle_command exec rake qiniu:download
+    ;;
     whenever)
         command="$1"
-        bundle exec whenever ${command} -i config/schedule.rb
-        ;;
+        $bundle_command exec whenever ${command} -i config/schedule.rb
+    ;;
     *)  
         echo "Usage: $SCRIPTNAME {bundle|start|stop|restart|deploy|log-analyzer|whenever|restore}" >&2  
         exit 3  
-        ;;  
+    ;;  
 esac  
