@@ -5,27 +5,17 @@ describe HomeController do
   describe "GET 'home#index'" do
     let(:user) { FactoryGirl.create(:user) }
 
-    it "should show register link if user not signed in" do
-      visit "/"
+    it "should show register link when user not signed in" do
       get :index
 
-      response.should_not be_success
-      expect(page).to have_content("登陆")
-    end
-
-    it "should show index if user has signed in" do
-      visit "/"
-      sign_in user
-      
-      get :index
-      expect(page).to have_content(user.name)
       response.should be_success
+      expect(page).to have_content("登陆")
     end
 
     it "should response normally as third api" do
       timestamp = Time.now.to_s
-      get "/solife", { echostr: timestamp }
-      expect(response.body).to be(timestamp)
+      get "solife_get", { echostr: timestamp }
+      expect(response.body).to eq(timestamp)
     end
   end
 

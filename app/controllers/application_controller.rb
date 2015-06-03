@@ -3,8 +3,13 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :mini_profiler_authorize!
   before_filter :configure_permitted_parameters, if: :devise_controller?
+
+  def authorize_request!
+    authorize
+    puts "before_filter authorize_request! #{Time.now}"
+  end
 
   def fresh_when(opts = {})
     opts[:etag] ||= []
@@ -54,5 +59,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(*User::ACCESSABLE_ATTRS) }
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(*User::ACCESSABLE_ATTRS) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(*User::ACCESSABLE_ATTRS) }
+  end
+  
+  # A hook in your ApplicationController
+  def mini_profiler_authorize!
+    if current_user and current_user.admin?
+      Rack::MiniProfiler.authorize_request
+    else
+       Rack::MiniProfiler.deauthorize_request
+    end
   end
 end

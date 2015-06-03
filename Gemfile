@@ -48,6 +48,10 @@ gem "whenever", :require => false
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
+# Profiler for your development and production Ruby rack apps.
+gem 'flamegraph', '~>0.1.0'
+gem "rack-mini-profiler", '~>0.9.3', require: false
+
 gem "haml-rails", "~>0.5.3"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 4.0.2"
@@ -67,6 +71,7 @@ gem "turbolinks", "~>2.2.2"
 gem "jbuilder", "~> 1.2"
 
 group :development do
+
   # gem "quiet_assets", "~>1.1.0"
   gem "capistrano", "~> 3.4.0"
   # gem "capistrano-rails", "~>1.1.2"

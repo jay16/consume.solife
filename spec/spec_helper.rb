@@ -52,6 +52,10 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
     file_path: /spec\/grape/
   }
+
+  config.before type: :controller do
+    allow(controller).to receive(:current_user) { nil }
+  end
 end
 
 # global function in every spec file

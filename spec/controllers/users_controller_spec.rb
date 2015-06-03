@@ -3,30 +3,24 @@ require 'spec_helper'
 describe UsersController do
 
   describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
-    end
-  end
+    let(:user) { FactoryGirl.create(:user) }
+    it "blocks unauthenticated access" do
+      visit "/users/sign_in"
+      sign_in nil
 
-  describe "GET 'show'" do
-    it "returns http success" do
-      get 'show'
-      response.should be_success
+      get :index
+      expect(response).to redirect_to(new_user_session_path)
     end
-  end
 
-  describe "GET 'edit'" do
-    it "returns http success" do
-      get 'edit'
-      response.should be_success
-    end
-  end
 
-  describe "GET 'update'" do
-    it "returns http success" do
-      get 'update'
+   it "allows authenticated access" do
+      visit "/users/sign_in"
+      sign_in user
+
+      get :index
+
       response.should be_success
+      expect(response.body).to have_content(user.name)
     end
   end
 
