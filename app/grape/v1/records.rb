@@ -90,7 +90,7 @@ module Consume
               record = current_user.records.undeleted.find(params[:id])
               record.soft_destroy
               # Bug: scope value should be `Float` but `ActiveRecord::AssociationRelation::ActiveRecord_AssociationRelation_Record`
-              current_user.generate_user_report
+              current_user.update_user_report
             rescue => e
               puts e.message
               # puts e.backtrace

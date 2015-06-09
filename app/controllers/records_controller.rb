@@ -74,7 +74,7 @@ class RecordsController < ApplicationController
     def find_record
       @record = current_user.records.find(params[:id])
     end
-
+     
     def update_user_report
       current_user.update_user_report
     end

@@ -6,16 +6,17 @@ PORT=$(test -z "$2" && echo "4001" || echo "$2") # default 4001
 ENVIRONMENT=$(test -z "$3" && echo "production" || echo "$3") # default production
 UNICORN=unicorn  
 CONFIG_FILE=config/unicorn.rb  
-APP_ROOT_PATH=$(pwd)
+app_root_path=$(pwd)
 
 # user bash environment for crontab job.
 shell_used=${SHELL##*/}
 echo "** shell used: ${shell_used}"
-[ -f ~/.${shell_used}_profile ] && source ~/.${shell_used}_profile > /dev/null 2&>1
-[ -f ~/.${shell_used}rc ] && source ~/.${shell_used}rc > /dev/null 2&>1
+[ -f ~/.${shell_used}_profile ] && source ~/.${shell_used}_profile &> /dev/null
+[ -f ~/.${shell_used}rc ] && source ~/.${shell_used}rc &> /dev/null
 export LANG=zh_CN.UTF-8
 # maybe enter other dir after source.
-cd ${APP_ROOT_PATH}
+cd ${app_root_path}
+
 
 # use the current .ruby-version's command
 bundle_command=$(rbenv which bundle)
@@ -92,6 +93,14 @@ case "$1" in
         # bundle exec request-log-analyzer log/production.log --file report.html --output HTML
     ;;
     restore)
+        if [[ "$(uname -s)" == "Darwin" ]];
+        then
+            start_mysql="mysql.server start"
+        else
+            start_mysql="service mysqld start"
+        fi
+        echo "\`${start_mysql}\`"
+        ${start_mysql}
         $bundle_command exec rake qiniu:download
     ;;
     whenever)

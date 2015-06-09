@@ -28,7 +28,7 @@ $form.bootstrapValidator
         notEmpty: 
           message: '消费日期为必填项.'
         date: 
-          format: 'YYYY-MM-DD hh:mm:ss'
+          format: 'YYYY-MM-DD hh:mm'
           message: "日期格式错误."
 
 $form.children("input").bind "keydown input onchange", ->

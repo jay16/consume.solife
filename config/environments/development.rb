@@ -39,4 +39,4 @@ Consume::Application.configure do
     #:enable_starttls_auto => true 
   }
 end
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+#ActiveRecord::Base.logger = Logger.new(STDOUT)

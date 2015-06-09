@@ -123,16 +123,16 @@ class User < ActiveRecord::Base
       normal_records = self.records.normals
       normal_records_count = normal_records.count
       lambda_call_method = lambda { |method| normal_records_count.zero? ? 0 : normal_records.send(method) } 
-      [:maximum_per_one,
-       :maximum_per_day,
-       :summary_by_day,
-       :summary_by_week,
-       :summary_by_month,
-       :summary_by_year,
-       :summary_by_all
-       ].inject({}) { |hash, method| 
-         hash[method] = lambda_call_method.call(method) 
+      %w(maximum_per_one
+         maximum_per_day
+         summary_by_day
+         summary_by_week
+         summary_by_month
+         summary_by_year
+         summary_by_all
+       ).inject({}) do |hash, method| 
+         hash[method] = lambda_call_method.call(method.to_sym) 
          hash
-       }
+       end
     end
 end

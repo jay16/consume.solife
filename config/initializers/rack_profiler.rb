@@ -12,7 +12,7 @@ Rack::MiniProfiler.config.position = 'right'
 Rack::MiniProfiler.config.start_hidden = false
 
 # `Rack::MiniProfiler.authorize_request` not work without this config
-if Rails.env.production?
+if false and Rails.env.production?
   Rack::MiniProfiler.config.authorization_mode = :whitelist 
 end
 

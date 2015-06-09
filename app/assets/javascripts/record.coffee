@@ -80,7 +80,7 @@ $(document).ready ->
   $recordForm = $("#recordForm")
   $datetimePicker = $('#datetimePicker')
   $datetimePicker.datetimepicker
-    format: 'YYYY/MM/DD HH:mm'
+    format: 'YYYY-MM-DD HH:mm'
     defaultDate: new Date()
 
   $recordForm.bootstrapValidator
@@ -103,7 +103,7 @@ $(document).ready ->
           notEmpty: 
             message: '消费日期为必填项.'
           date: 
-            format: 'YYYY/MM/DD HH:mm'
+            format: 'YYYY-MM-DD HH:mm'
 
   $datetimePicker.on 'dp.change dp.show', (e) ->
     # Revalidate the date when user change it
