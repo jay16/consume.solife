@@ -11,8 +11,16 @@
         %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
 
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
+    = javascript_include_tag_with_cdn "jquery-2.1.1.min.js"
+    = javascript_include_tag_with_cdn "bootstrap.320.min.js"
+    = javascript_include_tag_with_cdn "bootstrapValidator.min.js"
+    = javascript_include_tag_with_cdn "bootstrap-datetimepicker.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => true
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+
+    = stylesheet_link_tag_with_cdn "bootstrap.320.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrapValidator.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrap-datetimepicker.min.css"
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     = yield :styles
     = csrf_meta_tags
   %body

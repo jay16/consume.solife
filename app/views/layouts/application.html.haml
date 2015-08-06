@@ -4,8 +4,16 @@
   %head
     =  render_page_title
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
+    = javascript_include_tag_with_cdn "jquery-2.1.1.min.js"
+    = javascript_include_tag_with_cdn "bootstrap.320.min.js"
+    = javascript_include_tag_with_cdn "bootstrapValidator.min.js"
+    = javascript_include_tag_with_cdn "bootstrap-datetimepicker.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => true
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+
+    = stylesheet_link_tag_with_cdn "bootstrap.320.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrapValidator.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrap-datetimepicker.min.css"
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     :css
       body { padding:0px;background: white; }
       .navbar-brand-bg {background: transparent url(assets/favicon.ico) no-repeat;height:60px; width:140px;margin-top:5px;padding-top:0px;} 

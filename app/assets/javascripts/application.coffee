@@ -9,16 +9,16 @@
 #
 # Read Sprockets README (https:#github.com/sstephenson/sprockets#sprockets-directives) for details
 # about supported directives.
+# require jquery-2.1.1.min
+# require bootstrap.320.min
+# require bootstrapValidator.min
+# require bootstrap-datetimepicker.min
 # require_tree .
 #
-#= require jquery
 #= require jquery_ujs
 #= require turbolinks
-#= require bootstrap.v320
 #= require jquery.ui
-#= require bootstrapValidator.min
 #= require moment.min
-#= require bootstrap-datetimepicker.min
 #= require tag-it
 #= require record
 #= require record_item

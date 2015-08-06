@@ -72,4 +72,17 @@ module ApplicationHelper
   def number_format_to_currency(number)
     number_to_currency(number, unit: "￥", delimiter: ",", precision: 0, separator: ".")
   end
+
+  def javascript_include_tag_with_cdn(filename)
+    if Rails.env.production?
+      filename = "http://7qnc6j.com1.z0.glb.clouddn.com/#{filename}"
+    end
+    javascript_include_tag(filename)
+  end
+  def stylesheet_link_tag_with_cdn(filename)
+    if Rails.env.production?
+      filename = "http://7qnc6j.com1.z0.glb.clouddn.com/#{filename}"
+    end
+    stylesheet_link_tag(filename)
+  end
 end

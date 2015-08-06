@@ -11,11 +11,11 @@
  *
  *= require_self
  *= require home_without_login 
- *= require bootstrap.v320
+ * require bootstrap.320.min
  *= require tag-it
  *= require tag-it-theme
- *= require bootstrapValidator.min
- *= require bootstrap-datetimepicker.min
+ * require bootstrapValidator.min
+ * require bootstrap-datetimepicker.min
  * require will_paginate
  */
 

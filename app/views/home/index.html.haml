@@ -5,7 +5,11 @@
     %meta{:charset => "utf-8"}
     %title= [Setting.title, "-", Setting.slogan].join(" ")
     %link{rel: "shortcut icon", href: "#{Setting.favicon}"}/
+    = stylesheet_link_tag_with_cdn "bootstrap.320.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrapValidator.min.css"
+    = stylesheet_link_tag_with_cdn "bootstrap-datetimepicker.min.css"
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+
     - main_div_class = 'col-sm-10 col-sm-offset-1'
     - platform, li_register_state = 'non-mobile', 'normal'
     - if mobile?
@@ -105,6 +109,8 @@
           %span.zapfino #{Setting.domain}
 
 
+      = javascript_include_tag_with_cdn "jquery-2.1.1.min.js"
+      = javascript_include_tag_with_cdn "bootstrap.320.min.js"
       = javascript_include_tag "application", "data-turbolinks-track" => true
       = javascript_tag defer: "defer" do
         Home.resizeWindow()
